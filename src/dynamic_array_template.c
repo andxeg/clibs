@@ -66,7 +66,7 @@ int TEMPLATE(append, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a, T elem) {
     return 0; 
 }   
  
-void TEMPLATE(print, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
+void TEMPLATE(print, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a, int *types) {
     printf("len: %d\n", a->length);
     printf("cap: %d\n", a->capacity);
     for (int i = 0; i < a->length; i++) {
@@ -76,6 +76,19 @@ void TEMPLATE(print, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
         printf("%f ", a->data[i]);
     #elif TYPE_NUM == STRING
         printf("%s ", a->data[i]);
+    #elif TYPE_NUM == VOIDP
+        switch (types[i]) {
+            case INT:
+            case GOOD_FIELD:
+                printf("%d ", *(int *)a->data[i]);
+		break;
+	    case FLOAT:
+	    case DOUBLE:
+                printf("%f ", *(double *)a->data[i]);
+                break;
+            case STRING:
+                printf("%s ", (char *)a->data[i]);
+	}
     #else
         printf("%d ", a->data[i]);
     #endif

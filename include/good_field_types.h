@@ -8,9 +8,10 @@
 #include "dynamic_arrays.h"
 
 typedef enum {
+    VOID,
     BOOL,
     NUMBER,
-    STRING
+    STRING,
 } GOOD_FIELD_TYPE;
 
 #endif
