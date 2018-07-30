@@ -6,6 +6,27 @@
 #include <stdlib.h>
 #include "dynamic_array_types.h"
 
+TEMPLATE(DYN_ARRAY, TYPE_NAME)* TEMPLATE(create2, TYPE_NAME) (int size) {
+    TEMPLATE(DYN_ARRAY, TYPE_NAME)* result = (TEMPLATE(DYN_ARRAY, TYPE_NAME)*)malloc(sizeof(TEMPLATE(DYN_ARRAY, TYPE_NAME)));
+    if (result == NULL) {
+        fprintf(stderr, "create2: error in malloc\n");
+        return NULL;
+    }
+    
+    if (TEMPLATE(create, TYPE_NAME)(size, result)) {
+        fprintf(stderr, "create2: error in dyn array creation\n");
+        free(result);
+        return NULL;
+    }
+    
+    return result;
+}
+
+void TEMPLATE(destroy2, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
+    TEMPLATE(destroy, TYPE_NAME)(a);
+    free(a);
+}
+
 int TEMPLATE(create, TYPE_NAME) (int size, TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
     a->length = 0;
     a->capacity = size;
@@ -94,6 +115,58 @@ void TEMPLATE(print, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a, int *types) 
     #endif
     }
     putchar('\n');
+}
+
+int TEMPLATE(array_equal, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *first, TEMPLATE(DYN_ARRAY, TYPE_NAME) *second, int *types1, int *types2) {
+    if (first->length != second->length)
+        return 0;
+    
+    #if TYPE_NUM != VOIDP
+    // equal types
+    for (int i = 0; i < first->length; i++) {
+        if (first->data[i] != second->data[i]) {
+            printf("arrays are different in %d-th element\n", i+1);
+            return 0;
+        }
+    }
+    #else 
+    // different types
+    for (int i = 0; i < first->length; i++) {
+        if (types1[i] != types2[i]) {
+            printf("array_equal: arrays has different type in %d-th element\n", i+1);  
+            return 0;
+        }
+        switch (types1[i]) {
+            case INT:
+            case GOOD_FIELD:
+                if (*(int *)first->data[i] != *(int *)second->data[i]) {
+                    printf("array_equal: arrays are different in %d-th element\n", i+1);
+                    return 0;
+                }
+		break;
+	    case FLOAT:
+                if (*(float *)first->data[i] != *(float *)second->data[i]) {
+                    printf("array_equal: arrays are different in %d-th element\n", i+1);
+                    return 0;
+                }
+		break;
+	    case DOUBLE:
+                if (*(double *)first->data[i] != *(double *)second->data[i]) {
+                    printf("array_equal: arrays are different in %d-th element\n", i+1);
+                    return 0;
+                }
+		break;
+            case STRING:
+                if (*(char *)first->data[i] != *(char *)second->data[i]) {
+                    printf("array_equal: arrays are different in %d-th element\n", i+1);
+                    return 0;
+                }
+		break;
+	}
+    }
+    #endif
+
+    return 1;
 }
 
 #endif

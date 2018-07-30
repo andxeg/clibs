@@ -1,7 +1,5 @@
 #include "templates.h"
 #include "dynamic_arrays.h"
-#include "good_field_types.h"
-#include "dynamic_array_types.h"
 
 
 #ifdef T

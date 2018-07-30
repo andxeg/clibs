@@ -3,18 +3,24 @@
 
 #include "dynamic_arrays.h"
 
-typedef struct  {
+typedef struct {
     TEMPLATE(DYN_ARRAY, string) fields;
     TEMPLATE(DYN_ARRAY, good_field) types;
     TEMPLATE(DYN_ARRAY, int) length_min;
     TEMPLATE(DYN_ARRAY, int) lenght_max;
-} FILE_SCHEMA_GOODS;
+} FILE_HEADER;
 
-/*
 typedef struct {
-    FILE_SCHEMA_GOODS* file_schema;
-    
-} FILE_ENTRY;
-*/
+    TEMPLATE(DYN_ARRAY, vop) field_values;
+    struct GOOD *next;
+    struct GOOD *prev;
+} GOOD;
+
+typedef GOOD GOOD_LIST;
+
+typedef struct {
+    FILE_HEADER *header;
+    GOOD_LIST *goods;   
+} FILE_SCHEMA;
 
 #endif
