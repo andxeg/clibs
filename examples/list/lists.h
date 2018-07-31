@@ -103,5 +103,33 @@
 #define TYPE_NUM INT_VEC3
 #include "list_template.h"
 
+#ifdef T
+#undef T
+#endif
+#ifdef TYPE_NAME
+#undef TYPE_NAME
+#endif
+#ifdef TYPE_NUM
+#undef TYPE_NUM
+#endif
+#define T int*
+#define TYPE_NAME int_vec2_st
+#define TYPE_NUM INT_VEC2_ST
+#include "list_template.h"
+
+#ifdef T
+#undef T
+#endif
+#ifdef TYPE_NAME
+#undef TYPE_NAME
+#endif
+#ifdef TYPE_NUM
+#undef TYPE_NUM
+#endif
+#define T int*
+#define TYPE_NAME int_vec3_st
+#define TYPE_NUM INT_VEC3_ST
+#include "list_template.h"
+
 #endif
 

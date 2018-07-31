@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include "dynamic_arrays.h"
 #include "good_field_types.h"
-#include "file_schema.h"
 #include "dynamic_array_types.h"
 
 int test_array_int() {

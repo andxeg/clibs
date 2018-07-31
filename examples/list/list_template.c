@@ -57,12 +57,18 @@ int TEMPLATE(size_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list) {
     return size;
 }
 
-int TEMPLATE(contains, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, T elem) {
-    // search without deep equal
+int TEMPLATE(contains_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, T elem) {
     TEMPLATE(LIST_NODE, TYPE_NAME)* curr_node = list->next;
     while (curr_node != list) {
-        #if TYPE_NUM == INT_DYN_ARRAY || TYPE_NUM == STRING_DYN_ARRAY
-        if (curr_node->data.data == elem.data)
+        #if TYPE_NUM == INT_DYN_ARRAY
+        if (TEMPLATE(array_equal, int)(&curr_node->data, &elem, NULL, NULL))
+        #elif TYPE_NUM == STRING_DYN_ARRAY
+        if (TEMPLATE(array_equal, string)(&curr_node->data, &elem, NULL, NULL))
+        #elif TYPE_NUM == INT_VEC2 || TYPE_NUM == INT_VEC2_ST
+        if (curr_node->data[0] == elem[0] && curr_node->data[1] == elem[1])
+        #elif TYPE_NUM == INT_VEC3 || TYPE_NUM == INT_VEC3_ST
+        if (curr_node->data[0] == elem[0] && curr_node->data[1] == elem[1] && 
+            curr_node->data[2] == elem[2])
         #else
         if (curr_node->data == elem)
         #endif
@@ -106,12 +112,20 @@ int TEMPLATE(remove_from_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, T ele
         if (TEMPLATE(array_equal, int)(&curr_node->data, &elem, NULL, NULL)) {
         #elif TYPE_NUM == STRING_DYN_ARRAY
         if (TEMPLATE(array_equal, string)(&curr_node->data, &elem, NULL, NULL)) {
+        #elif TYPE_NUM == INT_VEC2 || TYPE_NUM == INT_VEC2_ST
+        if (curr_node->data[0] == elem[0] && curr_node->data[1] == elem[1]) {
+        #elif TYPE_NUM == INT_VEC3 || TYPE_NUM == INT_VEC3_ST
+        if (curr_node->data[0] == elem[0] && curr_node->data[1] == elem[1] && 
+            curr_node->data[2] == elem[2]) {
         #else
         if (curr_node->data == elem) {
         #endif
             TEMPLATE(LIST_NODE, TYPE_NAME)* prev = curr_node->prev;
             prev->next = curr_node->next;
             curr_node->next->prev = prev;  
+            curr_node->next = curr_node;
+            curr_node->prev = curr_node;
+            TEMPLATE(destroy_list, TYPE_NAME)(curr_node); 
             return 0;
         }
         curr_node = curr_node->next;
@@ -120,20 +134,32 @@ int TEMPLATE(remove_from_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, T ele
     return 1;
 }
 
-T TEMPLATE(get_by_index, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, int index) {
-    T result;
+int TEMPLATE(get_by_index, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, int index, T *result) {
     int curr_index = 0;
     TEMPLATE(LIST_NODE, TYPE_NAME)* curr_node = list->next;
     while (curr_node != list) {
         if (curr_index == index) {
-            result = curr_node->data;
-            break;
+            #if TYPE_NUM == INT_VEC2 || TYPE_NUM == INT_VEC3 ||\
+                TYPE_NUM == INT_VEC2_ST || TYPE_NUM == INT_VEC3_ST
+              #if TYPE_NUM == INT_VEC2 || INT_VEC2_ST
+            (*result)[0] = curr_node->data[0];
+            (*result)[1] = curr_node->data[1];
+              #elif TYPE_NUM == INT_VEC3 || INT_VEC3_ST
+            (*result)[0] = curr_node->data[0];
+            (*result)[1] = curr_node->data[1];
+            (*result)[2] = curr_node->data[2]
+              #endif 
+            #else
+            *result = curr_node->data;
+            #endif
+            return 0;
         }
         ++curr_index;
         curr_node = curr_node->next;
     }
     
-    return result;  
+    fprintf(stderr, "get_by_index: index out of range\n"); 
+    return 1; 
 }
 
 int TEMPLATE(indexOf, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, T elem) {
@@ -144,6 +170,11 @@ int TEMPLATE(indexOf, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, T elem) {
         if (TEMPLATE(array_equal, int)(&curr_node->data, &elem, NULL, NULL)) {
         #elif TYPE_NUM == STRING_DYN_ARRAY
         if (TEMPLATE(array_equal, string)(&curr_node->data, &elem, NULL, NULL)) {
+        #elif TYPE_NUM == INT_VEC2 || TYPE_NUM == INT_VEC2_ST
+        if (curr_node->data[0] == elem[0] && curr_node->data[1] == elem[1]) {
+        #elif TYPE_NUM == INT_VEC3 || TYPE_NUM == INT_VEC3_ST
+        if (curr_node->data[0] == elem[0] && curr_node->data[1] == elem[1] && 
+            curr_node->data[2] == elem[2]) {
         #else
         if (curr_node->data == elem) {
         #endif
@@ -169,18 +200,19 @@ void TEMPLATE(print_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list) {
         printf("%f ", curr_node->data);
         #elif TYPE_NUM == STRING
         printf("%s ", curr_node->data);
-        #elif TYPE_NUM == INT_VEC2 || TYPE_NUM == INT_VEC3
+        #elif TYPE_NUM == INT_VEC2 || TYPE_NUM == INT_VEC3 ||\
+              TYPE_NUM == INT_VEC2_ST || TYPE_NUM == INT_VEC3_ST
         int len;
-        #if TYPE_NUM == INT_VEC2
+        #if TYPE_NUM == INT_VEC2 || TYPE_NUM == INT_VEC2_ST
         len = 2;
         #else
         len = 3;
         #endif
         printf("[");
-        for (int i = 0; i < len; i++) {
-            printf(" %d", curr_node->data[i]);
+        for (int i = 0; i < len-1; i++) {
+            printf("%d,", curr_node->data[i]);
         }
-        printf("]");
+        printf("%d]", curr_node->data[len-1]);
         #endif
         curr_node = curr_node->next; 
     }
@@ -256,7 +288,7 @@ int TEMPLATE(remove_elem_by_index, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, i
         curr_node = curr_node->next; 
     }
     
-    if (index > curr_index) {
+    if (curr_index == 0 || index > curr_index) {
         fprintf(stderr, "remove_elem_by_index: index out of range\n");
         return 1;
     }   

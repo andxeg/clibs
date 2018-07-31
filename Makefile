@@ -31,4 +31,7 @@ test.o: test.c
 
 clean:
 	rm -rf *.o
+
+clean_all:
+	rm -rf *.o test test_task
     

@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-//#include "file_schema.h"
+#include "file_schema.h"
 //#include "file_io.h"
 
 

@@ -10,7 +10,9 @@
 #define INT_VEC3 6
 #define INT_DYN_ARRAY 7
 #define STRING_DYN_ARRAY 8
-#define GOOD_FIELD 9
+#define INT_VEC2_ST 9
+#define INT_VEC3_ST 10
+#define GOOD_FIELD 11
 
 #endif
 
