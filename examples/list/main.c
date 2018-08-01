@@ -193,6 +193,27 @@ int test_get_elem_by_index() {
     return 0;
 }
 
+int test_insert_elem_by_index() {
+    TEMPLATE(LIST, int)* list_int = TEMPLATE(create_list, int)();
+    TEMPLATE(add_to_list, int)(list_int, 1);
+    TEMPLATE(add_to_list, int)(list_int, 2);
+    TEMPLATE(add_to_list, int)(list_int, 3);
+    TEMPLATE(add_to_list, int)(list_int, 10);
+    TEMPLATE(add_to_list, int)(list_int, 12);
+    TEMPLATE(add_to_list, int)(list_int, 13);
+    TEMPLATE(print_list, int)(list_int);    
+    
+
+    int list_size = TEMPLATE(size_list, int)(list_int);
+    for (int i = 0; i < list_size; i++) {
+        TEMPLATE(insert_by_index, int)(list_int, i, i);
+    }
+
+    TEMPLATE(print_list, int)(list_int);
+    TEMPLATE(destroy_list, int)(list_int);
+    return 0;
+}
+
 int test_indexOf() {
     TEMPLATE(LIST, int)* list_int = TEMPLATE(create_list, int)();
     TEMPLATE(add_to_list, int)(list_int, 1);
@@ -333,6 +354,34 @@ int test_remove_element_by_index() {
     return 0;
 }
 
+int test_dyn_array() {
+    // create2 not work because two free: first in dyn array destroy2 second in destroy_list (free(node))
+
+    TEMPLATE(LIST, dyn_array_int)* list_dyn_array_int = TEMPLATE(create_list, dyn_array_int)();
+    TEMPLATE(DYN_ARRAY, int) array_int;
+    TEMPLATE(create, int)(4, &array_int);
+    TEMPLATE(append, int)(&array_int, 1);
+    TEMPLATE(append, int)(&array_int, 2);
+    TEMPLATE(append, int)(&array_int, 3);
+    TEMPLATE(append, int)(&array_int, 4);
+    TEMPLATE(append, int)(&array_int, 5);
+    TEMPLATE(append, int)(&array_int, 6);
+    TEMPLATE(append, int)(&array_int, 7);
+    TEMPLATE(print, int)(&array_int, NULL);
+    TEMPLATE(add_to_list, dyn_array_int)(list_dyn_array_int, array_int);
+    
+    int index = 0;
+    TEMPLATE(DYN_ARRAY, int) elem;
+    TEMPLATE(get_by_index, dyn_array_int)(list_dyn_array_int, index, &elem);
+    TEMPLATE(append, int)(&elem, 80);
+    TEMPLATE(append, int)(&elem, 90);
+    TEMPLATE(insert_by_index, dyn_array_int)(list_dyn_array_int, index, elem);
+    
+    TEMPLATE(print_list, dyn_array_int)(list_dyn_array_int);
+    TEMPLATE(destroy_list, dyn_array_int)(list_dyn_array_int);
+    return 0;
+}
+
 typedef int (*f)();
 
 typedef struct {
@@ -341,16 +390,18 @@ typedef struct {
 } TEST_CASE;
 
 int main(int argc, char** argv) {
-    TEST_CASE test_cases[9] = {
+    TEST_CASE test_cases[11] = {
         {"Test creation for list with int values", test_creation_int_list},
         {"Test empty list verification", test_empty_list_verification},
         {"Test checking presence of element in list", test_contains_in_list},
         {"Test int vec2", test_vec2_list},
         {"Test removing from list", test_removing_from_list},
         {"Test getting element by index", test_get_elem_by_index},
+        {"Test insert element by index", test_insert_elem_by_index},
         {"Test indexOf", test_indexOf},
         {"Test adding element by index", test_add_element_by_index},
-        {"Test removing element by index", test_remove_element_by_index}
+        {"Test removing element by index", test_remove_element_by_index},
+        {"Test list of dynamic arrays", test_dyn_array}
     };
     
     for (int i = 0; i < sizeof(test_cases) / sizeof(test_cases[0]); i++) {

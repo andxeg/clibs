@@ -84,6 +84,20 @@
 #ifdef TYPE_NUM
 #undef TYPE_NUM
 #endif
+#define T TEMPLATE(DYN_ARRAY, vop)
+#define TYPE_NAME dyn_array_vop
+#define TYPE_NUM VOP_DYN_ARRAY
+#include "list_template.h"
+
+#ifdef T
+#undef T
+#endif
+#ifdef TYPE_NAME
+#undef TYPE_NAME
+#endif
+#ifdef TYPE_NUM
+#undef TYPE_NUM
+#endif
 #define T int*
 #define TYPE_NAME int_vec2
 #define TYPE_NUM INT_VEC2

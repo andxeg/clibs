@@ -17,7 +17,7 @@ lists.o: lists.c
 	$(CC) $(CFLAG) -c lists.c -I ../../$(INCLUDE_DIR)
 
 list_template.o: list_template.c
-	$(CC) $(CFLAG) -c list_template.c
+	$(CC) $(CFLAG) -c list_template.c -I ../../$(INCLUDE_DIR)
 
 dynamic_array_template.o: ../../$(SRC_DIR)/dynamic_array_template.c
 	$(CC) $(CFLAG) -c ../../$(SRC_DIR)/dynamic_array_template.c -I ../../$(INCLUDE_DIR)
@@ -27,4 +27,7 @@ dynamic_arrays.o: ../../$(SRC_DIR)/dynamic_arrays.c
 
 clean:
 	rm -rf *.o
+
+clean_all:
+	rm -rf *.o test_list
     

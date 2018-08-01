@@ -55,20 +55,34 @@ def generate_file_entry(file):
             print("unknown field type")
     return result
 
-def generate_file(filename, count):
+def print_file_header(file):
+    fields = '|'.join(FIELDS)
+    min_constraints = '|'.join(map(str, LENGTH_MIN))
+    max_constraints = '|'.join(map(str, LENGTH_MAX))
+    file.write(fields + '\n') 
+    file.write(min_constraints + '\n')
+    file.write(max_constraints + '\n')
+
+def generate_file(filename, count, generation_mode):
     file = open(filename, "w")
+    if generation_mode == "dynamic":
+        print_file_header(file);
     for i in range(count):
         entry = generate_file_entry(file)
         file.write('|'.join(entry) + '\n')
     file.close()
 
 if __name__=="__main__":
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 4:
         print("error in input parameters")
-        print("type %s <output filename> <number of goods>" % sys.argv[0])
+        print("type %s <output filename> <number of goods> <dynamic|static>" % sys.argv[0])
         exit()
     
     output_filename = sys.argv[1]
     goods_count = int(sys.argv[2])
-    generate_file(output_filename, goods_count)
+    generation_mode = sys.argv[3]
+    if generation_mode not in ["dynamic", "static"]:
+        print("generation_mode has incorrect value: %s" % generation_mode)
+        exit()
+    generate_file(output_filename, goods_count, generation_mode)
 

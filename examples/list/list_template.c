@@ -33,6 +33,8 @@ void TEMPLATE(destroy_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list) {
         TEMPLATE(destroy, int)(&node->data);
         #elif TYPE_NUM == STRING_DYN_ARRAY
         TEMPLATE(destroy, string)(&node->data);
+        //#elif TYPE_NUM == VOP_DYN_ARRAY
+        //TEMPLATE(destroy2, vop)(&node->data);
         #elif TYPE_NUM == INT_VEC2 || TYPE_NUM == INT_VEC3
         free(node->data);
         #endif
@@ -64,6 +66,8 @@ int TEMPLATE(contains_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, T elem) 
         if (TEMPLATE(array_equal, int)(&curr_node->data, &elem, NULL, NULL))
         #elif TYPE_NUM == STRING_DYN_ARRAY
         if (TEMPLATE(array_equal, string)(&curr_node->data, &elem, NULL, NULL))
+        //#elif TYPE_NUM == VOP_DYN_ARRAY
+        //if (TEMPLATE(array_equal, vop)(&curr_node->data, &elem, types1, types2))
         #elif TYPE_NUM == INT_VEC2 || TYPE_NUM == INT_VEC2_ST
         if (curr_node->data[0] == elem[0] && curr_node->data[1] == elem[1])
         #elif TYPE_NUM == INT_VEC3 || TYPE_NUM == INT_VEC3_ST
@@ -150,6 +154,9 @@ int TEMPLATE(get_by_index, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, int index
             (*result)[2] = curr_node->data[2]
               #endif 
             #else
+            // note for dyn_array len and cap copy as value
+            // for modify element in list call get_by_index then
+            // insert_by_index 
             *result = curr_node->data;
             #endif
             return 0;
@@ -160,6 +167,34 @@ int TEMPLATE(get_by_index, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, int index
     
     fprintf(stderr, "get_by_index: index out of range\n"); 
     return 1; 
+}
+
+int TEMPLATE(insert_by_index, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, int index, T elem) {
+    int curr_index = 0;
+    TEMPLATE(LIST_NODE, TYPE_NAME) *curr_node= list->next;
+    while (curr_node != list) {
+        if (curr_index == index) {
+             #if TYPE_NUM == INT_VEC2 || TYPE_NUM == INT_VEC3 ||\
+                TYPE_NUM == INT_VEC2_ST || TYPE_NUM == INT_VEC3_ST
+              #if TYPE_NUM == INT_VEC2 || INT_VEC2_ST
+            curr_node->data[0] = elem[0];
+            curr_node->data[1] = elem[1];
+              #elif TYPE_NUM == INT_VEC3 || INT_VEC3_ST
+            curr_node->data[0] = elem[0];
+            curr_node->data[1] = elem[1];
+            curr_node->data[2] = elem[2];
+              #endif 
+            #else
+            curr_node->data = elem;
+            #endif
+            return 0;
+        } 
+        ++curr_index;
+        curr_node = curr_node->next; 
+    }
+
+    fprintf(stderr, "insert_by_index: index out of range\n");
+    return 1;
 }
 
 int TEMPLATE(indexOf, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, T elem) {
@@ -191,10 +226,11 @@ void TEMPLATE(print_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list) {
     TEMPLATE(LIST_NODE, TYPE_NAME)* curr_node = list->next;
     printf("len: %d\n", TEMPLATE(size_list, TYPE_NAME)(list));
     while (curr_node != list)  {
-        //#if TYPE_NUM == INT_DYN_ARRAY || STRING_DYN_ARRAY
-        //TEMPLATE(print, TYPE_NAME)(&curr_node->data, NULL);
-        //#elif TYPE_NUM == 
-        #if TYPE_NUM == INT
+        #if TYPE_NUM == INT_DYN_ARRAY
+        TEMPLATE(print, int)(&curr_node->data, NULL);
+        #elif TYPE_NUM == STRING_DYN_ARRAY
+        TEMPLATE(print, string)(&curr_node->data, NULL);
+        #elif TYPE_NUM == INT
         printf("%d ", curr_node->data);
         #elif TYPE_NUM == FLOAT || TYPE_NUM == DOUBLE
         printf("%f ", curr_node->data);
