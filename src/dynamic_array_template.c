@@ -31,6 +31,11 @@ int TEMPLATE(create, TYPE_NAME) (int size, TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
     a->length = 0;
     a->capacity = size;
     a->data = (T *) calloc(size, sizeof(T));
+    #if TYPE_NUM == VOIDP
+    a->types = TEMPLATE(create2, int)(size);
+    #else
+    a->types = NULL;
+    #endif 
     if (a->data == NULL) {
         fprintf(stderr, "create: error in calloc\n");
     }
@@ -38,8 +43,15 @@ int TEMPLATE(create, TYPE_NAME) (int size, TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
 }
 
 void TEMPLATE(destroy, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
-    free(a->data);
-    a->data = NULL;    
+    if (a->data != NULL) {
+        free(a->data);
+        a->data = NULL;
+    }
+
+    if (a->types != NULL) {
+        TEMPLATE(destroy2, int)(a->types);
+        a->types = NULL;
+    }
 }
 
 int TEMPLATE(is_empty, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
@@ -84,59 +96,94 @@ int TEMPLATE(append, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a, T elem) {
     a->length++;
     a->capacity = new_cap;
     printf("append: success\n");
-    return 0; 
+    return 0;
 }   
  
-void TEMPLATE(print, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a, int *types) {
-    printf("len: %d\n", a->length);
-    printf("cap: %d\n", a->capacity);
-    for (int i = 0; i < a->length; i++) {
+void TEMPLATE(print, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
+    printf("len: %d cap: %d ", a->length, a->capacity);
+    putchar('[');
+    int i;
+    for (i = 0; i < a->length-1; i++) {
     #if TYPE_NUM == INT || TYPE_NUM == GOOD_FIELD_TYPE
-        printf("%d ", a->data[i]);
+        printf("%d, ", a->data[i]);
     #elif TYPE_NUM == FLOAT || TYPE_NUM == DOUBLE
-        printf("%f ", a->data[i]);
+        printf("%f, ", a->data[i]);
     #elif TYPE_NUM == STRING
-        printf("%s ", a->data[i]);
+        printf("%s, ", a->data[i]);
     #elif TYPE_NUM == VOIDP
-        switch (types[i]) {
+        int type = 0;
+        switch (TEMPLATE(get, int)(a->types, i, &type), type) {
             case INT:
             case GOOD_FIELD:
-                printf("%d ", *(int *)a->data[i]);
+                printf("%d, ", *(int *)a->data[i]);
 		break;
 	    case FLOAT:
 	    case DOUBLE:
-                printf("%f ", *(double *)a->data[i]);
+                printf("%f, ", *(double *)a->data[i]);
                 break;
             case STRING:
-                printf("%s ", (char *)a->data[i]);
+                printf("%s, ", (char *)a->data[i]);
 	}
     #else
-        printf("%d ", a->data[i]);
+        printf("%d, ", a->data[i]);
     #endif
     }
-    putchar('\n');
+
+    if (a->length > 1) {
+    #if TYPE_NUM == INT || TYPE_NUM == GOOD_FIELD_TYPE
+        printf("%d", a->data[i]);
+    #elif TYPE_NUM == FLOAT || TYPE_NUM == DOUBLE
+        printf("%f", a->data[i]);
+    #elif TYPE_NUM == STRING
+        printf("%s", a->data[i]);
+    #elif TYPE_NUM == VOIDP
+        int type = 0;
+        switch (TEMPLATE(get, int)(a->types, i, &type), type) {
+            case INT:
+            case GOOD_FIELD:
+                printf("%d", *(int *)a->data[i]);
+		break;
+	    case FLOAT:
+	    case DOUBLE:
+                printf("%f", *(double *)a->data[i]);
+                break;
+            case STRING:
+                printf("%s", (char *)a->data[i]);
+	}
+    #else
+        printf("%d", a->data[i]);
+    #endif
+    }
+
+    printf("]\n");    
 }
 
-int TEMPLATE(array_equal, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *first, TEMPLATE(DYN_ARRAY, TYPE_NAME) *second, int *types1, int *types2) {
-    if (first->length != second->length)
+int TEMPLATE(array_equal, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *first, TEMPLATE(DYN_ARRAY, TYPE_NAME) *second) {
+    if (first->length != second->length) {
+        printf("array_equal: arrays have different lengths\n");
         return 0;
+    }
     
     #if TYPE_NUM != VOIDP
     // equal types
     for (int i = 0; i < first->length; i++) {
         if (first->data[i] != second->data[i]) {
-            printf("arrays are different in %d-th element\n", i+1);
+            printf("array_equal: %d-th elements have different types\n", i+1);
             return 0;
         }
     }
     #else 
     // different types
     for (int i = 0; i < first->length; i++) {
-        if (types1[i] != types2[i]) {
+        int type1;
+        int type2;
+        TEMPLATE(get, int)(first->types, i, &type1);
+        TEMPLATE(get, int)(second->types, i, &type2);
+        if (type1 != type2) {
             printf("array_equal: arrays has different type in %d-th element\n", i+1);  
             return 0;
         }
-        switch (types1[i]) {
+        switch (type1) {
             case INT:
             case GOOD_FIELD:
                 if (*(int *)first->data[i] != *(int *)second->data[i]) {

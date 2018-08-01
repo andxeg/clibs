@@ -33,8 +33,8 @@ void TEMPLATE(destroy_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list) {
         TEMPLATE(destroy, int)(&node->data);
         #elif TYPE_NUM == STRING_DYN_ARRAY
         TEMPLATE(destroy, string)(&node->data);
-        //#elif TYPE_NUM == VOP_DYN_ARRAY
-        //TEMPLATE(destroy2, vop)(&node->data);
+        #elif TYPE_NUM == VOP_DYN_ARRAY
+        TEMPLATE(destroy, vop)(&node->data);
         #elif TYPE_NUM == INT_VEC2 || TYPE_NUM == INT_VEC3
         free(node->data);
         #endif
@@ -63,11 +63,11 @@ int TEMPLATE(contains_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, T elem) 
     TEMPLATE(LIST_NODE, TYPE_NAME)* curr_node = list->next;
     while (curr_node != list) {
         #if TYPE_NUM == INT_DYN_ARRAY
-        if (TEMPLATE(array_equal, int)(&curr_node->data, &elem, NULL, NULL))
+        if (TEMPLATE(array_equal, int)(&curr_node->data, &elem))
         #elif TYPE_NUM == STRING_DYN_ARRAY
-        if (TEMPLATE(array_equal, string)(&curr_node->data, &elem, NULL, NULL))
-        //#elif TYPE_NUM == VOP_DYN_ARRAY
-        //if (TEMPLATE(array_equal, vop)(&curr_node->data, &elem, types1, types2))
+        if (TEMPLATE(array_equal, string)(&curr_node->data, &elem))
+        #elif TYPE_NUM == VOP_DYN_ARRAY
+        if (TEMPLATE(array_equal, vop)(&curr_node->data, &elem))
         #elif TYPE_NUM == INT_VEC2 || TYPE_NUM == INT_VEC2_ST
         if (curr_node->data[0] == elem[0] && curr_node->data[1] == elem[1])
         #elif TYPE_NUM == INT_VEC3 || TYPE_NUM == INT_VEC3_ST
@@ -113,9 +113,11 @@ int TEMPLATE(remove_from_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, T ele
     TEMPLATE(LIST_NODE, TYPE_NAME)* curr_node = list->next;
     while (curr_node != list) {
         #if TYPE_NUM == INT_DYN_ARRAY
-        if (TEMPLATE(array_equal, int)(&curr_node->data, &elem, NULL, NULL)) {
+        if (TEMPLATE(array_equal, int)(&curr_node->data, &elem)) {
         #elif TYPE_NUM == STRING_DYN_ARRAY
-        if (TEMPLATE(array_equal, string)(&curr_node->data, &elem, NULL, NULL)) {
+        if (TEMPLATE(array_equal, string)(&curr_node->data, &elem)) {
+        #elif TYPE_NUM == VOP_DYN_ARRAY
+        if (TEMPLATE(array_equal, vop)(&curr_node->data, &elem)) {
         #elif TYPE_NUM == INT_VEC2 || TYPE_NUM == INT_VEC2_ST
         if (curr_node->data[0] == elem[0] && curr_node->data[1] == elem[1]) {
         #elif TYPE_NUM == INT_VEC3 || TYPE_NUM == INT_VEC3_ST
@@ -202,9 +204,11 @@ int TEMPLATE(indexOf, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, T elem) {
     TEMPLATE(LIST_NODE, TYPE_NAME)* curr_node = list->next;
     while (curr_node != list) {
         #if TYPE_NUM == INT_DYN_ARRAY
-        if (TEMPLATE(array_equal, int)(&curr_node->data, &elem, NULL, NULL)) {
+        if (TEMPLATE(array_equal, int)(&curr_node->data, &elem)) {
         #elif TYPE_NUM == STRING_DYN_ARRAY
-        if (TEMPLATE(array_equal, string)(&curr_node->data, &elem, NULL, NULL)) {
+        if (TEMPLATE(array_equal, string)(&curr_node->data, &elem)) {
+        #elif TYPE_NUM == VOP_DYN_ARRAY
+        if (TEMPLATE(array_equal, vop)(&curr_node->data, &elem)) {
         #elif TYPE_NUM == INT_VEC2 || TYPE_NUM == INT_VEC2_ST
         if (curr_node->data[0] == elem[0] && curr_node->data[1] == elem[1]) {
         #elif TYPE_NUM == INT_VEC3 || TYPE_NUM == INT_VEC3_ST
@@ -224,18 +228,52 @@ int TEMPLATE(indexOf, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, T elem) {
 
 void TEMPLATE(print_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list) {
     TEMPLATE(LIST_NODE, TYPE_NAME)* curr_node = list->next;
-    printf("len: %d\n", TEMPLATE(size_list, TYPE_NAME)(list));
-    while (curr_node != list)  {
+    int length = TEMPLATE(size_list, TYPE_NAME)(list);
+    printf("len: %d ", length);
+    putchar('[');
+    while (curr_node->next != list)  {
         #if TYPE_NUM == INT_DYN_ARRAY
-        TEMPLATE(print, int)(&curr_node->data, NULL);
+        TEMPLATE(print, int)(&curr_node->data);
         #elif TYPE_NUM == STRING_DYN_ARRAY
-        TEMPLATE(print, string)(&curr_node->data, NULL);
+        TEMPLATE(print, string)(&curr_node->data);
+        #elif TYPE_NUM == VOP_DYN_ARRAY
+        TEMPLATE(print, vop)(&curr_node->data);
         #elif TYPE_NUM == INT
-        printf("%d ", curr_node->data);
+        printf("%d, ", curr_node->data);
         #elif TYPE_NUM == FLOAT || TYPE_NUM == DOUBLE
-        printf("%f ", curr_node->data);
+        printf("%f, ", curr_node->data);
         #elif TYPE_NUM == STRING
-        printf("%s ", curr_node->data);
+        printf("%s, ", curr_node->data);
+        #elif TYPE_NUM == INT_VEC2 || TYPE_NUM == INT_VEC3 ||\
+              TYPE_NUM == INT_VEC2_ST || TYPE_NUM == INT_VEC3_ST
+        int len;
+        #if TYPE_NUM == INT_VEC2 || TYPE_NUM == INT_VEC2_ST
+        len = 2;
+        #else
+        len = 3;
+        #endif
+        printf("[");
+        for (int i = 0; i < len-1; i++) {
+            printf("%d,", curr_node->data[i]);
+        }
+        printf("%d], ", curr_node->data[len-1]);
+        #endif
+        curr_node = curr_node->next; 
+    }
+
+    if (length != 0) {
+        #if TYPE_NUM == INT_DYN_ARRAY
+        TEMPLATE(print, int)(&curr_node->data);
+        #elif TYPE_NUM == STRING_DYN_ARRAY
+        TEMPLATE(print, string)(&curr_node->data);
+        #elif TYPE_NUM == VOP_DYN_ARRAY
+        TEMPLATE(print, vop)(&curr_node->data);
+        #elif TYPE_NUM == INT
+        printf("%d", curr_node->data);
+        #elif TYPE_NUM == FLOAT || TYPE_NUM == DOUBLE
+        printf("%f", curr_node->data);
+        #elif TYPE_NUM == STRING
+        printf("%s", curr_node->data);
         #elif TYPE_NUM == INT_VEC2 || TYPE_NUM == INT_VEC3 ||\
               TYPE_NUM == INT_VEC2_ST || TYPE_NUM == INT_VEC3_ST
         int len;
@@ -250,9 +288,9 @@ void TEMPLATE(print_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list) {
         }
         printf("%d]", curr_node->data[len-1]);
         #endif
-        curr_node = curr_node->next; 
     }
-    putchar('\n');
+
+    printf("]\n");
 }
 
 
@@ -313,6 +351,8 @@ int TEMPLATE(remove_elem_by_index, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, i
             TEMPLATE(destroy, int)(&curr_node->data);
             #elif TYPE_NUM == STRING_DYN_ARRAY
             TEMPLATE(destroy, string)(&curr_node->data);
+            #elif TYPE_NUM == VOP_DYN_ARRAY
+            TEMPLATE(destroy, vop)(&curr_node->data); 
             #elif TYPE_NUM == INT_VEC2 || TYPE_NUM == INT_VEC3
             free(curr_node->data);
             #endif

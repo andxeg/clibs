@@ -16,7 +16,7 @@ int test_array_int() {
     TEMPLATE(append, int)(&array_int, 4);
     TEMPLATE(append, int)(&array_int, 5);
 
-    TEMPLATE(print, int)(&array_int, NULL);
+    TEMPLATE(print, int)(&array_int);
     TEMPLATE(destroy, int)(&array_int);
     return 0;
 }
@@ -32,7 +32,7 @@ int test_array_string() {
     TEMPLATE(append, string)(&array_string, "second\0");
     TEMPLATE(append, string)(&array_string, "third\0");
 
-    TEMPLATE(print, string)(&array_string, NULL);
+    TEMPLATE(print, string)(&array_string);
     TEMPLATE(destroy, string)(&array_string);
     return 0;
 }
@@ -48,7 +48,7 @@ int test_array_good_field() {
     TEMPLATE(append, good_field)(&array_good_field, NUMBER_GOOD);
     TEMPLATE(append, good_field)(&array_good_field, STRING_GOOD);
 
-    TEMPLATE(print, good_field)(&array_good_field, NULL);
+    TEMPLATE(print, good_field)(&array_good_field);
     TEMPLATE(destroy, good_field)(&array_good_field);
     return 0;
 }
@@ -60,17 +60,18 @@ int test_array_void() {
         return 1;
     }
     
-    int a;
-    a = 1;
+    int a = 1;
     TEMPLATE(append, vop)(&array_void, (void *)&a);
-    a = 2;
-    TEMPLATE(append, vop)(&array_void, (void *)&a);
+    int b = 2;
+    TEMPLATE(append, vop)(&array_void, (void *)&b);
     
     char *s = "third\0";
     TEMPLATE(append, vop)(&array_void, (void *)s);
     
     int types[3] = {INT, INT, STRING};
-    TEMPLATE(print, vop)(&array_void, types);
+    for (int i = 0; i < 3; i++)
+        TEMPLATE(append, int)(array_void.types, types[i]);
+    TEMPLATE(print, vop)(&array_void);
     TEMPLATE(destroy, vop)(&array_void);    
     return 0;
 }
@@ -83,7 +84,7 @@ int test_create2() {
     }
     TEMPLATE(append, int)(array_int, 10);
     TEMPLATE(append, int)(array_int, 12);
-    TEMPLATE(print, int)(array_int, NULL);
+    TEMPLATE(print, int)(array_int);
     TEMPLATE(destroy2, int)(array_int);
     return 0;
 }
@@ -100,27 +101,27 @@ int test_array_comparison_simple() {
     TEMPLATE(append, int)(a2, 12);
 
     // arrays are equal 
-    TEMPLATE(print, int)(a1, NULL);
-    TEMPLATE(print, int)(a2, NULL);
-    if (TEMPLATE(array_equal, int)(a1, a2, NULL, NULL)) {
+    TEMPLATE(print, int)(a1);
+    TEMPLATE(print, int)(a2);
+    if (TEMPLATE(array_equal, int)(a1, a2)) {
         printf("arrays are equal\n");
     } else
         return 1;
     
     // arrays with different lengths
     TEMPLATE(append, int)(a1, 13);
-    TEMPLATE(print, int)(a1, NULL); 
-    TEMPLATE(print, int)(a2, NULL);
-    if (TEMPLATE(array_equal, int)(a1, a2, NULL, NULL)) {
+    TEMPLATE(print, int)(a1); 
+    TEMPLATE(print, int)(a2);
+    if (TEMPLATE(array_equal, int)(a1, a2)) {
         return 1;
     } else
         printf("arrays are not equal\n");
 
     // arrays are not equal
     TEMPLATE(append, int)(a2, 14);
-    TEMPLATE(print, int)(a1, NULL); 
-    TEMPLATE(print, int)(a2, NULL);
-    if (TEMPLATE(array_equal, int)(a1, a2, NULL, NULL)) {
+    TEMPLATE(print, int)(a1); 
+    TEMPLATE(print, int)(a2);
+    if (TEMPLATE(array_equal, int)(a1, a2)) {
         return 1;
     } else
         printf("arrays are not equal\n");
@@ -145,29 +146,35 @@ int test_array_comparison_complex() {
     TEMPLATE(append, vop)(a2, (void *)&v1);
     
     int types[4] = {INT, STRING, INT, INT};
+    for (int i = 0; i < 3; i++) {
+        TEMPLATE(append, int)(a2->types, types[i]);
+        TEMPLATE(append, int)(a1->types, types[i]);
+    }
     // arrays are equal 
-    TEMPLATE(print, vop)(a1, types);
-    TEMPLATE(print, vop)(a2, types);
-    if (TEMPLATE(array_equal, vop)(a1, a2, types, types)) {
+    TEMPLATE(print, vop)(a1);
+    TEMPLATE(print, vop)(a2);
+    if (TEMPLATE(array_equal, vop)(a1, a2)) {
         printf("arrays are equal\n");
     } else
         return 1;
 
     // arrays with different lengths
     TEMPLATE(append, vop)(a1, (void *)&v2);
-    TEMPLATE(print, vop)(a1, types);
-    TEMPLATE(print, vop)(a2, types);
-    if (TEMPLATE(array_equal, vop)(a1, a2, types, types)) {
+    TEMPLATE(append, int)(a1->types, INT);
+    TEMPLATE(print, vop)(a1);
+    TEMPLATE(print, vop)(a2);
+    if (TEMPLATE(array_equal, vop)(a1, a2)) {
         return 1;
     } else
         printf("arrays are not equal\n");
 
     // arrays are not equal
-    int types2[4] = {INT, STRING, INT, STRING};
     TEMPLATE(append, vop)(a2, (void *)v4);
-    TEMPLATE(print, vop)(a1, types); 
-    TEMPLATE(print, vop)(a2, types2);
-    if (TEMPLATE(array_equal, vop)(a1, a2, types, types2)) {
+    for (int i = 0; i < 4; i++)
+        TEMPLATE(append, int)(a2->types, STRING);
+    TEMPLATE(print, vop)(a1); 
+    TEMPLATE(print, vop)(a2);
+    if (TEMPLATE(array_equal, vop)(a1, a2)) {
         return 1;
     } else
         printf("arrays are not equal\n");

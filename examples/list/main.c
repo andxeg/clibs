@@ -62,7 +62,8 @@ int test_vec2_list() {
     
     int index = 2;
     int d[2] = {7, 8};
-    TEMPLATE(add_elem_by_index, int_vec2_st)(list_int_vec2, index, d);
+    printf("add [7, 8] to list to %d-th position -> %d\n", index, TEMPLATE(add_elem_by_index, int_vec2_st)(list_int_vec2, index, d));
+    TEMPLATE(print_list, int_vec2_st)(list_int_vec2);
     
     printf("empty value -> %d\n", TEMPLATE(is_empty_list, int_vec2_st)(list_int_vec2));
 
@@ -354,9 +355,11 @@ int test_remove_element_by_index() {
     return 0;
 }
 
-int test_dyn_array() {
+int test_int_dyn_array() {
     // create2 not work because two free: first in dyn array destroy2 second in destroy_list (free(node))
+    // !!! use create for dyn array creation
 
+    // create first element
     TEMPLATE(LIST, dyn_array_int)* list_dyn_array_int = TEMPLATE(create_list, dyn_array_int)();
     TEMPLATE(DYN_ARRAY, int) array_int;
     TEMPLATE(create, int)(4, &array_int);
@@ -367,7 +370,9 @@ int test_dyn_array() {
     TEMPLATE(append, int)(&array_int, 5);
     TEMPLATE(append, int)(&array_int, 6);
     TEMPLATE(append, int)(&array_int, 7);
-    TEMPLATE(print, int)(&array_int, NULL);
+    TEMPLATE(print, int)(&array_int);
+    
+    // add first element
     TEMPLATE(add_to_list, dyn_array_int)(list_dyn_array_int, array_int);
     
     int index = 0;
@@ -377,8 +382,96 @@ int test_dyn_array() {
     TEMPLATE(append, int)(&elem, 90);
     TEMPLATE(insert_by_index, dyn_array_int)(list_dyn_array_int, index, elem);
     
+    // create second element
+    TEMPLATE(DYN_ARRAY, int) array_int2;
+    TEMPLATE(create, int)(4, &array_int2);
+    TEMPLATE(append, int)(&array_int2, 1);
+    TEMPLATE(append, int)(&array_int2, 1);
+    TEMPLATE(append, int)(&array_int2, 1);
+    TEMPLATE(append, int)(&array_int2, 1);
+    TEMPLATE(append, int)(&array_int2, 1);
+    TEMPLATE(append, int)(&array_int2, 1);
+    TEMPLATE(append, int)(&array_int2, 1);
+    
+    // add second element
+    TEMPLATE(add_to_list, dyn_array_int)(list_dyn_array_int, array_int2);
+    index = 1;
+    TEMPLATE(DYN_ARRAY, int) elem2;
+    TEMPLATE(get_by_index, dyn_array_int)(list_dyn_array_int, index, &elem2);
+    TEMPLATE(append, int)(&elem2, 20);
+    TEMPLATE(append, int)(&elem2, 30);
+    TEMPLATE(insert_by_index, dyn_array_int)(list_dyn_array_int, index, elem2);
+
     TEMPLATE(print_list, dyn_array_int)(list_dyn_array_int);
     TEMPLATE(destroy_list, dyn_array_int)(list_dyn_array_int);
+    return 0;
+}
+
+int test_vop_dyn_array() {
+    // create two vop dyn arrays and add it to the list
+    // for all vop dyn arrays you must create only one array types
+    // share it! 
+    TEMPLATE(LIST, dyn_array_vop) *list_dyn_array_vop = TEMPLATE(create_list, dyn_array_vop)();
+    
+    // create first element
+    TEMPLATE(DYN_ARRAY, vop) array_vop;
+    TEMPLATE(create, vop)(4, &array_vop);
+    int a = 1;
+    TEMPLATE(append, vop)(&array_vop, (void *)&a);
+    int b = 2;
+    TEMPLATE(append, vop)(&array_vop, (void *)&b);
+    char *c = "first\0";
+    TEMPLATE(append, vop)(&array_vop, (void *)c);
+    char *d = "second\0";
+    TEMPLATE(append, vop)(&array_vop, (void *)d);
+    
+    int types[4] = {INT, INT, STRING, STRING};
+    for (int i = 0; i < 4; i++)
+        TEMPLATE(append, int)(array_vop.types, types[i]);  
+
+    TEMPLATE(print, vop)(&array_vop);
+    
+    // add first element
+    TEMPLATE(add_to_list, dyn_array_vop)(list_dyn_array_vop, array_vop);
+    
+    int index = 0;
+    TEMPLATE(DYN_ARRAY, vop) elem;
+    TEMPLATE(get_by_index, dyn_array_vop)(list_dyn_array_vop, index, &elem);
+    int s = 80;
+    char *t = "third\0";
+    TEMPLATE(append, vop)(&elem, (void *)&s);
+    TEMPLATE(append, vop)(&elem, (void *)t);
+    TEMPLATE(append, int)(elem.types, INT);
+    TEMPLATE(append, int)(elem.types, STRING);
+    TEMPLATE(insert_by_index, dyn_array_vop)(list_dyn_array_vop, index, elem);
+    
+    // create second element
+    TEMPLATE(DYN_ARRAY, vop) array_vop2;
+    TEMPLATE(create, vop)(4, &array_vop2);
+    
+    int p = 100;
+    TEMPLATE(append, vop)(&array_vop2, (void *)&p);
+    int q = -123;
+    TEMPLATE(append, vop)(&array_vop2, (void *)&q);
+    char *r = "hello\0";
+    TEMPLATE(append, vop)(&array_vop2, (void *)r);
+    char *m = "world\0";
+    TEMPLATE(append, vop)(&array_vop2, (void *)m);
+    
+    printf("append to array_vop2.types\n");
+    int types2[4] = {INT, INT, STRING, STRING};
+    for (int i = 0; i < 4; i++) {
+        TEMPLATE(append, int)(array_vop2.types, types2[i]);
+    }
+    //array_vop2.types = array_vop.types;
+    TEMPLATE(print, vop)(&array_vop2);
+
+    // add second element
+    TEMPLATE(add_to_list, dyn_array_vop)(list_dyn_array_vop, array_vop2);
+    
+ 
+    TEMPLATE(print_list, dyn_array_vop)(list_dyn_array_vop);
+    TEMPLATE(destroy_list, dyn_array_vop)(list_dyn_array_vop);
     return 0;
 }
 
@@ -390,7 +483,7 @@ typedef struct {
 } TEST_CASE;
 
 int main(int argc, char** argv) {
-    TEST_CASE test_cases[11] = {
+    TEST_CASE test_cases[12] = {
         {"Test creation for list with int values", test_creation_int_list},
         {"Test empty list verification", test_empty_list_verification},
         {"Test checking presence of element in list", test_contains_in_list},
@@ -401,7 +494,8 @@ int main(int argc, char** argv) {
         {"Test indexOf", test_indexOf},
         {"Test adding element by index", test_add_element_by_index},
         {"Test removing element by index", test_remove_element_by_index},
-        {"Test list of dynamic arrays", test_dyn_array}
+        {"Test list of dynamic arrays", test_int_dyn_array},
+        {"Test list with void* dynamic arrays", test_vop_dyn_array}
     };
     
     for (int i = 0; i < sizeof(test_cases) / sizeof(test_cases[0]); i++) {
