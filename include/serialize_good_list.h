@@ -1,0 +1,4 @@
+#ifndef SERIALIZE_GOOD_LIST_H
+#define SERIALIZE_GOOD_LIST_H
+
+#endif

@@ -1,5 +1,5 @@
 #ifndef LISTS_H
-#define LISTS_h
+#define LISTS_H
 
 #include "types.h"
 #include "templates.h"
@@ -31,6 +31,20 @@
 #define T char*
 #define TYPE_NAME string
 #define TYPE_NUM STRING
+#include "list_template.h"
+
+#ifdef T
+#undef T
+#endif
+#ifdef TYPE_NAME
+#undef TYPE_NAME
+#endif
+#ifdef TYPE_NUM
+#undef TYPE_NUM
+#endif
+#define T char*
+#define TYPE_NAME string_st
+#define TYPE_NUM STRING_ST
 #include "list_template.h"
 
 #ifdef T
@@ -87,6 +101,20 @@
 #define T TEMPLATE(DYN_ARRAY, vop)
 #define TYPE_NAME dyn_array_vop
 #define TYPE_NUM VOP_DYN_ARRAY
+#include "list_template.h"
+
+#ifdef T
+#undef T
+#endif
+#ifdef TYPE_NAME
+#undef TYPE_NAME
+#endif
+#ifdef TYPE_NUM
+#undef TYPE_NUM
+#endif
+#define T TEMPLATE(DYN_ARRAY, vop_st)
+#define TYPE_NAME dyn_array_vop_st
+#define TYPE_NUM VOP_DYN_ARRAY_ST
 #include "list_template.h"
 
 #ifdef T

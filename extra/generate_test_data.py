@@ -10,10 +10,6 @@ import sys
 import string
 from random import *
 
-BOOL = 0
-NUMBER = 1
-STRING = 2
-
 FIELDS = [
     "NAME",
     "COUNT_UNIT_NAME",
@@ -24,7 +20,7 @@ FIELDS = [
     "PACKED"
 ]
 
-TYPES = [STRING, STRING, NUMBER, BOOL, BOOL, BOOL, BOOL]
+TYPES = ["STRING", "STRING", "NUMBER", "BOOL", "BOOL", "BOOL", "BOOL"]
 
 LENGTH_MIN = [1, 1, 1, 1, 1, 1, 1]
 LENGTH_MAX = [31, 4, 6, 1, 1, 1, 1]
@@ -45,11 +41,11 @@ def generate_file_entry(file):
         type = TYPES[i] 
         min = LENGTH_MIN[i]
         max = LENGTH_MAX[i]
-        if type == STRING:
+        if type == "STRING":
             result.append(generate_random_string(min, max))
-        elif type == NUMBER:
+        elif type == "NUMBER":
             result.append(str(generate_random_num(min, max)))
-        elif type == BOOL:
+        elif type == "BOOL":
             result.append(str(randint(0, 1)))
         else:
             print("unknown field type")
@@ -57,9 +53,11 @@ def generate_file_entry(file):
 
 def print_file_header(file):
     fields = '|'.join(FIELDS)
+    types = '|'.join(TYPES)
     min_constraints = '|'.join(map(str, LENGTH_MIN))
     max_constraints = '|'.join(map(str, LENGTH_MAX))
-    file.write(fields + '\n') 
+    file.write(fields + '\n')
+    file.write(types + '\n')
     file.write(min_constraints + '\n')
     file.write(max_constraints + '\n')
 

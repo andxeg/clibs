@@ -31,7 +31,7 @@ int TEMPLATE(create, TYPE_NAME) (int size, TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
     a->length = 0;
     a->capacity = size;
     a->data = (T *) calloc(size, sizeof(T));
-    #if TYPE_NUM == VOIDP
+    #if TYPE_NUM == VOIDP || TYPE_NUM == VOIDP_ST
     a->types = TEMPLATE(create2, int)(size);
     #else
     a->types = NULL;
@@ -44,6 +44,11 @@ int TEMPLATE(create, TYPE_NAME) (int size, TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
 
 void TEMPLATE(destroy, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
     if (a->data != NULL) {
+        #if TYPE_NUM == STRING || TYPE_NUM == VOIDP
+        for (int i = 0; i < a->length; i++) {
+            free(a->data[i]);
+        }
+        #endif
         free(a->data);
         a->data = NULL;
     }
@@ -108,9 +113,9 @@ void TEMPLATE(print, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
         printf("%d, ", a->data[i]);
     #elif TYPE_NUM == FLOAT || TYPE_NUM == DOUBLE
         printf("%f, ", a->data[i]);
-    #elif TYPE_NUM == STRING
+    #elif TYPE_NUM == STRING || TYPE_NUM == STRING_ST
         printf("%s, ", a->data[i]);
-    #elif TYPE_NUM == VOIDP
+    #elif TYPE_NUM == VOIDP || TYPE_NUM == VOIDP_ST
         int type = 0;
         switch (TEMPLATE(get, int)(a->types, i, &type), type) {
             case INT:
@@ -134,9 +139,9 @@ void TEMPLATE(print, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
         printf("%d", a->data[i]);
     #elif TYPE_NUM == FLOAT || TYPE_NUM == DOUBLE
         printf("%f", a->data[i]);
-    #elif TYPE_NUM == STRING
+    #elif TYPE_NUM == STRING || TYPE_NUM == STRING_ST
         printf("%s", a->data[i]);
-    #elif TYPE_NUM == VOIDP
+    #elif TYPE_NUM == VOIDP || TYPE_NUM == VOIDP_ST
         int type = 0;
         switch (TEMPLATE(get, int)(a->types, i, &type), type) {
             case INT:
@@ -167,7 +172,11 @@ int TEMPLATE(array_equal, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *first, TEM
     #if TYPE_NUM != VOIDP
     // equal types
     for (int i = 0; i < first->length; i++) {
+        #if TYPE_NUM == STRING || TYPE_NUM == STRING_ST
+        if (strcmp(first->data[i], second->data[i]) != 0) {
+        #else
         if (first->data[i] != second->data[i]) {
+        #endif
             printf("array_equal: %d-th elements have different types\n", i+1);
             return 0;
         }
@@ -204,7 +213,8 @@ int TEMPLATE(array_equal, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *first, TEM
                 }
 		break;
             case STRING:
-                if (*(char *)first->data[i] != *(char *)second->data[i]) {
+            case STRING_ST:
+                if (strcmp((char *)first->data[i], (char *)second->data[i]) != 0) {
                     printf("array_equal: arrays are different in %d-th element\n", i+1);
                     return 0;
                 }

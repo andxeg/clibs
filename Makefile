@@ -1,6 +1,6 @@
 CC = gcc
 CFLAG = -Wall -g
-OBJS = dynamic_array_template.o dynamic_arrays.o lists.o list_template.o
+OBJS = dynamic_array_template.o dynamic_arrays.o lists.o list_template.o file_schema.o iofile.o
 MAIN_OBJS = main.o $(OBJS)
 TEST_OBJS = test.o $(OBJS)
 
@@ -29,14 +29,17 @@ lists.o: ./$(LIST_SRC_DIR)/lists.c
 list_template.o: ./$(LIST_SRC_DIR)/list_template.c
 	$(CC) $(CFLAG) -c ./$(LIST_SRC_DIR)/list_template.c -I ./$(INCLUDE_DIR) -I ./$(LIST_INCLUDE_DIR)
 
+file_schema.o: ./$(SRC_DIR)/file_schema.c
+	$(CC) $(CFLAG) -c ./$(SRC_DIR)/file_schema.c -I ./$(INCLUDE_DIR) -I ./$(LIST_INCLUDE_DIR)
 
-
+iofile.o: ./$(SRC_DIR)/iofile.c
+	$(CC) $(CFLAG) -c ./$(SRC_DIR)/iofile.c -I ./$(INCLUDE_DIR) -I ./$(LIST_INCLUDE_DIR)
 
 all_test: $(TEST_OBJS) 
 	$(CC) $(CFLAG) -o test $(TEST_OBJS)
 
 test.o: test.c
-	$(CC) $(CFLAG) -c test.c -I ./$(INCLUDE_DIR)/ 
+	$(CC) $(CFLAG) -c test.c -I ./$(INCLUDE_DIR)/  -I ./$(LIST_INCLUDE_DIR)
 
 
 clean:
