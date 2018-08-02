@@ -29,10 +29,26 @@ void TEMPLATE(destroy2, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
 
 int TEMPLATE(create, TYPE_NAME) (int size, TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
     a->length = 0;
-    a->capacity = size;
-    a->data = (T *) calloc(size, sizeof(T));
+    if (size <= 0) {
+        fprintf(stderr, "create: array size is not positive, set capacity to 1\n");
+        return 1;
+    }
+    a->capacity = (size <= 0) ? 1 : size;
+
+    T* p = (T *) calloc(size, sizeof(T));
+    if (p == NULL) {
+        fprintf(stderr, "create: calloc error, cannot allocate memory\n");
+        return 1;
+    }
+    a->data = p;
+
     #if TYPE_NUM == VOIDP || TYPE_NUM == VOIDP_ST
-    a->types = TEMPLATE(create2, int)(size);
+    TEMPLATE(DYN_ARRAY, int)* array_int = TEMPLATE(create2, int)(size);
+    if (array_int == NULL) {
+        fprintf(stderr, "create: error while create array for types\n");
+        return 1;
+    }
+    a->types = array_int;
     #else
     a->types = NULL;
     #endif 
@@ -224,6 +240,39 @@ int TEMPLATE(array_equal, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *first, TEM
     #endif
 
     return 1;
+}
+
+TEMPLATE(DYN_ARRAY, int)* TEMPLATE(get_array_types, TYPE_NAME)(TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
+    return a->types;
+}
+
+T* TEMPLATE(get_raw_data, TYPE_NAME)(TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
+    return a->data;
+}
+
+int TEMPLATE(shrink_to_fit, TYPE_NAME)(TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
+    if (a->length == 0) {
+        fprintf(stderr, "shrink_to_fit: shrink empty array is not permitted\n");
+        return 1;
+    }
+
+    T* p = (T *) realloc(a->data, sizeof(T) * a->length);
+    if (p == NULL) {
+        fprintf(stderr, "shrink_to_fit: error while realloc\n");
+        return 1;
+    }
+        
+    a->capacity = a->length;
+    return 0;
+}
+
+int TEMPLATE(recreate, TYPE_NAME)(TEMPLATE(DYN_ARRAY, TYPE_NAME) *a, int size) {
+    TEMPLATE(destroy, TYPE_NAME)(a);
+    if (TEMPLATE(create, TYPE_NAME)(size, a)) {
+        return 1;
+    }
+
+    return 0;      
 }
 
 #endif

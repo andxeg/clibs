@@ -259,6 +259,7 @@ int test_file_read() {
     char* filename = "./test_data/goods.txt\0";
 
     if (read_file_with_goods(filename, schema)) {
+        destroy_file_schema(schema);
         return 1;
     }
 

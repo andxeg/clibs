@@ -25,6 +25,20 @@
 #ifdef TYPE_NUM
 #undef TYPE_NUM
 #endif
+#define T char
+#define TYPE_NAME char
+#define TYPE_NUM CHAR
+#include "dynamic_array_template.c"
+
+#ifdef T
+#undef T
+#endif
+#ifdef TYPE_NAME
+#undef TYPE_NAME
+#endif
+#ifdef TYPE_NUM
+#undef TYPE_NUM
+#endif
 #define T char*
 #define TYPE_NAME string
 #define TYPE_NUM STRING
