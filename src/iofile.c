@@ -192,7 +192,86 @@ int read_limits(FILE* file, TEMPLATE(DYN_ARRAY, int)* limits) {
 }
 
 int read_goods(FILE* file, FILE_SCHEMA* schema) {
+    TEMPLATE(DYN_ARRAY, good_field)* types = &schema->header->types;
+    TEMPLATE(DYN_ARRAY, int)* min_limit = &schema->header->length_min;
+    TEMPLATE(DYN_ARRAY, int)* max_limit = &schema->header->length_max; 
+    TEMPLATE(LIST, dyn_array_vop)* goods = schema->goods;
     
+    // create array with types
+    int length = types->length;
+    TEMPLATE(DYN_ARRAY, int)* int_types = TEMPLATE(create2, int)(length);
+    for (int i = 0; i < length; i++) {
+        int type;
+        TEMPLATE(get, int)(int_types, i, &type);
+        switch (type) {
+        case BOOL_GOOD:
+            TEMPLATE(append, int)(int_types, BOOL);
+        case NUMBER_GOOD:
+            TEMPLATE(append, int)(int_types, INT);
+        case STRING_GOOD:
+            TEMPLATE(append, int)(int_types, STRING);
+        default:
+            ;char error_msg[ERROR_LENGTH_LIMIT];
+            sprintf(error_msg, "unknown type -> %d", type);
+            ELOG(error_msg);
+        }
+    }
+
+    TEMPLATE(DYN_ARRAY, vop) array_void;
+    TEMPLATE(create, vop)(length, &array_void);
+     
+    int c;
+    char* raw_data = NULL;
+    int inside = 0;
+    TEMPLATE(DYN_ARRAY, char) array_char;
+    TEMPLATE(create, char)(DEFAULT_FIELD_SIZE, &array_char);
+    while ((c = getc(file)) != EOF) {
+        if (c == '\n') {
+           // add good to the list
+           TEMPLATE(add_to_list, dyn_array_vop)(goods, array_void);
+           TEMPLATE(create, vop)(types->length, &array_void);
+        }
+        
+        // process one good 
+        if (c == GOODS_FILE_SEPARATOR) {
+            if (inside) {
+                TEMPLATE(append, char)(&array_char, '\0');
+                if (TEMPLATE(shrink_to_fit, char)(&array_char)) {
+                    ELOG("cannot shrink input field");
+                    TEMPLATE(destroy, char)(&array_char); 
+                    return 1;
+                }
+                raw_data = TEMPLATE(get_raw_data, char)(&array_char);
+                TEMPLATE(append, vop)(&array_void, (void *) raw_data);
+                TEMPLATE(create, char)(DEFAULT_FIELD_SIZE, &array_char);
+            }
+            inside = 0;
+        } else if (isalpha(c) || isdigit(c) || c == ' ' || c == '.') {
+            inside = 1;
+            TEMPLATE(append, char)(&array_char, c);
+        } else {
+            ELOG("unknown symbol in field");
+            TEMPLATE(destroy, char)(&array_char); 
+            return 1;
+        }
+    }
+    
+    // last field
+    if (array_char.length != 0) {
+         TEMPLATE(append, char)(&array_char, '\0');
+         if (TEMPLATE(shrink_to_fit, char)(&array_char)) {
+             ELOG("cannot shrink input field");
+             TEMPLATE(destroy, char)(&array_char); 
+             return 1;
+         }
+         raw_data = TEMPLATE(get_raw_data, char)(&array_char);
+         printf("field -> %s\n", raw_data);
+         TEMPLATE(append, string)(&schema->header->fields, raw_data);
+    }
+    return 0;
+}   
+
+   
     return 0;
 }
 

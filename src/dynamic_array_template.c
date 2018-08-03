@@ -250,6 +250,15 @@ TEMPLATE(DYN_ARRAY, int)* TEMPLATE(get_array_types, TYPE_NAME)(TEMPLATE(DYN_ARRA
     return a->types;
 }
 
+int TEMPLATE(set_array_types, TYPE_NAME)(TEMPLATE(DYN_ARRAY, TYPE_NAME) *a, TEMPLATE(DYN_ARRAY, int) *types) {
+    if (a->types != NULL) {
+        free(a->types);
+    }
+    
+    a->types = types;
+    return 0;
+}
+
 T* TEMPLATE(get_raw_data, TYPE_NAME)(TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
     return a->data;
 }
