@@ -475,6 +475,7 @@ int test_vop_dyn_array() {
     return 0;
 }
 
+
 typedef int (*f)();
 
 typedef struct {

@@ -85,6 +85,18 @@ int test_array_good_field() {
     return 0;
 }
 
+int test_array_char() {
+    TEMPLATE(DYN_ARRAY, char) array_char;
+    TEMPLATE(create, char)(10, &array_char);
+    TEMPLATE(print, char)(&array_char);
+    TEMPLATE(append, char)(&array_char, 'a');
+    TEMPLATE(append, char)(&array_char, 'b');
+    TEMPLATE(append, char)(&array_char, 'c'); 
+    TEMPLATE(print, char)(&array_char);
+    TEMPLATE(destroy, char)(&array_char);
+    return 0;
+}
+
 int test_array_void_st() {
     TEMPLATE(DYN_ARRAY, vop_st) array_void;
     if (TEMPLATE(create, vop_st)(1, &array_void)) {
@@ -268,6 +280,138 @@ int test_file_read() {
     return 0;
 }
 
+int test_shrink_to_fit() {
+    TEMPLATE(DYN_ARRAY, char) array_char;
+    TEMPLATE(create, char)(10, &array_char);
+    TEMPLATE(print, char)(&array_char);
+    TEMPLATE(append, char)(&array_char, 'a');
+    TEMPLATE(append, char)(&array_char, 'b');
+    TEMPLATE(append, char)(&array_char, 'c');
+    TEMPLATE(print, char)(&array_char);
+    TEMPLATE(shrink_to_fit, char)(&array_char);
+    TEMPLATE(print, char)(&array_char);
+    TEMPLATE(destroy, char)(&array_char);
+    return 0;
+}
+
+int test_get_raw_data() {
+    TEMPLATE(DYN_ARRAY, char) array_char;
+    TEMPLATE(create, char)(10, &array_char);
+    TEMPLATE(print, char)(&array_char);
+    TEMPLATE(append, char)(&array_char, 'a');
+    TEMPLATE(append, char)(&array_char, 'b');
+    TEMPLATE(append, char)(&array_char, 'c');
+    TEMPLATE(append, char)(&array_char, '\0');
+    TEMPLATE(print, char)(&array_char);
+    TEMPLATE(shrink_to_fit, char)(&array_char);
+    TEMPLATE(print, char)(&array_char);
+
+    char* raw_data = array_char.data;
+    printf("raw data -> %s\n", raw_data);
+    free(raw_data);
+    return 0;
+}
+
+int test_get_types() {
+    TEMPLATE(DYN_ARRAY, vop) array_void;
+    get_array_void(&array_void);
+    int* a = (int *) malloc(sizeof(int));
+    int* b = (int *) malloc(sizeof(int));
+    int* c = (int *) malloc(sizeof(int));
+    int* d = (int *) malloc(sizeof(int));
+    int* e = (int *) malloc(sizeof(int));
+    *a = 1;
+    *b = 2;
+    *c = 3;
+    *d = 4;
+    *e = 5;
+    TEMPLATE(append, vop)(&array_void, (void *)a);
+    TEMPLATE(append, vop)(&array_void, (void *)b);
+    TEMPLATE(append, vop)(&array_void, (void *)c);
+    TEMPLATE(append, vop)(&array_void, (void *)d);
+    TEMPLATE(append, vop)(&array_void, (void *)e);
+    for (int i = 0; i <5; i++) {
+        TEMPLATE(append, int)(array_void.types, INT);
+    }
+    TEMPLATE(print, vop)(&array_void);
+   
+    TEMPLATE(DYN_ARRAY, int)* types = TEMPLATE(get_array_types, vop)(&array_void);
+    int length = array_void.length;
+    for (int i = 0; i < length; i++) {
+        int type;
+        TEMPLATE(get, int)(types, i, &type);
+        printf("%d ", type);
+    }
+    putchar('\n');
+    TEMPLATE(destroy, vop)(&array_void);
+    return 0;
+}
+
+int test_recreate_array() {
+    TEMPLATE(DYN_ARRAY, char) array_char;
+    TEMPLATE(create, char)(10, &array_char);
+    TEMPLATE(print, char)(&array_char);
+    TEMPLATE(append, char)(&array_char, 'a');
+    TEMPLATE(append, char)(&array_char, 'b');
+    TEMPLATE(append, char)(&array_char, 'c');
+    TEMPLATE(append, char)(&array_char, '\0');
+    TEMPLATE(print, char)(&array_char);
+    TEMPLATE(shrink_to_fit, char)(&array_char);
+    TEMPLATE(print, char)(&array_char);
+    
+    TEMPLATE(recreate, char)(&array_char, 10);
+    TEMPLATE(append, char)(&array_char, 'c');
+    TEMPLATE(print, char)(&array_char);
+    TEMPLATE(destroy, char)(&array_char);
+    return 0;
+}
+
+int test_array_string_raw_data() {
+    TEMPLATE(DYN_ARRAY, string) array_string;
+    TEMPLATE(create, string)(10, &array_string);
+    /*
+    char* s1 = "first";
+    char* s2 = "second";
+    char* s3 = "third";
+    char* a = (char *) malloc(strlen(s1) + 1);
+    char* b = (char *) malloc(strlen(s2) + 1);
+    char* c = (char *) malloc(strlen(s3) + 1);
+    a = strcpy(a, s1);
+    b = strcpy(b, s2);
+    c = strcpy(c, s3);
+    TEMPLATE(append, string)(&array_string, a);
+    TEMPLATE(append, string)(&array_string, b);
+    TEMPLATE(append, string)(&array_string, c);
+    */
+    
+    TEMPLATE(DYN_ARRAY, char) a;
+    TEMPLATE(create, char)(10, &a);
+    TEMPLATE(append, char)(&a, 'o');
+    TEMPLATE(append, char)(&a, 'n');
+    TEMPLATE(append, char)(&a, 'e');
+    TEMPLATE(append, char)(&a, '\0');
+    TEMPLATE(shrink_to_fit, char)(&a);
+
+    TEMPLATE(DYN_ARRAY, char) b;
+    TEMPLATE(create, char)(10, &b);
+    TEMPLATE(append, char)(&b, 't');
+    TEMPLATE(append, char)(&b, 'w');
+    TEMPLATE(append, char)(&b, 'o');
+    TEMPLATE(append, char)(&b, '\0');
+    TEMPLATE(shrink_to_fit, char)(&b);
+
+    TEMPLATE(print, char)(&a);
+    TEMPLATE(print, char)(&b);
+    char* raw_data_a = TEMPLATE(get_raw_data, char)(&a);
+    char* raw_data_b = TEMPLATE(get_raw_data, char)(&b);
+
+    TEMPLATE(append, string)(&array_string, raw_data_a);
+    TEMPLATE(append, string)(&array_string, raw_data_b); 
+    TEMPLATE(print, string)(&array_string);
+    TEMPLATE(destroy, string)(&array_string);
+    return 0;
+}
+
 typedef int (*func)();
 
 typedef struct {
@@ -276,28 +420,42 @@ typedef struct {
 } TEST_CASE;
 
 int main(int argc, char** argv) {
-    TEST_CASE test_cases[10] = {
+    TEST_CASE test_cases[16] = {
         {"Test array with integer values", test_array_int},
         {"Test array with char* (static)", test_array_string_st},
         {"Test array with char* (dynamic)", test_array_string},
         {"Test array with good fields", test_array_good_field},
+        {"Test array with char", test_array_char},
         {"Test array with void* (static)", test_array_void_st},
         {"Test array with void* (dynamic)", test_array_void},
         {"Test another version of array creation", test_create2},
         {"Test simple array comparison", test_array_comparison_simple},
         {"Test complex array comparison", test_array_comparison_complex},
-        {"Test file reading", test_file_read}
+        {"Test file reading", test_file_read},
+        {"Test shrink to fit", test_shrink_to_fit},
+        {"Test get raw data", test_get_raw_data},
+        {"Test get types", test_get_types},
+        {"Test recreate array", test_recreate_array},
+        {"Test string dyn array with element raw data from dyn array char", test_array_string_raw_data}
     };
     
-    for (int i = 0; i < sizeof(test_cases) / sizeof(test_cases[0]); i++) {
+    int all_tests = sizeof(test_cases) / sizeof(test_cases[0]);
+    int passed_tests = 0;
+         
+    for (int i = 0; i < all_tests; i++) {
         TEST_CASE ts = test_cases[i];
         printf("launch: %s\n", ts.name);
-        if (ts.test())
-            fprintf(stderr, "error in test: %s\n", ts.name);
-        else
+        if (ts.test()) {
+            printf("There is an error in test: %s\n", ts.name);
+        } else {
+            ++passed_tests;
             printf("%s was successfully passed\n", ts.name);
+        }
         putchar('\n');
     }
+
+    printf("ALL: %d, PASSED: %d, FAILED: %d\n",
+           all_tests, passed_tests, all_tests - passed_tests);
     return 0;
 }
 

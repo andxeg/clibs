@@ -3,6 +3,7 @@
 #include <errno.h>
 #include <ctype.h>
 #include "defs.h"
+#include "log.h"
 #include "iofile.h"
 
 
@@ -11,9 +12,9 @@ int read_file_with_goods(const char* filename, FILE_SCHEMA* schema) {
     FILE* input = fopen(filename, "r");
     int error_num = errno;
     if (input == NULL) {
-        fprintf(stderr, "read_file_with_goods: error while read input file \n");
+        ELOG("error while read input file");
         char* error_msg = strerror(error_num);
-        printf("File : %s\nLine : %d\nCurrent Function : %s\nFailed function : %s\nError message %s\n", __FILE__, __LINE__, __func__, "fopen\0", error_msg);
+        ELOG(error_msg);
         return 1;
     }
     
@@ -48,16 +49,19 @@ int read_file_header(FILE* file, FILE_SCHEMA* schema) {
 int read_fields(FILE* file, FILE_SCHEMA* schema) {
     int c;
     int inside = 0;
+    return 0;
     TEMPLATE(DYN_ARRAY, char) array_char;
- /*
+    TEMPLATE(create, char)(DEFAULT_FIELD_SIZE, &array_char);
     while ((c = getchar()) != EOF && c != '\n') {
         if (c == GOODS_FILE_SEPARATOR) {
-        ;    
+        
         } else if (isalpha(c) || isdigit(c) || c == ' ' || c == '.') {
-        ;
+        
+        } else {
+            ELOG("unknown symbol in field");
+            return 1;
         }
     }
- */   
     return 0;
 }
 

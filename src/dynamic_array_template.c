@@ -125,7 +125,9 @@ void TEMPLATE(print, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
     putchar('[');
     int i;
     for (i = 0; i < a->length-1; i++) {
-    #if TYPE_NUM == INT || TYPE_NUM == GOOD_FIELD_TYPE
+    #if TYPE_NUM == CHAR
+        printf("%c, ", a->data[i]);
+    #elif TYPE_NUM == INT || TYPE_NUM == GOOD_FIELD_TYPE
         printf("%d, ", a->data[i]);
     #elif TYPE_NUM == FLOAT || TYPE_NUM == DOUBLE
         printf("%f, ", a->data[i]);
@@ -150,8 +152,10 @@ void TEMPLATE(print, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
     #endif
     }
 
-    if (a->length > 1) {
-    #if TYPE_NUM == INT || TYPE_NUM == GOOD_FIELD_TYPE
+    if (a->length >= 1) {
+    #if TYPE_NUM == CHAR
+        printf("%c", a->data[i]);
+    #elif TYPE_NUM == INT || TYPE_NUM == GOOD_FIELD_TYPE
         printf("%d", a->data[i]);
     #elif TYPE_NUM == FLOAT || TYPE_NUM == DOUBLE
         printf("%f", a->data[i]);
@@ -262,6 +266,7 @@ int TEMPLATE(shrink_to_fit, TYPE_NAME)(TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
         return 1;
     }
         
+    a->data = p;    
     a->capacity = a->length;
     return 0;
 }
