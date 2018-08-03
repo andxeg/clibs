@@ -268,7 +268,7 @@ int test_array_comparison_complex() {
 
 int test_file_read() {
     FILE_SCHEMA* schema = create_file_schema();
-    char* filename = "./test_data/goods.txt\0";
+    char* filename = "./test_data/test_limits.txt\0";
 
     if (read_file_with_goods(filename, schema)) {
         destroy_file_schema(schema);
@@ -359,7 +359,7 @@ int test_recreate_array() {
     TEMPLATE(shrink_to_fit, char)(&array_char);
     TEMPLATE(print, char)(&array_char);
     
-    TEMPLATE(recreate, char)(&array_char, 10);
+    TEMPLATE(recreate, char)(10, &array_char);
     TEMPLATE(append, char)(&array_char, 'c');
     TEMPLATE(print, char)(&array_char);
     TEMPLATE(destroy, char)(&array_char);
@@ -369,20 +369,6 @@ int test_recreate_array() {
 int test_array_string_raw_data() {
     TEMPLATE(DYN_ARRAY, string) array_string;
     TEMPLATE(create, string)(10, &array_string);
-    /*
-    char* s1 = "first";
-    char* s2 = "second";
-    char* s3 = "third";
-    char* a = (char *) malloc(strlen(s1) + 1);
-    char* b = (char *) malloc(strlen(s2) + 1);
-    char* c = (char *) malloc(strlen(s3) + 1);
-    a = strcpy(a, s1);
-    b = strcpy(b, s2);
-    c = strcpy(c, s3);
-    TEMPLATE(append, string)(&array_string, a);
-    TEMPLATE(append, string)(&array_string, b);
-    TEMPLATE(append, string)(&array_string, c);
-    */
     
     TEMPLATE(DYN_ARRAY, char) a;
     TEMPLATE(create, char)(10, &a);
@@ -394,7 +380,8 @@ int test_array_string_raw_data() {
 
     TEMPLATE(DYN_ARRAY, char) b;
     TEMPLATE(create, char)(10, &b);
-    TEMPLATE(append, char)(&b, 't');
+    int z = 't';
+    TEMPLATE(append, char)(&b, z);
     TEMPLATE(append, char)(&b, 'w');
     TEMPLATE(append, char)(&b, 'o');
     TEMPLATE(append, char)(&b, '\0');
@@ -406,7 +393,14 @@ int test_array_string_raw_data() {
     char* raw_data_b = TEMPLATE(get_raw_data, char)(&b);
 
     TEMPLATE(append, string)(&array_string, raw_data_a);
-    TEMPLATE(append, string)(&array_string, raw_data_b); 
+    TEMPLATE(append, string)(&array_string, raw_data_b);
+
+    // use old array
+    TEMPLATE(create, char)(10, &a);
+    TEMPLATE(append, char)(&a, 'x');
+    TEMPLATE(print, char)(&a);
+    TEMPLATE(destroy, char)(&a);
+
     TEMPLATE(print, string)(&array_string);
     TEMPLATE(destroy, string)(&array_string);
     return 0;

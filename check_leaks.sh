@@ -1,4 +1,4 @@
 #!/bin/bash
 
-valgrind --leak-check=full $1
+valgrind --leak-check=full --show-leak-kinds=all $1
 

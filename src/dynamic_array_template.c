@@ -271,7 +271,7 @@ int TEMPLATE(shrink_to_fit, TYPE_NAME)(TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
     return 0;
 }
 
-int TEMPLATE(recreate, TYPE_NAME)(TEMPLATE(DYN_ARRAY, TYPE_NAME) *a, int size) {
+int TEMPLATE(recreate, TYPE_NAME)(int size, TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
     TEMPLATE(destroy, TYPE_NAME)(a);
     if (TEMPLATE(create, TYPE_NAME)(size, a)) {
         return 1;

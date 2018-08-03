@@ -24,3 +24,4 @@ void destroy_file_schema(FILE_SCHEMA* schema);
 void print_file_schema(FILE_SCHEMA* schema);
 
 #endif
+
