@@ -192,6 +192,7 @@ int read_limits(FILE* file, TEMPLATE(DYN_ARRAY, int)* limits) {
 }
 
 int read_goods(FILE* file, FILE_SCHEMA* schema) {
+    return 0;
     TEMPLATE(DYN_ARRAY, good_field)* types = &schema->header->types;
     TEMPLATE(DYN_ARRAY, int)* min_limit = &schema->header->length_min;
     TEMPLATE(DYN_ARRAY, int)* max_limit = &schema->header->length_max; 
@@ -202,7 +203,7 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
     TEMPLATE(DYN_ARRAY, int)* int_types = TEMPLATE(create2, int)(length);
     for (int i = 0; i < length; i++) {
         int type;
-        TEMPLATE(get, int)(int_types, i, &type);
+        TEMPLATE(get, int)(types, i, &type);
         switch (type) {
         case BOOL_GOOD:
             TEMPLATE(append, int)(int_types, BOOL);
@@ -212,15 +213,17 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
             TEMPLATE(append, int)(int_types, STRING);
         default:
             ;char error_msg[ERROR_LENGTH_LIMIT];
-            sprintf(error_msg, "unknown type -> %d", type);
+            sprintf(error_msg, "unknown type types array from file header-> %d", type);
             ELOG(error_msg);
         }
     }
 
     TEMPLATE(DYN_ARRAY, vop) array_void;
     TEMPLATE(create, vop)(length, &array_void);
-     
+    
     int c;
+    int curr_field = 0;
+    int good_num = 1;
     char* raw_data = NULL;
     int inside = 0;
     TEMPLATE(DYN_ARRAY, char) array_char;
@@ -228,13 +231,46 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
     while ((c = getc(file)) != EOF) {
         if (c == '\n') {
            // add good to the list
+           if (array_void.length == 0) {
+               continue;
+           }
            TEMPLATE(add_to_list, dyn_array_vop)(goods, array_void);
            TEMPLATE(create, vop)(types->length, &array_void);
+           ++good_num;
         }
         
-        // process one good 
+        // process single field value
         if (c == GOODS_FILE_SEPARATOR) {
             if (inside) {
+                int len = TEMPLATE(array_length, char)(&array_char);
+                int min, max;
+                TEMPLATE(get, int)(min_limit, curr_field, &min);
+                TEMPLATE(get, int)(max_limit, curr_field, &max);
+                if (len < min || len > max) {
+                    char error_msg[ERROR_LENGTH_LIMIT];
+                    char* field;
+                    TEMPLATE(get, string)(&schema->fields, curr_field, &field);
+                    sprintf(error_msg, "good #%d has incorrect value in field %s", good_num, field);
+                    ELOG(error_msg);
+                    TEMPLATE(destroy, char)(&array_char);
+                    return 1;
+                }
+               
+                int type;
+                TEMPLATE(get, int)(int_types, curr_field, &type);
+                switch (type) {
+                case BOOL:
+                     int 
+                     break
+                case INT:
+                     break;
+                case STRING:
+                     break;
+                default: 
+                    ELOG("unknown type");
+                    break;
+                } 
+                // old code. copy from previous function
                 TEMPLATE(append, char)(&array_char, '\0');
                 if (TEMPLATE(shrink_to_fit, char)(&array_char)) {
                     ELOG("cannot shrink input field");
@@ -244,6 +280,7 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
                 raw_data = TEMPLATE(get_raw_data, char)(&array_char);
                 TEMPLATE(append, vop)(&array_void, (void *) raw_data);
                 TEMPLATE(create, char)(DEFAULT_FIELD_SIZE, &array_char);
+                ++curr_field;
             }
             inside = 0;
         } else if (isalpha(c) || isdigit(c) || c == ' ' || c == '.') {
@@ -270,10 +307,6 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
     }
     return 0;
 }   
-
-   
-    return 0;
-}
 
 int write_file_with_goods(const char* filename, FILE_SCHEMA* schema) {
     return 0;

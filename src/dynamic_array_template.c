@@ -79,6 +79,14 @@ int TEMPLATE(is_empty, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
     return a->length == 0 ? 1 : 0; 
 }
 
+int TEMPLATE(array_length, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
+    return a->length;
+}
+
+int TEMPLATE(array_capacity, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
+    return a->capacity;
+}
+
 int TEMPLATE(get, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a, int index, T *result) {
     if (a->length < (index + 1))   {
         fprintf(stderr, "get:index out of range\n");
