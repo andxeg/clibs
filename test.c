@@ -268,7 +268,7 @@ int test_array_comparison_complex() {
 
 int test_file_read() {
     FILE_SCHEMA* schema = create_file_schema();
-    char* filename = "./test_data/test_limits.txt\0";
+    char* filename = "./test_data/goods.txt\0";
 
     if (read_file_with_goods(filename, schema)) {
         destroy_file_schema(schema);

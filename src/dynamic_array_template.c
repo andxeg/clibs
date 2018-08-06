@@ -23,8 +23,11 @@ TEMPLATE(DYN_ARRAY, TYPE_NAME)* TEMPLATE(create2, TYPE_NAME) (int size) {
 }
 
 void TEMPLATE(destroy2, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
-    TEMPLATE(destroy, TYPE_NAME)(a);
-    free(a);
+    if (a != NULL) {
+        TEMPLATE(destroy, TYPE_NAME)(a);
+        free(a);
+        a = NULL;
+    }
 }
 
 int TEMPLATE(create, TYPE_NAME) (int size, TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
@@ -135,7 +138,7 @@ void TEMPLATE(print, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
     for (i = 0; i < a->length-1; i++) {
     #if TYPE_NUM == CHAR
         printf("%c, ", a->data[i]);
-    #elif TYPE_NUM == INT || TYPE_NUM == GOOD_FIELD_TYPE
+    #elif TYPE_NUM == INT || TYPE_NUM == GOOD_FIELD_TYPE || TYPE_NUM == BOOL
         printf("%d, ", a->data[i]);
     #elif TYPE_NUM == FLOAT || TYPE_NUM == DOUBLE
         printf("%f, ", a->data[i]);
@@ -146,6 +149,7 @@ void TEMPLATE(print, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
         switch (TEMPLATE(get, int)(a->types, i, &type), type) {
             case INT:
             case GOOD_FIELD:
+            case BOOL:
                 printf("%d, ", *(int *)a->data[i]);
 		break;
 	    case FLOAT:
@@ -163,7 +167,7 @@ void TEMPLATE(print, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
     if (a->length >= 1) {
     #if TYPE_NUM == CHAR
         printf("%c", a->data[i]);
-    #elif TYPE_NUM == INT || TYPE_NUM == GOOD_FIELD_TYPE
+    #elif TYPE_NUM == INT || TYPE_NUM == GOOD_FIELD_TYPE || TYPE_NUM == BOOL
         printf("%d", a->data[i]);
     #elif TYPE_NUM == FLOAT || TYPE_NUM == DOUBLE
         printf("%f", a->data[i]);
@@ -174,6 +178,7 @@ void TEMPLATE(print, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
         switch (TEMPLATE(get, int)(a->types, i, &type), type) {
             case INT:
             case GOOD_FIELD:
+            case BOOL:
                 printf("%d", *(int *)a->data[i]);
 		break;
 	    case FLOAT:
