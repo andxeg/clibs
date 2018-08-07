@@ -318,10 +318,12 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
                          if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
                              TEMPLATE(destroy2, int)(int_types);
                          }
+                         free(val);
                          return 1;     
                      }
                      printf("append to void array\n");
                      TEMPLATE(append, vop)(&array_void, (void *)val);
+                     TEMPLATE(destroy, char)(&array_char);
                      break;
                 case INT:
                      if (get_int_value(&array_char, val)) {
@@ -332,12 +334,15 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
                          if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
                              TEMPLATE(destroy2, int)(int_types);
                          }
+                         free(val);
                          return 1;
                      }
                      printf("append to void array\n");
                      TEMPLATE(append, vop)(&array_void, (void *)val);
+                     TEMPLATE(destroy, char)(&array_char);
                      break;
                 case STRING:
+                     free(val);
                      if (TEMPLATE(shrink_to_fit, char)(&array_char)) {
                          ELOG("cannot shrink input field");
                          TEMPLATE(destroy, char)(&array_char);
@@ -350,9 +355,10 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
                      printf("append to void array\n");
                      TEMPLATE(append, vop)(&array_void, (void*)array_char.data); 
                      break;
-                default: 
+                default:
+                    free(val); 
                     ELOG("unknown type");
-                    break;
+                    return 1;
                 } 
 
                 TEMPLATE(create, char)(DEFAULT_FIELD_SIZE, &array_char);
@@ -366,7 +372,17 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
                inside = curr_field = 0;
                continue;
            }
-           array_void.types = int_types;
+
+           // add copy of int_types to array_void.types
+           for (int i = 0; i < array_void.length; i++) {
+               int type;
+               TEMPLATE(get, int)(int_types, i, &type);
+               TEMPLATE(append, int)(array_void.types, type);
+           }
+
+           // add one int_types to all node of list
+           // TEMPLATE(destroy2, int)(array_void.types);
+           // array_void.types = int_types;
            TEMPLATE(add_to_list, dyn_array_vop)(goods, array_void);
            TEMPLATE(create, vop)(types->length, &array_void);
            ++good_num;
@@ -410,9 +426,11 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
                          if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
                              TEMPLATE(destroy2, int)(int_types);
                          }
+                         free(val);
                          return 1;     
                      }
                      TEMPLATE(append, vop)(&array_void, (void *)val);
+                     TEMPLATE(destroy, char)(&array_char);
                      break;
                 case INT:
                      if (get_int_value(&array_char, val)) {
@@ -423,11 +441,14 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
                          if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
                              TEMPLATE(destroy2, int)(int_types);
                          }
+                         free(val);
                          return 1;
                      }
                      TEMPLATE(append, vop)(&array_void, (void *)val);
+                     TEMPLATE(destroy, char)(&array_char);
                      break;
                 case STRING:
+                     free(val);
                      if (TEMPLATE(shrink_to_fit, char)(&array_char)) {
                          ELOG("cannot shrink input field");
                          TEMPLATE(destroy, char)(&array_char);
@@ -454,10 +475,15 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
         } else {
             ELOG("unknown symbol in field");
             TEMPLATE(destroy, char)(&array_char); 
+            TEMPLATE(destroy, vop)(&array_void);
             return 1;
         }
     }
-    
+   
+    // delete int_types if add copy to node of list
+    TEMPLATE(destroy2, int)(int_types);
+    TEMPLATE(destroy, vop)(&array_void); 
+    TEMPLATE(destroy, char)(&array_char);
     return 0;
 } 
 
