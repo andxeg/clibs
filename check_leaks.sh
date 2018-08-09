@@ -1,4 +1,4 @@
 #!/bin/bash
 
-valgrind -v --leak-check=full --show-leak-kinds=all $1
+valgrind -v --track-origins=yes --leak-check=full --show-leak-kinds=all $1
 

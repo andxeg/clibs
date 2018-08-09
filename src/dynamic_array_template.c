@@ -55,9 +55,6 @@ int TEMPLATE(create, TYPE_NAME) (int size, TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
     #else
     a->types = NULL;
     #endif 
-    if (a->data == NULL) {
-        fprintf(stderr, "create: error in calloc\n");
-    }
     return 0;
 }
 
@@ -307,6 +304,66 @@ int TEMPLATE(recreate, TYPE_NAME)(int size, TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
 
     return 0;      
 }
+
+// work only for INT and STRING
+// 0 - not match
+// 1 - match
+int TEMPLATE(array_match, TYPE_NAME)(TEMPLATE(DYN_ARRAY, TYPE_NAME)* a, TEMPLATE(DYN_ARRAY, vop)* pattern) {
+    #if TYPE_NUM == VOIDP
+    printf("array_match for VOIDP\n ");
+    if (a->length != pattern->length) {
+        fprintf(stderr, "template and array has different size\n");
+        return 0;
+    }
+    
+    int i;
+    int type1, type2;
+    int *val1, *val2;
+    char *str1, *str2;
+    for (i = 0; i < a->length; i++) {
+        TEMPLATE(get, int)(a->types, i, &type1);
+        TEMPLATE(get, int)(pattern->types, i, &type2);
+	
+        if (type1 == INT) {
+            TEMPLATE(get, vop)(a, i, (void**)(&val1));
+        } else if (type1 == STRING) {
+            TEMPLATE(get, vop)(a, i, (void**)(&str1));
+        } else {
+            fprintf(stderr, "array_match: unknown type in array\n");
+            return 0;
+        }
+
+        if (type2 == INT) {
+            TEMPLATE(get, vop)(pattern, i, (void**)(&val2));
+        } else if (type2 == STRING) {
+            TEMPLATE(get, vop)(pattern, i, (void**)(&str2));
+        } else {
+            fprintf(stderr, "array_match: unknown type in template\n");
+            return 0;
+        }
+        
+        if (type1 == INT && type2 == INT) {
+            printf("number field first -> %d, number second -> %d\n", *val1, *val2);
+            if (*val1 != *val2) return 0;
+        } else if (type1 == INT && type2 == STRING) {
+            printf("number field first -> %d, string second -> %s\n", *val1, str2);
+            if (strcmp(str2, "*\0") != 0) return 0;  
+        } else if (type1 == STRING && type2 == INT) {
+            printf("string field first -> %s, number second -> %d\n", str1, *val2);
+            return 0;
+        } else {
+            // type1 == STRING && type2 == STRING
+            printf("string field first -> %s, second -> %s\n", str1, str2);
+            if (strcmp(str2, "*\0") == 0) continue;
+            if (strcmp(str1, str2) != 0) return 0;
+        }
+        
+    }
+    #endif
+
+    return 1;
+}
+
 
 #endif
 #endif

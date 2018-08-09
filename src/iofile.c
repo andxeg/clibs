@@ -170,7 +170,7 @@ int read_types(FILE* file, FILE_SCHEMA* schema) {
     return 0;
 }
 
-int read_limits(FILE* file, TEMPLATE(DYN_ARRAY, int)* limits) {
+/*int read_limits(FILE* file, TEMPLATE(DYN_ARRAY, int)* limits) {
     int c;
     int num;
     while (fscanf(file, "%d", &num)) {
@@ -190,7 +190,7 @@ int read_limits(FILE* file, TEMPLATE(DYN_ARRAY, int)* limits) {
     }
     
     return 0;
-}
+}*/
 
 int get_int_value(TEMPLATE(DYN_ARRAY, char)* array_char, int* value) {
     char* eptr;
@@ -209,6 +209,46 @@ int get_int_value(TEMPLATE(DYN_ARRAY, char)* array_char, int* value) {
     sprintf(msg, "converted number -> %ld", result);
     SLOG(msg);
     *value = (int) result; 
+    return 0;
+}
+
+int read_limits(FILE* file, TEMPLATE(DYN_ARRAY, int)* limits) {
+    char c;
+    int inside = 0;
+    TEMPLATE(DYN_ARRAY, char) array_char;
+    TEMPLATE(create, char)(DEFAULT_FIELD_SIZE, &array_char);
+    while(1) {
+        if (fread(&c, sizeof(char), 1, file) == 0) break;
+        if (feof(file)) break;
+        if (c == '\n') break;
+       
+        if (c == GOODS_FILE_SEPARATOR) {
+            if (inside) {
+                TEMPLATE(append, char)(&array_char, '\0');
+                int val;
+                get_int_value(&array_char, &val);
+                TEMPLATE(append, int)(limits, val);
+                TEMPLATE(recreate, char)(DEFAULT_FIELD_SIZE, &array_char);
+            }
+            inside = 0;
+        } else if (isdigit(c)) {
+            inside = 1;
+            TEMPLATE(append, char)(&array_char, c);
+        } else {
+            fprintf(stderr, "unknown symbol in limits\n");
+            return 1;
+        }
+    }
+
+    // last field
+    if (array_char.length != 0) {
+        TEMPLATE(append, char)(&array_char, '\0');
+        int val;
+        get_int_value(&array_char, &val);
+        TEMPLATE(append, int)(limits, val);
+    }
+    
+    TEMPLATE(destroy, char)(&array_char);
     return 0;
 }
 
@@ -418,7 +458,7 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
                 TEMPLATE(append, char)(&array_char, '\0');
                 switch (type) {
                 case BOOL:
-                     if (get_int_value(&array_char, val)) {
+                     if (get_bool_value(&array_char, val)) {
                          char error_msg[ERROR_LENGTH_LIMIT];
                          sprintf(error_msg, "cannot convert %s to bool value", array_char.data);
                          ELOG(error_msg);

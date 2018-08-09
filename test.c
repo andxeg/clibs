@@ -64,6 +64,11 @@ int test_array_string() {
     get_array_string(&array_string);
     TEMPLATE(append, string_st)(&array_string, "fifth\0");
     TEMPLATE(append, string_st)(&array_string, "sixth\0");
+   
+    char* str;
+    TEMPLATE(get, string_st)(&array_string, 2, &str);
+    printf("GET string -> %s\n",  str);
+
     TEMPLATE(print, string_st)(&array_string);
     TEMPLATE(destroy, string_st)(&array_string);
     return 0;
@@ -131,15 +136,19 @@ int get_array_void(TEMPLATE(DYN_ARRAY, vop)* result) {
     int* b = (int *) malloc(sizeof(int));
     char* s1 = "third";
     char* s = (char *) malloc(strlen(s1) + 1);
+    char* s2 = "fourth";
+    char* t = (char *) malloc(strlen(s2) + 1);
     s = strcpy(s, s1);
+    t = strcpy(t, s2);
     *a = 1;
     *b = 2;
     TEMPLATE(append, vop)(&array_void, (void *)a);
     TEMPLATE(append, vop)(&array_void, (void *)b);
     TEMPLATE(append, vop)(&array_void, (void *)s);
+    TEMPLATE(append, vop)(&array_void, (void *)t);
     
-    int types[3] = {INT, INT, STRING};
-    for (int i = 0; i < 3; i++)
+    int types[4] = {INT, INT, STRING, STRING};
+    for (int i = 0; i < 4; i++)
         TEMPLATE(append, int)(array_void.types, types[i]);
     TEMPLATE(print, vop)(&array_void);
     *result = array_void;
@@ -154,6 +163,31 @@ int test_array_void() {
     TEMPLATE(append, vop)(&array_void, (void *)a);
     TEMPLATE(append, int)(array_void.types, INT);
     TEMPLATE(print, vop)(&array_void);
+
+    // get eleemnt with index 2
+//    char* str = (char* ) array_void.data[2];
+//    printf("READ from dyn_arra_vop -> %s\n", str);
+
+    char* str;
+    TEMPLATE(get, vop)(&array_void, 2, (void**)(&str)); 
+    printf("READ from dyn_array_vop -> %s\n", str);
+
+    char** strings = (char**) malloc(2 * sizeof(char*));
+    strings[0] = str;
+    
+    TEMPLATE(get, vop)(&array_void, 3, (void**)(&str));
+    printf("READ from dyn_array_vop -> %s\n", str);
+    strings[1] = str;
+
+    printf("print stringsi: %s, %s\n", strings[0], strings[1]);
+    
+    free(strings);
+    //
+
+    int* val;
+    TEMPLATE(get, vop)(&array_void, 0, (void**)(&val));
+    printf("READ int value -> %d\n", *val);
+
     TEMPLATE(destroy, vop)(&array_void);
     return 0;
 }
@@ -406,6 +440,72 @@ int test_array_string_raw_data() {
     return 0;
 }
 
+int test_array_match() {  
+    // first array
+    TEMPLATE(DYN_ARRAY, vop) array_void1;
+    TEMPLATE(create, vop)(10, &array_void1);
+    int* a = (int *) malloc(sizeof(int));
+    int* b = (int *) malloc(sizeof(int));
+    char* s1 = "third";
+    char* s = (char *) malloc(strlen(s1) + 1);
+    char* s2 = "fourth";
+    char* t = (char *) malloc(strlen(s2) + 1);
+    s = strcpy(s, s1);
+    t = strcpy(t, s2);
+    *a = 1;
+    *b = 2;
+    TEMPLATE(append, vop)(&array_void1, (void *)a);
+    TEMPLATE(append, vop)(&array_void1, (void *)b);
+    TEMPLATE(append, vop)(&array_void1, (void *)s);
+    TEMPLATE(append, vop)(&array_void1, (void *)t);
+
+    TEMPLATE(append, int)(array_void1.types, INT);
+    TEMPLATE(append, int)(array_void1.types, INT);
+    TEMPLATE(append, int)(array_void1.types, STRING);
+    TEMPLATE(append, int)(array_void1.types, STRING);
+
+    // second array
+    TEMPLATE(DYN_ARRAY, vop) array_void2;
+    TEMPLATE(create, vop)(10, &array_void2);
+    int* c = (int *) malloc(sizeof(int));
+    int* d = (int *) malloc(sizeof(int));
+    char* s3 = "*";
+    char* w = (char *) malloc(strlen(s3) + 1);
+    char* u = (char *) malloc(strlen(s3) + 1);
+    char* s4 = "fouth";
+    char* v = (char *) malloc(strlen(s4) + 1);
+    w = strcpy(w, s3);
+    u = strcpy(u, s3);
+    v = strcpy(v, s4);
+    *c = 1;
+    *d = 2;
+    TEMPLATE(append, vop)(&array_void2, (void *)c);
+    TEMPLATE(append, vop)(&array_void2, (void *)w);
+    TEMPLATE(append, vop)(&array_void2, (void *)u);
+    TEMPLATE(append, vop)(&array_void2, (void *)v);
+
+    TEMPLATE(append, int)(array_void2.types, INT);
+    TEMPLATE(append, int)(array_void2.types, STRING);
+    TEMPLATE(append, int)(array_void2.types, STRING);
+    TEMPLATE(append, int)(array_void2.types, STRING);
+
+    printf("first array: \n");
+    TEMPLATE(print, vop)(&array_void1);
+    printf("second array: \n");
+    TEMPLATE(print, vop)(&array_void2);
+
+
+    if (TEMPLATE(array_match, vop)(&array_void1, &array_void2) == 1) {
+        printf("first array match by second\n");
+    } else {
+        printf("first array not match by second\n");
+    }
+
+    TEMPLATE(destroy, vop)(&array_void2);
+    TEMPLATE(destroy, vop)(&array_void1);
+    return 0;
+}
+
 typedef int (*func)();
 
 typedef struct {
@@ -414,7 +514,7 @@ typedef struct {
 } TEST_CASE;
 
 int main(int argc, char** argv) {
-    TEST_CASE test_cases[16] = {
+    TEST_CASE test_cases[17] = {
         {"Test array with integer values", test_array_int},
         {"Test array with char* (static)", test_array_string_st},
         {"Test array with char* (dynamic)", test_array_string},
@@ -430,7 +530,8 @@ int main(int argc, char** argv) {
         {"Test get raw data", test_get_raw_data},
         {"Test get types", test_get_types},
         {"Test recreate array", test_recreate_array},
-        {"Test string dyn array with element raw data from dyn array char", test_array_string_raw_data}
+        {"Test string dyn array with element raw data from dyn array char", test_array_string_raw_data},
+        {"Test array match", test_array_match}
     };
     
     int all_tests = sizeof(test_cases) / sizeof(test_cases[0]);

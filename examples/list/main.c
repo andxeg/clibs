@@ -475,6 +475,184 @@ int test_vop_dyn_array() {
     return 0;
 }
 
+int test_search_vop_dyn_array() {
+    // ===============CREATE_LIST===============
+    TEMPLATE(LIST, dyn_array_vop) *list_dyn_array_vop = TEMPLATE(create_list, dyn_array_vop)();
+   
+    // first array
+    TEMPLATE(DYN_ARRAY, vop) array_void1;
+    TEMPLATE(create, vop)(10, &array_void1);
+    int* a = (int *) malloc(sizeof(int));
+    int* b = (int *) malloc(sizeof(int));
+    char* s1 = "first";
+    char* s = (char *) malloc(strlen(s1) + 1);
+    char* s2 = "fourth";
+    char* t = (char *) malloc(strlen(s2) + 1);
+    s = strcpy(s, s1);
+    t = strcpy(t, s2);
+    *a = 1;
+    *b = 5;
+    TEMPLATE(append, vop)(&array_void1, (void *)s);
+    TEMPLATE(append, vop)(&array_void1, (void *)a);
+    TEMPLATE(append, vop)(&array_void1, (void *)t);
+    TEMPLATE(append, vop)(&array_void1, (void *)b);
+
+    TEMPLATE(append, int)(array_void1.types, STRING);
+    TEMPLATE(append, int)(array_void1.types, INT);
+    TEMPLATE(append, int)(array_void1.types, STRING);
+    TEMPLATE(append, int)(array_void1.types, INT);
+
+    // second array
+    TEMPLATE(DYN_ARRAY, vop) array_void2;
+    TEMPLATE(create, vop)(10, &array_void2);
+    int* c = (int *) malloc(sizeof(int));
+    int* d = (int *) malloc(sizeof(int));
+    char* s3 = "first";
+    char* u = (char *) malloc(strlen(s3) + 1);
+    char* s4 = "fouth";
+    char* v = (char *) malloc(strlen(s4) + 1);
+    u = strcpy(u, s3);
+    v = strcpy(v, s4);
+    *c = 2;
+    *d = 6;
+    TEMPLATE(append, vop)(&array_void2, (void *)u);
+    TEMPLATE(append, vop)(&array_void2, (void *)c);
+    TEMPLATE(append, vop)(&array_void2, (void *)v);
+    TEMPLATE(append, vop)(&array_void2, (void *)d);
+
+    TEMPLATE(append, int)(array_void2.types, STRING);
+    TEMPLATE(append, int)(array_void2.types, INT);
+    TEMPLATE(append, int)(array_void2.types, STRING);
+    TEMPLATE(append, int)(array_void2.types, INT);
+
+   
+    // third array
+    TEMPLATE(DYN_ARRAY, vop) array_void3;
+    TEMPLATE(create, vop)(10, &array_void3);
+    int* e = (int *) malloc(sizeof(int));
+    int* f = (int *) malloc(sizeof(int));
+    int* g = (int *) malloc(sizeof(int));
+    char* s5 = "first";
+    char* x = (char *) malloc(strlen(s5) + 1);
+    x = strcpy(x, s5);
+    *e = 2;
+    *f = 7;
+    *g = 6;
+    TEMPLATE(append, vop)(&array_void3, (void *)x);
+    TEMPLATE(append, vop)(&array_void3, (void *)e);
+    TEMPLATE(append, vop)(&array_void3, (void *)f);
+    TEMPLATE(append, vop)(&array_void3, (void *)g);
+
+    TEMPLATE(append, int)(array_void3.types, STRING);
+    TEMPLATE(append, int)(array_void3.types, INT);
+    TEMPLATE(append, int)(array_void3.types, INT);
+    TEMPLATE(append, int)(array_void3.types, INT);
+
+
+    // fourth array
+    TEMPLATE(DYN_ARRAY, vop) array_void4;
+    TEMPLATE(create, vop)(10, &array_void4);
+    int* h = (int *) malloc(sizeof(int));
+    char* s6 = "second";
+    char* n = (char *) malloc(strlen(s6) + 1);
+    char* s7 = "fouth";
+    char* m = (char *) malloc(strlen(s7) + 1);
+    char* s8 = "fifth";
+    char* l = (char *) malloc(strlen(s8) + 1);
+    n = strcpy(n, s6);
+    m = strcpy(m, s7);
+    l = strcpy(l, s8);
+    *h = 3;
+    TEMPLATE(append, vop)(&array_void4, (void *)n);
+    TEMPLATE(append, vop)(&array_void4, (void *)h);
+    TEMPLATE(append, vop)(&array_void4, (void *)m);
+    TEMPLATE(append, vop)(&array_void4, (void *)l);
+
+    TEMPLATE(append, int)(array_void4.types, STRING);
+    TEMPLATE(append, int)(array_void4.types, INT);
+    TEMPLATE(append, int)(array_void4.types, STRING);
+    TEMPLATE(append, int)(array_void4.types, STRING);
+
+
+    // fifth array
+    TEMPLATE(DYN_ARRAY, vop) array_void5;
+    TEMPLATE(create, vop)(10, &array_void5);
+    int* p = (int *) malloc(sizeof(int));
+    char* s9 = "third";
+    char* k = (char *) malloc(strlen(s9) + 1);
+    char* s10 = "fouth";
+    char* r = (char *) malloc(strlen(s10) + 1);
+    char* s11 = "sixth";
+    char* z = (char *) malloc(strlen(s11) + 1); 
+    k = strcpy(k, s9);
+    r = strcpy(r, s10);
+    z = strcpy(z, s11);
+    *p = 4;
+    TEMPLATE(append, vop)(&array_void5, (void *)k);
+    TEMPLATE(append, vop)(&array_void5, (void *)p);
+    TEMPLATE(append, vop)(&array_void5, (void *)r);
+    TEMPLATE(append, vop)(&array_void5, (void *)z);
+
+    TEMPLATE(append, int)(array_void5.types, STRING);
+    TEMPLATE(append, int)(array_void5.types, INT);
+    TEMPLATE(append, int)(array_void5.types, STRING);
+    TEMPLATE(append, int)(array_void5.types, STRING);
+
+    
+    TEMPLATE(add_to_list, dyn_array_vop)(list_dyn_array_vop, array_void1);
+    TEMPLATE(add_to_list, dyn_array_vop)(list_dyn_array_vop, array_void2);
+    TEMPLATE(add_to_list, dyn_array_vop)(list_dyn_array_vop, array_void3);
+    TEMPLATE(add_to_list, dyn_array_vop)(list_dyn_array_vop, array_void4);
+    TEMPLATE(add_to_list, dyn_array_vop)(list_dyn_array_vop, array_void5);
+    TEMPLATE(print_list, dyn_array_vop)(list_dyn_array_vop);
+
+    // ===============TEST_SEARCH===============
+    char* first = "first";
+    char* second = "second";
+    char* third = "third";
+    char* fourth = "fourth";
+    char* fifth = "fifth";
+    char* sixth = "sixth";
+    char* asterisk = "*";
+    // PATTERN 1
+    TEMPLATE(DYN_ARRAY, vop) pattern1;
+    TEMPLATE(create, vop)(10, &pattern1);
+
+    char* ptr = (char *) malloc(strlen(first) + 1);
+    ptr = strcpy(ptr, first);
+    TEMPLATE(append, vop)(&pattern1, (void *)ptr);
+    ptr = (char *) malloc(strlen(asterisk) + 1);
+    ptr = strcpy(ptr, asterisk);
+    TEMPLATE(append, vop)(&pattern1, (void *)ptr);
+    ptr = (char *) malloc(strlen(fourth) + 1);
+    ptr = strcpy(ptr, fourth);
+    TEMPLATE(append, vop)(&pattern1, (void *)ptr);
+    ptr = (char *) malloc(strlen(asterisk) + 1);
+    ptr = strcpy(ptr, asterisk);
+    TEMPLATE(append, vop)(&pattern1, (void *)ptr);
+
+    TEMPLATE(append, int)(pattern1.types, STRING);
+    TEMPLATE(append, int)(pattern1.types, STRING);
+    TEMPLATE(append, int)(pattern1.types, STRING);
+    TEMPLATE(append, int)(pattern1.types, STRING);
+
+    printf("pattern1:\n");
+    TEMPLATE(print, vop)(&pattern1);
+        
+    TEMPLATE(LIST, dyn_array_vop)* res = TEMPLATE(search, dyn_array_vop)(list_dyn_array_vop, &pattern1);
+    printf("result:\n");
+    TEMPLATE(print_list, dyn_array_vop)(res);
+    TEMPLATE(destroy_list_lite, dyn_array_vop)(res);
+    // PATTERN 2
+
+    // PATTERN 3
+
+    // PATTERN 4
+   
+    TEMPLATE(destroy_list, dyn_array_vop)(list_dyn_array_vop);
+    return 0;
+}
+
 
 typedef int (*f)();
 
@@ -484,7 +662,7 @@ typedef struct {
 } TEST_CASE;
 
 int main(int argc, char** argv) {
-    TEST_CASE test_cases[12] = {
+    TEST_CASE test_cases[13] = {
         {"Test creation for list with int values", test_creation_int_list},
         {"Test empty list verification", test_empty_list_verification},
         {"Test checking presence of element in list", test_contains_in_list},
@@ -496,7 +674,8 @@ int main(int argc, char** argv) {
         {"Test adding element by index", test_add_element_by_index},
         {"Test removing element by index", test_remove_element_by_index},
         {"Test list of dynamic arrays", test_int_dyn_array},
-        {"Test list with void* dynamic arrays", test_vop_dyn_array}
+        {"Test list with void* dynamic arrays", test_vop_dyn_array},
+        {"Test search in list with template", test_search_vop_dyn_array}
     };
     
     for (int i = 0; i < sizeof(test_cases) / sizeof(test_cases[0]); i++) {
