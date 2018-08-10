@@ -172,7 +172,8 @@ Obj/GNU_ARM_DEBUG_T2/main_processing.o: Src/main_processing.c Inc/log.h \
   Inc/good_field_types.h Inc/dynamic_array_types.h \
   Inc/dynamic_array_template.h Inc/list_template.h Inc/iofile.h \
   C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/GL_Types.h \
-  Inc/file_schema.h Inc/main_processing.h
+  Inc/file_schema.h Inc/main_processing.h Inc/Training.h \
+  C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/OSL_Layer.h
 
 Inc/log.h:
 
@@ -545,3 +546,7 @@ C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/GL_T
 Inc/file_schema.h:
 
 Inc/main_processing.h:
+
+Inc/Training.h:
+
+C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/OSL_Layer.h:

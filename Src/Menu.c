@@ -358,6 +358,7 @@ void menuGoalDisplay(void)
 		  "Test list of dynamic array",
 		  "GL Dialog Menu",
 		  "Test file size",
+		  "Magnetic",
 		  "[TEST TASK MAIN MENU]",
 		  "Exit", 0 };
 
@@ -688,6 +689,9 @@ void menuGoalDisplay(void)
     		GoalDestroyScreen(&hScreen);              // Destroy screen
     	break;
     case 10:
+    	Magnetic();
+    	break;
+    case 11:
     	// Test task main processing
     	GL_Dialog_Message(gGoalGraphicLibInstance, "TEST TASK MAIN MENU",
     			"Hello in test task main menu", GL_ICON_INFORMATION, GL_BUTTON_VALID,
@@ -701,7 +705,7 @@ void menuGoalDisplay(void)
 		//exit
 		break;
     }
-  } while (choice != 11);
+  } while (choice != 12);
 
   releaseUIContext();
   return;

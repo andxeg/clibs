@@ -15,6 +15,8 @@
 <file generated="false" name="Src/Goal.c" parentProject=""/>
 <file generated="false" name="Src/main_processing.c" parentProject=""/>
 <file generated="false" name="Src/log.c" parentProject=""/>
+<file generated="false" name="Src/Magnetic.c" parentProject=""/>
+<file generated="false" name="Src/Timer.c" parentProject=""/>
 </virtualFolder>
 <archiveFilesVirtualFolder name="Archive Files"/>
 </virtualFolders>
@@ -62,20 +64,7 @@
 <teliumSdkPackages>
 <teliumSdkPackage package="Telium SDK" version="PatchF9.32.3.02"/>
 </teliumSdkPackages>
-<userDefines>
-<userDefine value="_ING_TELIUM_SDK_LOC=&quot;${telium_sdk_loc}&quot;"/>
-<userDefine value="_ING_TELIUM_SDK_NAME=&quot;${telium_sdk_name}&quot;"/>
-<userDefine value="_ING_TELIUM_SDK_VERSION=&quot;${telium_sdk_version}&quot;"/>
-<userDefine value="_ING_APPLI_BINARY_NAME=&quot;${appli_binary_name}&quot;"/>
-<userDefine value="_ING_APPLI_FAMILY=&quot;${appli_family}&quot;"/>
-<userDefine value="_ING_APPLI_TYPE=${appli_type}"/>
-<userDefine value="_ING_APPLI_TELIUM1_FULL_BINARY_NAME=&quot;${appli_telium1_full_binary_name}&quot;"/>
-<userDefine value="_ING_APPLI_TELIUM2_FULL_BINARY_NAME=&quot;${appli_telium2_full_binary_name}&quot;"/>
-<userDefine value="_ING_APPLI_TELIUM_COMPATIBILITY=&quot;${appli_telium_compatibility}&quot;"/>
-<userDefine value="_ING_APPLI_SIGN_MODE=&quot;${appli_sign_mode}&quot;"/>
-<userDefine value="_ING_APPLI_CURRENT_CONFIG_NAME=&quot;${appli_current_config_name}&quot;"/>
-<userDefine value="_ING_APPLI_FULL_BINARY_NAME=&quot;${appli_full_binary_name}&quot;"/>
-</userDefines>
+<userDefines/>
 <prebuild command="" description=""/>
 <postbuild command="" description=""/>
 <externalSchemes/>

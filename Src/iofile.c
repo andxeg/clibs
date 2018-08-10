@@ -27,6 +27,7 @@ int read_file_with_goods(const char* filename, FILE_SCHEMA* schema, T_GL_HGRAPHI
     iRet = read_goods(file, schema, hGraphicLib);
     CHECK(iRet == 0, lblEnd);
 	iRet = GL_File_Close(file);
+	file = NULL;
 	CHECK(iRet == GL_SUCCESS, lblHostKO);
 	print_message(hGraphicLib, "File was successfully imported");
 	goto lblEnd;
@@ -38,6 +39,9 @@ lblFileMissing:                                    // File not found
 	GL_Dialog_Message(hGraphicLib, NULL, "Cannot find such file", GL_ICON_ERROR, GL_BUTTON_VALID, 5*1000);
 	goto lblEnd;
 lblEnd:
+	if (file != NULL) {
+		GL_File_Close(file);
+	}
 
     return 0;
 }

@@ -1,19 +1,20 @@
 Obj/GNU_ARM_DEBUG_T2/TEST_TASK.axf  :
 section             size      addr
-.text              85296      4096
-.rodata            10758     89392
-.data               2668   2097152
-.bss                 108   2099820
+.text              90864      4096
+.rodata            13362     94960
+.data               2684   2097152
+.bss                 140   2099836
 .ARM.attributes       16         0
 .comment              35         0
-.debug_abbrev       8087         0
-.debug_info        89057         0
-.debug_line        15115         0
-.debug_frame       12016         0
-.debug_pubnames    10873         0
-.debug_aranges       928         0
-.debug_str         21160         0
-.debug_loc         19757         0
-Total             275874
+.debug_abbrev       9556         0
+.debug_info        97348         0
+.debug_line        16823         0
+.debug_frame       12484         0
+.debug_pubnames    11093         0
+.debug_aranges      1152         0
+.debug_str         21906         0
+.debug_loc         20903         0
+.debug_ranges         48         0
+Total             298414
 
 

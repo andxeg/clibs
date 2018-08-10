@@ -11,6 +11,8 @@
 #include "file_schema.h"
 #include "main_processing.h"
 
+#include "Training.h"
+
 const char* TERMINAL_DATA_DIR = "dir://flash/HOST";
 const char* GOODS_FILE_FORMAT = "*.TXT";
 
@@ -29,6 +31,42 @@ static const ST_DSP_LINE txFile[] = {
 	  {GL_ALIGN_LEFT, GL_ALIGN_CENTER, FALSE, 100, FALSE, {2, 0, 0, 0}, {0, 0, 0, 0, GL_COLOR_BLACK}, {0, 0, 0, 0}, {NULL, GL_FONT_STYLE_NORMAL, GL_SCALE_MEDIUM}} }
 };
 
+// Properties of the Magnetic screen (Goal)
+// ========================================
+static const ST_DSP_LINE txMagnetic[] =
+{
+	{ {GL_ALIGN_CENTER, GL_ALIGN_CENTER, GL_COLOR_WHITE, GL_COLOR_BLACK, 0, FALSE, {0, 0, 0, 0}, {0, 0, 0, 0, GL_COLOR_WHITE}, {0, 0, 0, 0}, {NULL, GL_FONT_STYLE_NORMAL, GL_SCALE_XLARGE}}, // Line0
+	  {GL_ALIGN_CENTER, GL_ALIGN_CENTER, FALSE,  0, FALSE, {0, 0, 0, 0}, {0, 0, 0, 0, GL_COLOR_BLACK}, {0, 0, 0, 0}, {NULL, GL_FONT_STYLE_NORMAL, GL_SCALE_XLARGE}} },
+	{ {GL_ALIGN_CENTER, GL_ALIGN_CENTER, GL_COLOR_WHITE, GL_COLOR_BLACK, 0, FALSE, {0, 0, 0, 0}, {0, 0, 0, 0, GL_COLOR_WHITE}, {0, 0, 0, 0}, {NULL, GL_FONT_STYLE_NORMAL, GL_SCALE_XLARGE}}, // Line1
+	  {GL_ALIGN_CENTER, GL_ALIGN_CENTER, FALSE,  0, FALSE, {0, 0, 0, 0}, {0, 0, 0, 0, GL_COLOR_BLACK}, {0, 0, 0, 0}, {NULL, GL_FONT_STYLE_NORMAL, GL_SCALE_XLARGE}} },
+	{ {GL_ALIGN_CENTER, GL_ALIGN_CENTER, GL_COLOR_WHITE, GL_COLOR_BLACK, 0, FALSE, {0, 0, 0, 0}, {0, 0, 0, 0, GL_COLOR_WHITE}, {0, 0, 0, 0}, {NULL, GL_FONT_STYLE_NORMAL, GL_SCALE_XLARGE}}, // Line2
+	  {GL_ALIGN_CENTER, GL_ALIGN_CENTER, FALSE,  0, FALSE, {0, 0, 0, 0}, {0, 0, 0, 0, GL_COLOR_BLACK}, {0, 0, 0, 0}, {NULL, GL_FONT_STYLE_NORMAL, GL_SCALE_XLARGE}} }
+};
+
+// Properties of the Track screen (Goal)
+// =====================================
+static const ST_DSP_LINE txTrack[] =
+{
+	{ {GL_ALIGN_LEFT, GL_ALIGN_CENTER, GL_COLOR_WHITE, GL_COLOR_BLACK, 100, FALSE, {1, 0, 0, 0}, {0, 0, 0, 0, GL_COLOR_WHITE}, {0, 0, 0, 0}, {NULL, GL_FONT_STYLE_NORMAL, GL_SCALE_XSMALL}}, // Line0
+	  {GL_ALIGN_LEFT, GL_ALIGN_CENTER, FALSE, 100, FALSE, {2, 0, 0, 0}, {0, 0, 0, 0, GL_COLOR_BLACK}, {0, 0, 0, 0}, {NULL, GL_FONT_STYLE_NORMAL, GL_SCALE_XSMALL}} },
+	{ {GL_ALIGN_LEFT, GL_ALIGN_CENTER, GL_COLOR_WHITE, GL_COLOR_RED,   100, FALSE, {1, 3, 0, 3}, {1, 1, 1, 1, GL_COLOR_WHITE}, {3, 0, 3, 0}, {NULL, GL_FONT_STYLE_NORMAL, GL_SCALE_XSMALL}}, // Line1
+	  {GL_ALIGN_LEFT, GL_ALIGN_CENTER, TRUE,  100, FALSE, {2, 4, 0, 0}, {0, 0, 0, 0, GL_COLOR_BLACK}, {0, 0, 0, 0}, {NULL, GL_FONT_STYLE_NORMAL, GL_SCALE_XSMALL}} },
+	{ {GL_ALIGN_LEFT, GL_ALIGN_CENTER, GL_COLOR_WHITE, GL_COLOR_BLACK, 100, FALSE, {1, 0, 0, 0}, {0, 0, 0, 0, GL_COLOR_WHITE}, {0, 0, 0, 0}, {NULL, GL_FONT_STYLE_NORMAL, GL_SCALE_XSMALL}}, // Line2
+	  {GL_ALIGN_LEFT, GL_ALIGN_CENTER, FALSE, 100, FALSE, {2, 0, 0, 0}, {0, 0, 0, 0, GL_COLOR_BLACK}, {0, 0, 0, 0}, {NULL, GL_FONT_STYLE_NORMAL, GL_SCALE_XSMALL}} },
+	{ {GL_ALIGN_LEFT, GL_ALIGN_CENTER, GL_COLOR_WHITE, GL_COLOR_BLUE,  100, FALSE, {1, 3, 0, 3}, {1, 1, 1, 1, GL_COLOR_WHITE}, {3, 0, 3, 0}, {NULL, GL_FONT_STYLE_NORMAL, GL_SCALE_XSMALL}}, // Line3
+	  {GL_ALIGN_LEFT, GL_ALIGN_CENTER, TRUE,  100, FALSE, {2, 4, 0, 0}, {0, 0, 0, 0, GL_COLOR_BLACK}, {0, 0, 0, 0}, {NULL, GL_FONT_STYLE_NORMAL, GL_SCALE_XSMALL}} },
+	{ {GL_ALIGN_LEFT, GL_ALIGN_CENTER, GL_COLOR_WHITE, GL_COLOR_BLACK, 100, FALSE, {1, 0, 0, 0}, {0, 0, 0, 0, GL_COLOR_WHITE}, {0, 0, 0, 0}, {NULL, GL_FONT_STYLE_NORMAL, GL_SCALE_XSMALL}}, // Line4
+	  {GL_ALIGN_LEFT, GL_ALIGN_CENTER, FALSE, 100, FALSE, {2, 0, 0, 0}, {0, 0, 0, 0, GL_COLOR_BLACK}, {0, 0, 0, 0}, {NULL, GL_FONT_STYLE_NORMAL, GL_SCALE_XSMALL}} },
+	{ {GL_ALIGN_LEFT, GL_ALIGN_CENTER, GL_COLOR_WHITE, GL_COLOR_GREEN, 100, FALSE, {1, 3, 0, 3}, {1, 1, 1, 1, GL_COLOR_WHITE}, {3, 0, 3, 0}, {NULL, GL_FONT_STYLE_NORMAL, GL_SCALE_XSMALL}}, // Line5
+	  {GL_ALIGN_LEFT, GL_ALIGN_CENTER, TRUE,  100, FALSE, {2, 4, 0, 0}, {0, 0, 0, 0, GL_COLOR_BLACK}, {0, 0, 0, 0}, {NULL, GL_FONT_STYLE_NORMAL, GL_SCALE_XSMALL}} }
+};
+
+// Properties of the default printer (Goal)
+// ========================================
+static const ST_PRN_LINE xPrinter =
+{
+	GL_ALIGN_LEFT, GL_ALIGN_CENTER, FALSE, 100, {0, 0, 0, 0}, {0, 0, 0, 0, GL_COLOR_BLACK}, {1, 0, 1, 0}, {NULL, GL_FONT_STYLE_NORMAL, GL_SCALE_LARGE}
+};
 
 void print_startup_message(T_GL_HGRAPHIC_LIB hGraphicLib) {
 	int iRet;
@@ -657,11 +695,132 @@ int find_goods_by_template(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_sche
 	return 0;
 }
 
-int pay(char* pan, int len) {
-	// TODO
-	// read pan from card
+void pay(T_GL_HGRAPHIC_LIB hGraphicLib, char* pan, int len) {
+	// Flush pan
+	pan[0] = '\0';
 
-	return 0;
+	// Local variables
+    // ***************
+	T_GL_HWIDGET hScreen=NULL;
+	T_GL_HWIDGET xDocument=NULL;
+	ST_PRN_LINE xLine;
+    Telium_File_t *hMag2=NULL;
+	byte ucLen=0;
+    int iSta;
+    char tcTmp[128];
+    char *pcSrc, *pcDst;
+    char tcTrk2[128];
+    byte p; // Printer line index
+	int iKey, iTimeout=0, iRet;
+
+	// Swipe card in progress
+	// **********************
+	strcpy(tcTrk2, "No readable data");
+
+	// Open peripherals
+	// ================
+	if (IsISO2() == 1)
+	{
+		hMag2 = Telium_Fopen("SWIPE2", "r*");         // Open mag2 peripheral
+		CHECK(hMag2, lblKO);
+	}
+
+	// Prompt Swipe a card
+	// ===================
+	hScreen = GoalCreateScreen(gGoalGraphicLibInstance, txMagnetic, NUMBER_OF_LINES(txMagnetic), GL_ENCODING_UTF8);
+	CHECK(hScreen!=NULL, lblKO);                      // Create screen and clear it
+	iRet = GoalClrScreen(hScreen, GL_COLOR_BLACK, KEY_CANCEL, false);
+	CHECK(iRet>=0, lblKO);
+
+	iRet = GoalDspLine(hScreen, 0, "Please Swipe", &txMagnetic[0], 0, false);
+	CHECK(iRet>=0, lblKO);                            // Prompt for a swiping card
+	iRet = GoalDspLine(hScreen, 1, "Magnetic Card", &txMagnetic[1], 0, true);
+	CHECK(iRet>=0, lblKO);
+
+	// Wait for magnetic card
+	// ======================
+	iRet = TimerStart(0, 10*1000);                                   // Timer0 starts to 30s
+	CHECK(iRet>=0, lblKO);
+	do
+	{
+		iSta = Telium_Ttestall(SWIPE2, 5);       // Wait for the first event SWIPE31
+		if (iSta != 0)
+			break;                                                   // Swipe detected
+		iKey = GoalGetKey(hScreen, gGoalGraphicLibInstance, true, 100, false);         // Get key pressed/touched (shortcut)
+		CHECK(iKey!=GL_KEY_CANCEL, lblEnd);                          // Exit on cancel key
+		iTimeout = TimerGet(0);                                      // Retrieve timer value
+	}while(iTimeout>0);
+
+	CHECK(iTimeout!=0, lblEnd);                                      // Exit on timeout
+
+	iSta |= Telium_Ttestall(iSta ^ (SWIPE2), 5); // Wait for the second event SWIPE2
+	iSta |= Telium_Ttestall(iSta ^ (SWIPE2), 5); // Wait for the third event SWIPE3
+
+	// Retrieve and analyze ISO2
+	// =========================
+	if(iSta & SWIPE2)
+	{
+		memset(tcTmp, 0, sizeof(tcTmp));
+		memset(tcTrk2, 0, sizeof(tcTrk2));
+		iRet = Telium_Is_iso2(hMag2, &ucLen, (byte*)tcTmp);  // *** Read ISO2 to ascii format ***
+		if (iRet != ISO_OK)
+			IsoError (iRet, tcTrk2);
+		else
+		{
+			CHECK(strlen(tcTmp)<128, lblKO);
+			pcSrc = tcTmp;
+			pcDst = tcTrk2;
+			while(*pcSrc) {                                  // Find start sentinel
+				if(*pcSrc++ == 'B')
+					break;
+			}
+			while(*pcSrc) {                                  // Copy all data between start and end sentinels
+				if(*pcSrc == 'F')
+					break;
+				if(*pcSrc == 'D')
+					*pcSrc = '=';
+				*pcDst++ = *pcSrc++;
+			}
+		}
+	}
+
+	if (tcTrk2[0]==0) strcpy(tcTrk2, "Empty");
+
+	GoalDestroyScreen(&hScreen);                             // Destroy screen
+
+	// Get pan from track
+	// ==================
+	int i;
+	char * pch;
+	pch = strtok (tcTrk2,"=");
+	if (pch != NULL && isdigit(pch[0])) {
+		strcpy(pan, pch);
+		for (i = 0; i < (strlen(pan) - 4); i++) {
+			pan[i] = '*';
+		}
+	}
+
+	goto lblEnd;
+
+	// Errors treatment
+	// ****************
+lblKO:                                                       // None-classified low level error
+	GL_Dialog_Message(gGoalGraphicLibInstance, NULL, "Processing Error", GL_ICON_ERROR, GL_BUTTON_VALID, 5*1000);
+	goto lblEnd;
+lblEnd:
+	TimerStop(0);                                            // Stop Timer0
+	if(hMag2) {
+		Telium_Fclose(hMag2);                                // Close mag2 peripheral
+	}
+
+	if (hScreen) {
+		GoalDestroyScreen(&hScreen);                         // Destroy screen
+	}
+
+	if (xDocument) {
+		GoalDestroyDocument(&xDocument);                     // Destroy document
+	}
+
 }
 
 int get_index_of_price_field(FILE_SCHEMA* file_schema) {
@@ -687,16 +846,12 @@ int get_good_price(FILE_SCHEMA* file_schema, TEMPLATE(DYN_ARRAY, vop)* good_fiel
 		return 0;
 	}
 
-	char msg[100];
-	sprintf(msg, "price -> %d, index -> %d", *price, index);
-	print_message(gGoalGraphicLibInstance, msg);
-
 	TEMPLATE(get, vop)(good_fields, index, (void**)(&price));
 	return *price;
 }
 
 int print_document(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema,
-		           TEMPLATE(DYN_ARRAY, int)* indexes, TEMPLATE(DYN_ARRAY, int)* counts) {
+		           TEMPLATE(DYN_ARRAY, int)* indexes, TEMPLATE(DYN_ARRAY, int)* counts, char* pan) {
 	T_GL_HWIDGET hDocument, hLayout, hPrint;
 	T_GL_DIM usLine = 0;
 	hDocument = GL_Document_Create(hGraphicLib);
@@ -713,7 +868,7 @@ int print_document(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema,
 	GL_Widget_SetText(hPrint, "CHECK");
 
 	int i;
-	int price = 0;
+	unsigned long long price = 0;
 	int index = 0;
 	int count = 0;
 	unsigned long long total_sum = 0;
@@ -733,7 +888,7 @@ int print_document(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema,
 		// good name
 		sprintf(document_line, "%s", first_field);
 		hPrint = GL_Print_Create(hLayout);
-		GL_Widget_SetFontScale(hPrint, GL_SCALE_LARGE);
+		GL_Widget_SetFontScale(hPrint, GL_SCALE_XLARGE);
 		GL_Widget_SetItem(hPrint, 0, usLine++);
 		GL_Widget_SetBackAlign(hPrint, GL_ALIGN_LEFT);
 		GL_Widget_SetText(hPrint, document_line);
@@ -741,15 +896,15 @@ int print_document(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema,
 		// count of good
 		sprintf(document_line, "count: %d", count);
 		hPrint = GL_Print_Create(hLayout);
-		GL_Widget_SetFontScale(hPrint, GL_SCALE_MEDIUM);
+		GL_Widget_SetFontScale(hPrint, GL_SCALE_LARGE);
 		GL_Widget_SetItem(hPrint, 0, usLine++);
 		GL_Widget_SetBackAlign(hPrint, GL_ALIGN_LEFT);
 		GL_Widget_SetText(hPrint, document_line);
 
 		// price
-		sprintf(document_line, "-- %d", price * count);
+		sprintf(document_line, "> %d", price * count);
 		hPrint = GL_Print_Create(hLayout);
-		GL_Widget_SetFontScale(hPrint, GL_SCALE_MEDIUM);
+		GL_Widget_SetFontScale(hPrint, GL_SCALE_LARGE);
 		GL_Widget_SetItem(hPrint, 0, usLine++);
 		GL_Widget_SetBackAlign(hPrint, GL_ALIGN_RIGHT);
 		GL_Widget_SetText(hPrint, document_line);
@@ -758,12 +913,22 @@ int print_document(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema,
 	// print total_sum
 	sprintf(document_line, "Total sum: %d", total_sum);
 	hPrint = GL_Print_Create(hLayout);
-	GL_Widget_SetFontScale(hPrint, GL_SCALE_MEDIUM);
+	GL_Widget_SetFontScale(hPrint, GL_SCALE_LARGE);
 	GL_Widget_SetItem(hPrint, 0, usLine++);
 	GL_Widget_SetBackAlign(hPrint, GL_ALIGN_RIGHT);
 	GL_Widget_SetText(hPrint, document_line);
 
-	GL_Document_Print(hDocument, 10 * 1000);
+	sprintf(document_line, "Customer card: %s\n\n\n\n", pan);
+	hPrint = GL_Print_Create(hLayout);
+	GL_Widget_SetFontScale(hPrint, GL_SCALE_LARGE);
+	GL_Widget_SetItem(hPrint, 0, usLine++);
+	GL_Widget_SetBackAlign(hPrint, GL_ALIGN_LEFT);
+	GL_Widget_SetText(hPrint, document_line);
+
+	GL_Document_Print(hDocument, 0);
+	GL_Widget_Destroy(hDocument);
+
+	GL_Document_Print(hDocument, 0);
 	GL_Widget_Destroy(hDocument);
 	return 0;
 }
@@ -775,17 +940,15 @@ int pay_for_goods(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema,
 
 	// payment
 	char pan[PAN_LIMIT];
-	if (pay(pan, sizeof(pan) / sizeof(pan[0]))) {
-		print_message(hGraphicLib, "error while pay");
+	pay(hGraphicLib, pan, sizeof(pan) / sizeof(pan[0]));
+	if (strlen(pan) == 0) {
 		return 1;
 	}
 
 	// print document
-	print_document(hGraphicLib, file_schema, indexes, counts);
+	print_document(hGraphicLib, file_schema, indexes, counts, pan);
 	return 0;
 }
-
-
 
 int get_count_of_good(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 	const  char *menu[] = {
@@ -852,15 +1015,21 @@ int form_cart_and_buy(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 		if (choice == goods_count + 1) {
 			break;
 		} else if (choice == goods_count) {
-			print_message(hGraphicLib, "insert card, please");
+			if (indexes.length == 0) {
+				print_message(hGraphicLib, "empty shopping cart");
+				continue;
+			}
 			for (i = 0; i < CARD_READ_LIMIT; i++) {
-				if (pay_for_goods(hGraphicLib, file_schema, &indexes, &counts) == 0) {
+				if (pay_for_goods(hGraphicLib, file_schema, &indexes, &counts) != 0) {
+					char msg[LOG_MSG_LENGTH_LIMIT];
+					sprintf(msg, "Cannot read card. Attempt %d from %d", i+1, CARD_READ_LIMIT);
+					print_message(hGraphicLib, msg);
+				} else {
 					break;
 				}
 			}
 			break;
 		} else {
-			print_message(hGraphicLib, "Add number of good");
 			count = get_count_of_good(hGraphicLib, file_schema);
 			if (count != 0) {
 				TEMPLATE(append, int)(&indexes, choice);
@@ -902,9 +1071,6 @@ void create_menu(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 
 		switch (choice) {
 		case 0:                                    // IMPORT
-			// TODO
-			// add dialog_file for choosing file
-			// Add GL_Dialog_Progress
 			if (file_schema == NULL) {
 				print_message(hGraphicLib, "Internal error: file_schema == NULL");
 				break;
@@ -931,14 +1097,6 @@ void create_menu(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 			find_goods_by_template(hGraphicLib, file_schema);
 			break;
 		case 4:                                    // FORM CART AND BUY
-			// TODO
-			// form shopping cart
-			// print check box
-			// for each good read count of goods
-			// push button "pay"
-			// then insert magnetic card
-			// read pan from card
-			// print message with printer
 			form_cart_and_buy(hGraphicLib, file_schema);
 			break;
 		default:

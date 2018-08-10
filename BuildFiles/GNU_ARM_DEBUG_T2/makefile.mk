@@ -213,6 +213,8 @@ $(OBJ_PATH)/lists.o \
 $(OBJ_PATH)/Goal.o \
 $(OBJ_PATH)/main_processing.o \
 $(OBJ_PATH)/log.o \
+$(OBJ_PATH)/Magnetic.o \
+$(OBJ_PATH)/Timer.o \
 
 #-------------------------------------------------------------------------------
 # Dependencies
@@ -390,6 +392,26 @@ $(OBJ_PATH)/log.o: Src/log.c $(DEPENDENCIES) $(EXTRA_DEPENDENCIES)
 	@echo "'Src/log.c' compilation in progress..."
 	$(CC) $(CC_OPTS) -MMD -MP -o "$@" "$<"
 ifeq ($(MAKECMDGOALS), $(OBJ_PATH)/log.o)
+	@echo "done!"
+endif
+
+ifneq ($(MAKECMDGOALS), clean)
+-include $(OBJ_PATH)/Magnetic.d
+endif
+$(OBJ_PATH)/Magnetic.o: Src/Magnetic.c $(DEPENDENCIES) $(EXTRA_DEPENDENCIES)
+	@echo "'Src/Magnetic.c' compilation in progress..."
+	$(CC) $(CC_OPTS) -MMD -MP -o "$@" "$<"
+ifeq ($(MAKECMDGOALS), $(OBJ_PATH)/Magnetic.o)
+	@echo "done!"
+endif
+
+ifneq ($(MAKECMDGOALS), clean)
+-include $(OBJ_PATH)/Timer.d
+endif
+$(OBJ_PATH)/Timer.o: Src/Timer.c $(DEPENDENCIES) $(EXTRA_DEPENDENCIES)
+	@echo "'Src/Timer.c' compilation in progress..."
+	$(CC) $(CC_OPTS) -MMD -MP -o "$@" "$<"
+ifeq ($(MAKECMDGOALS), $(OBJ_PATH)/Timer.o)
 	@echo "done!"
 endif
 
