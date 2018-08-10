@@ -167,9 +167,9 @@ Obj/GNU_ARM_DEBUG_T2/iofile.o: Src/iofile.c Inc/Goal.h \
   C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/GL_Version.h \
   C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/GL_ClassBinder.hpp \
   C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/GL_File.h \
-  Inc/defs.h Inc/log.h Inc/Goal.h Inc/iofile.h \
+  Inc/defs.h Inc/templates.h Inc/log.h Inc/Goal.h Inc/iofile.h \
   C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/GL_Types.h \
-  Inc/file_schema.h Inc/defs.h Inc/lists.h Inc/templates.h Inc/types.h \
+  Inc/file_schema.h Inc/defs.h Inc/lists.h Inc/types.h \
   Inc/dynamic_arrays.h Inc/good_field_types.h Inc/dynamic_array_types.h \
   Inc/dynamic_array_template.h Inc/list_template.h Inc/good_field_types.h
 
@@ -513,6 +513,8 @@ C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/GL_F
 
 Inc/defs.h:
 
+Inc/templates.h:
+
 Inc/log.h:
 
 Inc/Goal.h:
@@ -526,8 +528,6 @@ Inc/file_schema.h:
 Inc/defs.h:
 
 Inc/lists.h:
-
-Inc/templates.h:
 
 Inc/types.h:
 

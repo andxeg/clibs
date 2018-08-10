@@ -17,6 +17,7 @@ typedef TEMPLATE(LIST_NODE, TYPE_NAME) TEMPLATE(LIST, TYPE_NAME);
 
 TEMPLATE(LIST, TYPE_NAME)* TEMPLATE(create_list, TYPE_NAME)();
 void TEMPLATE(destroy_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list);
+void TEMPLATE(destroy_list_lite, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list);
 int TEMPLATE(is_empty_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list);
 int TEMPLATE(size_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list);
 int TEMPLATE(contains_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, T elem);
@@ -30,6 +31,7 @@ int TEMPLATE(contains_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, T elem);
 // vec2 - interval [a, b]
 // return array of founded element
 
+TEMPLATE(LIST, TYPE_NAME)* TEMPLATE(search, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME)* list, TEMPLATE(DYN_ARRAY, vop)* pattern);
 int TEMPLATE(add_to_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, T elem);
 int TEMPLATE(remove_from_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, T elem); // delete first node with data == elem
 int TEMPLATE(get_by_index, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, int index, T *result);

@@ -131,7 +131,7 @@ int print_good_fields(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema,
 	int* val;
 	char* str;
 	int curr_pos;
-	for (i = 0; i < fields_amount-1; i++) {
+	for (i = 0; i < fields_amount; i++) {
 		char* field_name;
 		TEMPLATE(get, string)(&file_schema->header->fields, i, &field_name);
 		GOOD_FIELD_TYPE type;
@@ -150,27 +150,6 @@ int print_good_fields(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema,
 		default:
 			break;
 		}
-
-	}
-
-	// add last field
-	char* field_name;
-	TEMPLATE(get, string)(&file_schema->header->fields, fields_amount-1, &field_name);
-	GOOD_FIELD_TYPE type;
-	TEMPLATE(get, good_field)(&file_schema->header->types, fields_amount-1, &type);
-	curr_pos = strlen(good_fields);
-	switch (type) {
-	case BOOL_GOOD:
-	case NUMBER_GOOD:
-		TEMPLATE(get, vop)(&fields_value, fields_amount-1, (void**)(&val));
-		sprintf(good_fields + curr_pos, "%s: %d", field_name, *val);
-		break;
-	case STRING_GOOD:
-		TEMPLATE(get, vop)(&fields_value, fields_amount-1, (void**)(&str));
-		sprintf(good_fields + curr_pos, "%s: %s", field_name, str);
-		break;
-	default:
-		break;
 	}
 
 	print_message(hGraphicLib, good_fields);
@@ -190,7 +169,6 @@ void get_first_fields(FILE_SCHEMA* file_schema, char** first_fields) {
 		TEMPLATE(get, vop)(&array_void, 0, (void**)(&field_value));
 		first_fields[i] = field_value;
 	}
-
 }
 
 int print_list_with_goods(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
@@ -235,31 +213,51 @@ int print_list_with_goods(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schem
 
 	} while (choice != goods_count);
 
-
 	free(first_fields);
 	return 0;
 }
 
 char* read_field(T_GL_HGRAPHIC_LIB graphicLib, char* field_name,
-		int min_size, int max_size, GOOD_FIELD_TYPE type)
+		int min_size, int max_size, GOOD_FIELD_TYPE type, int is_pattern)
 {
 	char* field = (char* ) malloc(sizeof(char) * (max_size + 1));
 
 	int i;
+	char c;
 	ulong result;
 	char* template;
+
 	switch (type) {
 	case BOOL_GOOD:
-		result = GL_Dialog_VirtualKeyboard (graphicLib, field_name, "Field value: ",
-				"/b|01", field, sizeof(char) * (max_size + 1), GL_TIME_INFINITE);
+		if (is_pattern) {
+			result = GL_Dialog_VirtualKeyboard (graphicLib, field_name, "Field value: ",
+					"/u|01*", field, sizeof(char) * (max_size + 1), GL_TIME_INFINITE);
+		} else {
+			result = GL_Dialog_VirtualKeyboard (graphicLib, field_name, "Field value: ",
+					"/b|01", field, sizeof(char) * (max_size + 1), GL_TIME_INFINITE);
+		}
 		(void)result;
 		break;
 	case NUMBER_GOOD:
-		template = (char *) malloc(max_size*2 + 1);
+		// '/u' * max_size + '|' + digits + '\0'
+		template = (char *) malloc(max_size*2 + 1 + 10 + 1);
 		for (i = 0; i < max_size*2; i += 2) {
 			template[i] = '/';
-			template[i+1] = 'd';
+			template[i+1] = 'u';
 		}
+
+		template[i++] = '|';
+
+		for (c = '0'; c <= '9'; c++, i++) {
+			template[i] = c;
+		}
+
+		if (is_pattern) {
+			// add '*'
+			template = (char *) realloc(template, max_size*2 + 1 + 10 + 1 + 1);
+			template[i++] = '*';
+		}
+
 		template[i] = '\0';
 		result = GL_Dialog_VirtualKeyboard (graphicLib, field_name, "Field value: ",
 				template, field, sizeof(char) * (max_size + 1), GL_TIME_INFINITE);
@@ -268,14 +266,15 @@ char* read_field(T_GL_HGRAPHIC_LIB graphicLib, char* field_name,
 		free(template);
 		break;
 	case STRING_GOOD:
-		// /u*max_size + '|' + aplhas + digits + ' ' + '.'
+		// '/u' * max_size + '|' + aplhas + digits + ' ' + '.' + '\0'
 		template = (char *) malloc(max_size*2 + 1 + 2*26 + 10 + 1 + 1 + 1);
 		for (i = 0; i < max_size*2; i += 2) {
 			template[i] = '/';
 			template[i+1] = 'u';
 		}
+
 		template[i++] = '|';
-		char c;
+
 		for (c = 'a'; c <= 'z'; c++, i++) {
 			template[i] = c;
 		}
@@ -290,6 +289,13 @@ char* read_field(T_GL_HGRAPHIC_LIB graphicLib, char* field_name,
 
 		template[i++] = ' ';
 		template[i++] = '.';
+
+		if (is_pattern) {
+			// add '*'
+			template = (char *) realloc(template, max_size*2 + 1 + 2*26 + 10 + 1 + 1 + 1 + 1);
+			template[i++] = '*';
+		}
+
 		template[i] = '\0';
 
 		result = GL_Dialog_VirtualKeyboard (graphicLib, field_name, "Field value: ",
@@ -313,6 +319,10 @@ char* read_field(T_GL_HGRAPHIC_LIB graphicLib, char* field_name,
 }
 
 int convert_to_int_value(char* str, int* value) {
+	if (strlen(str) == 0) {
+		return 0;
+	}
+
 	char* eptr;
 	long result = strtol(str, &eptr, 10);
 	if (result == 0) {
@@ -325,9 +335,8 @@ int convert_to_int_value(char* str, int* value) {
 			return 1;
 		}
 	}
-//	char msg[LOG_MSG_LENGTH_LIMIT];
-	*value = (int) result;
 
+	*value = (int) result;
 	return 0;
 }
 
@@ -347,7 +356,6 @@ int convert_to_bool_value(char* str, int* value) {
 
 
 int add_new_good(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
-	// see  GL_SampleDialogVirtualKeyboard1(gGoalGraphicLibInstance);
 	TEMPLATE(DYN_ARRAY, string)* fields = &file_schema->header->fields;
     TEMPLATE(DYN_ARRAY, good_field)* types = &file_schema->header->types;
     TEMPLATE(DYN_ARRAY, int)* min_limit = &file_schema->header->length_min;
@@ -371,85 +379,50 @@ int add_new_good(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 
 		print_message(hGraphicLib, field_name);
 
-		switch (type) {
-		case BOOL_GOOD:
-			field_value = read_field(hGraphicLib, field_name, min_len, max_len, type);
-			if (field_value == NULL) {
-				TEMPLATE(destroy, vop)(&good_fields);
-				print_message(hGraphicLib, "Error in input field");
-				return 1;
-			}
+		field_value = read_field(hGraphicLib, field_name, min_len, max_len, type, 0);
+		if (field_value == NULL) {
+			TEMPLATE(destroy, vop)(&good_fields);
+			print_message(hGraphicLib, "Error in input field");
+			return 1;
+		}
 
+		if (type == BOOL_GOOD) {
 			val = (int *) malloc(sizeof(int));
 			if (convert_to_bool_value(field_value, val)) {
-				free(val);
+				free(field_value); free(val);
 				TEMPLATE(destroy, vop)(&good_fields);
 				print_message(hGraphicLib, "cannot convert to bool value");
 				return 1;
 			}
 
 			TEMPLATE(append, vop)(&good_fields, (void *)val);
+			TEMPLATE(append, int)(good_fields.types, BOOL);
 			free(field_value);
-			break;
-		case NUMBER_GOOD:
-			field_value = read_field(hGraphicLib, field_name, min_len, max_len, type);
-			if (field_value == NULL) {
-				TEMPLATE(destroy, vop)(&good_fields);
-				print_message(hGraphicLib, "Error in input field");
-				return 1;
-			}
-
+		} else if (type == NUMBER_GOOD) {
 			val = (int *) malloc(sizeof(int));
 			if (convert_to_int_value(field_value, val)) {
-				free(val);
+				free(field_value); free(val);
 				TEMPLATE(destroy, vop)(&good_fields);
 				print_message(hGraphicLib, "cannot convert to integer value");
 				return 1;
 			}
 
 			TEMPLATE(append, vop)(&good_fields, (void *)val);
+			TEMPLATE(append, int)(good_fields.types, INT);
 			free(field_value);
-			break;
-		case STRING_GOOD:
-			field_value = read_field(hGraphicLib, field_name, min_len, max_len, type);
-			if (field_value == NULL) {
-				TEMPLATE(destroy, vop)(&good_fields);
-				print_message(hGraphicLib, "Error in input field");
-				return 1;
-			}
+		} else if (type == STRING_GOOD) {
 			TEMPLATE(append, vop)(&good_fields, (void*)field_value);
-			break;
-		default:
-			TEMPLATE(destroy, vop)(&good_fields);
+			TEMPLATE(append, int)(good_fields.types, STRING);
+		} else {
 			print_message(hGraphicLib, "Internal error: unknown good type");
+			if (field_value != NULL) {
+				free(field_value);
+			}
 			return 1;
 		}
 	}
 
 	// add good to list
-	for (i = 0; i < good_fields.length; i++) {
-		GOOD_FIELD_TYPE type;
-		TEMPLATE(get, good_field)(types, i, &type);
-		int dyn_array_type;
-		switch (type) {
-		case BOOL_GOOD:
-			dyn_array_type = BOOL;
-			break;
-		case NUMBER_GOOD:
-			dyn_array_type = INT;
-			break;
-		case STRING_GOOD:
-			dyn_array_type = STRING;
-			break;
-		default:
-			TEMPLATE(destroy, vop)(&good_fields);
-			print_message(hGraphicLib, "Internal error: unknown good type");
-			return 1;
-		}
-
-		TEMPLATE(append, int)(good_fields.types, dyn_array_type);
-	}
-
 	if (TEMPLATE(add_to_list, dyn_array_vop)(goods, good_fields)) {
 		print_message(hGraphicLib, "cannot add good to list");
 		return 1;
@@ -472,7 +445,6 @@ int delete_good(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, int ind
 }
 
 int edit_good(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, int index) {
-
 	const  char *menu[] = {
 			"Delete",
 			"Edit",
@@ -533,6 +505,374 @@ int modify_list_with_goods(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_sche
 
 	} while(choice != goods_count + 1);
 
+	free(first_fields);
+	return 0;
+}
+
+void print_message_search_menu(T_GL_HGRAPHIC_LIB hGraphicLib) {
+	int iRet;
+	T_GL_HWIDGET hScreen = NULL;
+
+	hScreen = GoalCreateScreen(hGraphicLib, txFile, NUMBER_OF_LINES(txFile), GL_ENCODING_UTF8);
+	CHECK(hScreen!=NULL, lblKO);                   // Create screen and clear it
+	iRet = GoalClrScreen(hScreen, GL_COLOR_BLACK, KEY_VALID, true);
+	CHECK(iRet>=0, lblKO);
+
+	GoalDspLine(hScreen, 0, "Search goods by template:", &txFile[1], 3*1000, true);
+	GoalDspLine(hScreen, 1, "1. Enter field values", &txFile[1], 3*1000, true);
+	GoalDspLine(hScreen, 2, "2. You can use '*' for match any value", &txFile[1], 3*1000, true);
+	GoalDspLine(hScreen, 3, "3. See results", &txFile[3], 3*1000, true);
+	goto lblEnd;
+
+lblKO:                                             // None-classified low level error
+	GL_Dialog_Message(hGraphicLib, NULL, "Processing Error", GL_ICON_ERROR, GL_BUTTON_VALID, 5*1000);
+	goto lblEnd;
+
+lblEnd:
+	if (hScreen) {
+		GoalDestroyScreen(&hScreen);
+	}
+}
+
+int read_search_pattern(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, TEMPLATE(DYN_ARRAY, vop)* pattern) {
+	TEMPLATE(DYN_ARRAY, string)* fields = &file_schema->header->fields;
+	TEMPLATE(DYN_ARRAY, good_field)* types = &file_schema->header->types;
+	TEMPLATE(DYN_ARRAY, int)* min_limit = &file_schema->header->length_min;
+	TEMPLATE(DYN_ARRAY, int)* max_limit = &file_schema->header->length_max;
+	TEMPLATE(LIST, dyn_array_vop)* goods = file_schema->goods;
+
+	int i;
+	GOOD_FIELD_TYPE type;
+	int max_len;
+	int min_len;
+	char* field_name;
+	char* field_value = NULL;
+	char* asterisk = "*";
+	int* val;
+	for (i = 0; i < fields->length; i++) {
+		TEMPLATE(get, good_field)(types, i, &type);
+		TEMPLATE(get, int)(min_limit, i, &min_len);
+		TEMPLATE(get, int)(max_limit, i, &max_len);
+		TEMPLATE(get, string)(fields, i, &field_name);
+
+		print_message(hGraphicLib, field_name);
+
+		field_value = read_field(hGraphicLib, field_name, min_len, max_len, type, 1);
+		if (field_value == NULL) {
+			print_message(hGraphicLib, "Error in input field");
+			return 1;
+		}
+
+		if (strcmp(field_value, "*\0") == 0) {
+			char* str = (char *) malloc(sizeof(char) * 2);
+			str = strcpy(str, asterisk);
+			TEMPLATE(append, vop)(pattern, (void *)str);
+			TEMPLATE(append, int)(pattern->types, STRING);
+			continue;
+		}
+
+		if (type == BOOL_GOOD) {
+			val = (int *) malloc(sizeof(int));
+			if (convert_to_bool_value(field_value, val)) {
+				free(val);
+				print_message(hGraphicLib, "cannot convert to bool value");
+				if (field_value != NULL) {
+					free(field_value);
+				}
+				return 1;
+			}
+
+			TEMPLATE(append, vop)(pattern, (void *)val);
+			TEMPLATE(append, int)(pattern->types, BOOL);
+			free(field_value);
+		} else if (type == NUMBER_GOOD) {
+			val = (int *) malloc(sizeof(int));
+			if (convert_to_int_value(field_value, val)) {
+				free(val);
+				print_message(hGraphicLib, "cannot convert to integer value");
+				return 1;
+			}
+
+			TEMPLATE(append, vop)(pattern, (void *)val);
+			TEMPLATE(append, int)(pattern->types, INT);
+			free(field_value);
+		} else if (type == STRING_GOOD) {
+			TEMPLATE(append, vop)(pattern, (void*)field_value);
+			TEMPLATE(append, int)(pattern->types, STRING);
+		} else {
+			print_message(hGraphicLib, "Internal error: unknown good type");
+			if (field_value != NULL) {
+				free(field_value);
+			}
+			return 1;
+		}
+	}
+
+	print_message(hGraphicLib, "pattern was successfully read");
+	return 0;
+}
+
+int show_search_results(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, TEMPLATE(LIST, dyn_array_vop)* res) {
+	FILE_SCHEMA* tmp_file_schema = (FILE_SCHEMA *) malloc(sizeof(FILE_SCHEMA));
+
+	tmp_file_schema->header = (FILE_HEADER *) malloc(sizeof(FILE_HEADER));
+	tmp_file_schema->header->fields = file_schema->header->fields;
+	tmp_file_schema->header->types = file_schema->header->types;
+	tmp_file_schema->header->length_min = file_schema->header->length_min;
+	tmp_file_schema->header->length_max = file_schema->header->length_max;
+
+	tmp_file_schema->goods = res;
+	print_list_with_goods(hGraphicLib, tmp_file_schema);
+
+	free(tmp_file_schema->header);
+	free(tmp_file_schema);
+	return 0;
+}
+
+int find_goods_by_template(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
+	int goods_count = TEMPLATE(size_list, dyn_array_vop)(file_schema->goods);
+	if (file_schema == NULL || goods_count == 0) {
+		print_message(hGraphicLib, "List with goods is empty");
+		return 1;
+	}
+
+	print_message_search_menu(hGraphicLib);
+	int fields_amount = file_schema->header->fields.length;
+	TEMPLATE(DYN_ARRAY, vop) pattern;
+	TEMPLATE(create, vop)(fields_amount, &pattern);
+
+	if (read_search_pattern(hGraphicLib, file_schema, &pattern)) {
+		print_message(hGraphicLib, "error in pattern reading");
+		TEMPLATE(destroy, vop)(&pattern);
+		return 1;
+	}
+
+	TEMPLATE(LIST, dyn_array_vop)* res = TEMPLATE(search, dyn_array_vop)(file_schema->goods, &pattern);
+
+	print_message(hGraphicLib, "search");
+	show_search_results(hGraphicLib, file_schema, res);
+
+	TEMPLATE(destroy_list_lite, dyn_array_vop)(res);
+	TEMPLATE(destroy, vop)(&pattern);
+	return 0;
+}
+
+int pay(char* pan, int len) {
+	// TODO
+	// read pan from card
+
+	return 0;
+}
+
+int get_index_of_price_field(FILE_SCHEMA* file_schema) {
+	TEMPLATE(DYN_ARRAY, string)* fields = &file_schema->header->fields;
+
+	int i;
+	char* str;
+	for (i = 0; i < fields->length; i++) {
+		TEMPLATE(get, string)(fields, i, &str);
+		if (strcmp(str, "PRICE\0") == 0) {
+			return i;
+		}
+	}
+
+	return -1;
+}
+
+int get_good_price(FILE_SCHEMA* file_schema, TEMPLATE(DYN_ARRAY, vop)* good_fields) {
+	// TODO
+	int* price;
+	int index = get_index_of_price_field(file_schema);
+	if (index < 0) {
+		return 0;
+	}
+
+	char msg[100];
+	sprintf(msg, "price -> %d, index -> %d", *price, index);
+	print_message(gGoalGraphicLibInstance, msg);
+
+	TEMPLATE(get, vop)(good_fields, index, (void**)(&price));
+	return *price;
+}
+
+int print_document(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema,
+		           TEMPLATE(DYN_ARRAY, int)* indexes, TEMPLATE(DYN_ARRAY, int)* counts) {
+	T_GL_HWIDGET hDocument, hLayout, hPrint;
+	T_GL_DIM usLine = 0;
+	hDocument = GL_Document_Create(hGraphicLib);
+	hLayout = GL_Layout_Create(hDocument);
+
+	TEMPLATE(LIST, dyn_array_vop)* goods = file_schema->goods;
+
+	hPrint = GL_Print_Create(hLayout);
+	GL_Widget_SetFontScale(hPrint, GL_SCALE_XXLARGE);
+	GL_Widget_SetItem(hPrint, 0, usLine++);
+	GL_Widget_SetMargins(hPrint, 0, 10, 0, 10, GL_UNIT_PIXEL);
+	GL_Widget_SetForeColor(hPrint, GL_COLOR_WHITE);
+	GL_Widget_SetBackColor(hPrint, GL_COLOR_BLACK);
+	GL_Widget_SetText(hPrint, "CHECK");
+
+	int i;
+	int price = 0;
+	int index = 0;
+	int count = 0;
+	unsigned long long total_sum = 0;
+	char* first_field = NULL;
+	char document_line[DOC_LINE_LIMIT];
+	TEMPLATE(DYN_ARRAY, vop) good_fields;
+	for (i = 0; i < indexes->length; i++) {
+		TEMPLATE(get, int)(indexes, i, &index);
+		TEMPLATE(get, int)(counts, i, &count);
+
+		TEMPLATE(get_by_index, dyn_array_vop)(goods, index, &good_fields);
+		TEMPLATE(get, vop)(&good_fields, 0, (void**)(&first_field));
+
+		price = get_good_price(file_schema, &good_fields);
+		total_sum += price * count;
+
+		// good name
+		sprintf(document_line, "%s", first_field);
+		hPrint = GL_Print_Create(hLayout);
+		GL_Widget_SetFontScale(hPrint, GL_SCALE_LARGE);
+		GL_Widget_SetItem(hPrint, 0, usLine++);
+		GL_Widget_SetBackAlign(hPrint, GL_ALIGN_LEFT);
+		GL_Widget_SetText(hPrint, document_line);
+
+		// count of good
+		sprintf(document_line, "count: %d", count);
+		hPrint = GL_Print_Create(hLayout);
+		GL_Widget_SetFontScale(hPrint, GL_SCALE_MEDIUM);
+		GL_Widget_SetItem(hPrint, 0, usLine++);
+		GL_Widget_SetBackAlign(hPrint, GL_ALIGN_LEFT);
+		GL_Widget_SetText(hPrint, document_line);
+
+		// price
+		sprintf(document_line, "-- %d", price * count);
+		hPrint = GL_Print_Create(hLayout);
+		GL_Widget_SetFontScale(hPrint, GL_SCALE_MEDIUM);
+		GL_Widget_SetItem(hPrint, 0, usLine++);
+		GL_Widget_SetBackAlign(hPrint, GL_ALIGN_RIGHT);
+		GL_Widget_SetText(hPrint, document_line);
+	}
+
+	// print total_sum
+	sprintf(document_line, "Total sum: %d", total_sum);
+	hPrint = GL_Print_Create(hLayout);
+	GL_Widget_SetFontScale(hPrint, GL_SCALE_MEDIUM);
+	GL_Widget_SetItem(hPrint, 0, usLine++);
+	GL_Widget_SetBackAlign(hPrint, GL_ALIGN_RIGHT);
+	GL_Widget_SetText(hPrint, document_line);
+
+	GL_Document_Print(hDocument, 10 * 1000);
+	GL_Widget_Destroy(hDocument);
+	return 0;
+}
+
+int pay_for_goods(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema,
+		         TEMPLATE(DYN_ARRAY, int)* indexes, TEMPLATE(DYN_ARRAY, int)* counts) {
+	TEMPLATE(print, int)(indexes);
+	TEMPLATE(print, int)(counts);
+
+	// payment
+	char pan[PAN_LIMIT];
+	if (pay(pan, sizeof(pan) / sizeof(pan[0]))) {
+		print_message(hGraphicLib, "error while pay");
+		return 1;
+	}
+
+	// print document
+	print_document(hGraphicLib, file_schema, indexes, counts);
+	return 0;
+}
+
+
+
+int get_count_of_good(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
+	const  char *menu[] = {
+			"Enter count",
+			"Exit",
+			0
+	};
+
+	int count = 0;
+	char choice = 0;
+	int max_len = 5;
+	char* field_value;
+	do {
+		choice = GL_Dialog_Menu(hGraphicLib, "Select action", menu, choice,
+				GL_BUTTON_NONE , GL_KEY_0, GL_TIME_INFINITE);
+
+		if (choice == 1) break;
+
+		field_value = read_field(hGraphicLib, "Enter count of good", 0, max_len, NUMBER_GOOD, 0);
+		if (field_value == NULL) {
+			print_message(hGraphicLib, "Error in input field");
+			return 1;
+		}
+
+		if (convert_to_int_value(field_value, &count)) {
+			free(field_value);
+			print_message(hGraphicLib, "cannot convert to integer value");
+			return 1;
+		}
+
+		free(field_value);
+	} while (choice != 1);
+
+	return count;
+}
+
+int form_cart_and_buy(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
+	// first field values
+	int goods_count = TEMPLATE(size_list, dyn_array_vop)(file_schema->goods);
+	if (goods_count == 0) {
+		print_message(hGraphicLib, "List with goods is empty");
+		return 0;
+	}
+
+	char** first_fields = (char** ) malloc((goods_count + 3) * sizeof(char*));
+	get_first_fields(file_schema, first_fields);
+	first_fields[goods_count] = "Buy";
+	first_fields[goods_count + 1] = "Exit";
+	first_fields[goods_count + 2] = NULL;
+
+	int count = 0;
+	TEMPLATE(DYN_ARRAY, int) indexes; // keep indexed of goods
+	TEMPLATE(DYN_ARRAY, int) counts;  // keep number of each goods in cart
+	TEMPLATE(create, int)(1, &indexes);
+	TEMPLATE(create, int)(1, &counts);
+
+	int i;
+	char choice = 0;
+	do {
+		choice = GL_Dialog_Choice(hGraphicLib, "Choose goods", first_fields,
+				choice, GL_BUTTON_DEFAULT, GL_KEY_0, GL_TIME_INFINITE);
+	    (void)choice;
+
+		if (choice == goods_count + 1) {
+			break;
+		} else if (choice == goods_count) {
+			print_message(hGraphicLib, "insert card, please");
+			for (i = 0; i < CARD_READ_LIMIT; i++) {
+				if (pay_for_goods(hGraphicLib, file_schema, &indexes, &counts) == 0) {
+					break;
+				}
+			}
+			break;
+		} else {
+			print_message(hGraphicLib, "Add number of good");
+			count = get_count_of_good(hGraphicLib, file_schema);
+			if (count != 0) {
+				TEMPLATE(append, int)(&indexes, choice);
+				TEMPLATE(append, int)(&counts, count);
+			}
+		}
+
+	} while(choice != goods_count + 1);
+
+	TEMPLATE(destroy, int)(&indexes);
+	TEMPLATE(destroy, int)(&counts);
+	free(first_fields);
 	return 0;
 }
 
@@ -562,7 +902,7 @@ void create_menu(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 
 		switch (choice) {
 		case 0:                                    // IMPORT
-			// TODO small
+			// TODO
 			// add dialog_file for choosing file
 			// Add GL_Dialog_Progress
 			if (file_schema == NULL) {
@@ -588,13 +928,7 @@ void create_menu(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 			modify_list_with_goods(hGraphicLib, file_schema);
 			break;
 		case 3:                                    // FIND
-			// TODO
-			// find good
-			// for each field print dialog_virtual_keyboard
-			// check each field for valid value
-			// then find goods by this template
-			// print result in separate menu
-			// in this menu goods are immutable
+			find_goods_by_template(hGraphicLib, file_schema);
 			break;
 		case 4:                                    // FORM CART AND BUY
 			// TODO
@@ -605,6 +939,7 @@ void create_menu(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 			// then insert magnetic card
 			// read pan from card
 			// print message with printer
+			form_cart_and_buy(hGraphicLib, file_schema);
 			break;
 		default:
 			// Exit

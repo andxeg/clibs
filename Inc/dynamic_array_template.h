@@ -1,6 +1,7 @@
 #ifdef T
 #ifdef TYPE_NAME
 #ifdef TYPE_NUM
+#include "defs.h"
 #include "templates.h"
 
 #define INCREASE_FACTOR 2
@@ -13,8 +14,10 @@ typedef struct TEMPLATE(DYN_ARRAY, TYPE_NAME) TEMPLATE(DYN_ARRAY, TYPE_NAME);
 #endif
 */
 
+// lines below work in linux (gcc 7.3.0) but don't work in windows
+//typedef struct TEMPLATE(DYN_ARRAY, vop) TEMPLATE(DYN_ARRAY, vop);
+//typedef struct TEMPLATE(DYN_ARRAY, TYPE_NAME) TEMPLATE(DYN_ARRAY, TYPE_NAME);
 
-typedef struct TEMPLATE(DYN_ARRAY, TYPE_NAME) TEMPLATE(DYN_ARRAY, TYPE_NAME);
 
 struct TEMPLATE(DYN_ARRAY, TYPE_NAME) {
     T* data;
@@ -40,7 +43,7 @@ int TEMPLATE(set_array_types, TYPE_NAME)(TEMPLATE(DYN_ARRAY, TYPE_NAME) *a, TEMP
 T* TEMPLATE(get_raw_data, TYPE_NAME)(TEMPLATE(DYN_ARRAY, TYPE_NAME) *a);
 int TEMPLATE(shrink_to_fit, TYPE_NAME)(TEMPLATE(DYN_ARRAY, TYPE_NAME) *a);
 int TEMPLATE(recreate, TYPE_NAME)(int size, TEMPLATE(DYN_ARRAY, TYPE_NAME) *a);
-
+int TEMPLATE(array_match, TYPE_NAME)(TEMPLATE(DYN_ARRAY, TYPE_NAME)* a, TEMPLATE(DYN_ARRAY, vop)* pattern);
 
 #endif
 #endif

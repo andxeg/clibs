@@ -1,8 +1,9 @@
 Obj/GNU_ARM_DEBUG_T2/lists.o: Src/lists.c Inc/types.h Inc/templates.h \
   Inc/lists.h Inc/templates.h Inc/types.h Inc/dynamic_arrays.h \
   Inc/good_field_types.h Inc/dynamic_array_types.h \
-  Inc/dynamic_array_template.h Inc/list_template.h Inc/dynamic_arrays.h \
-  Src/list_template.c Inc/defs.h Inc/log.h Inc/Goal.h \
+  Inc/dynamic_array_template.h Inc/defs.h Inc/list_template.h \
+  Inc/dynamic_arrays.h Src/list_template.c Inc/defs.h Inc/log.h \
+  Inc/Goal.h \
   C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/sdk_tplus.h \
   C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/oem_stdint_def.h \
   C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/oem_string_def.h \
@@ -188,6 +189,8 @@ Inc/good_field_types.h:
 Inc/dynamic_array_types.h:
 
 Inc/dynamic_array_template.h:
+
+Inc/defs.h:
 
 Inc/list_template.h:
 

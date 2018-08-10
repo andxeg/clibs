@@ -1,4 +1,5 @@
-Obj/GNU_ARM_DEBUG_T2/log.o: Src/log.c Inc/defs.h Inc/log.h Inc/Goal.h \
+Obj/GNU_ARM_DEBUG_T2/log.o: Src/log.c Inc/defs.h Inc/templates.h \
+  Inc/log.h Inc/Goal.h \
   C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/sdk_tplus.h \
   C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/oem_sys_types_def.h \
   C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/oem_stdint_def.h \
@@ -169,6 +170,8 @@ Obj/GNU_ARM_DEBUG_T2/log.o: Src/log.c Inc/defs.h Inc/log.h Inc/Goal.h \
   C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/GL_File.h
 
 Inc/defs.h:
+
+Inc/templates.h:
 
 Inc/log.h:
 

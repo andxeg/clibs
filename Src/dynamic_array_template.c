@@ -308,6 +308,65 @@ int TEMPLATE(recreate, TYPE_NAME)(int size, TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
     return 0;
 }
 
+// work only for INT and STRING
+// 0 - not match
+// 1 - match
+int TEMPLATE(array_match, TYPE_NAME)(TEMPLATE(DYN_ARRAY, TYPE_NAME)* a, TEMPLATE(DYN_ARRAY, vop)* pattern) {
+    #if TYPE_NUM == VOIDP
+    if (a->length != pattern->length) {
+        ELOG("template and array has different size");
+        return 0;
+    }
+
+    int i;
+    int type1, type2;
+    int *val1, *val2;
+    char *str1, *str2;
+    for (i = 0; i < a->length; i++) {
+        TEMPLATE(get, int)(a->types, i, &type1);
+        TEMPLATE(get, int)(pattern->types, i, &type2);
+
+        if (type1 == INT || type1 == BOOL) {
+            TEMPLATE(get, vop)(a, i, (void**)(&val1));
+        } else if (type1 == STRING) {
+            TEMPLATE(get, vop)(a, i, (void**)(&str1));
+        } else {
+            ELOG("unknown type in array");
+            return 0;
+        }
+
+        if (type2 == INT || type2 == BOOL) {
+            TEMPLATE(get, vop)(pattern, i, (void**)(&val2));
+        } else if (type2 == STRING) {
+            TEMPLATE(get, vop)(pattern, i, (void**)(&str2));
+        } else {
+            ELOG("unknown type in template");
+            return 0;
+        }
+
+
+        if ((type1 == INT && type2 == INT) ||
+        	(type1 == BOOL && type2 == BOOL)) {
+            if (*val1 != *val2) return 0;
+        } else if ((type1 == INT || type1 == BOOL) && type2 == STRING) {
+            if (strcmp(str2, "*\0") != 0) return 0;
+        } else if ((type1 == INT && type2 == BOOL) ||
+        		   (type1 == STRING && type2 == INT) ||
+				   (type1 == STRING && type2 == BOOL) ||
+				   (type1 == BOOL && type2 == INT)) {
+            return 0;
+        } else {
+            // type1 == STRING && type2 == STRING
+            if (strcmp(str2, "*\0") == 0) continue;
+            if (strcmp(str1, str2) != 0) return 0;
+        }
+
+    }
+    #endif
+
+    return 1;
+}
+
 #endif
 #endif
 #endif

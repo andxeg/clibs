@@ -1,8 +1,8 @@
 Obj/GNU_ARM_DEBUG_T2/dynamic_arrays.o: Src/dynamic_arrays.c \
   Inc/templates.h Inc/dynamic_arrays.h Inc/templates.h \
   Inc/good_field_types.h Inc/dynamic_arrays.h Inc/dynamic_array_types.h \
-  Inc/dynamic_array_template.h Src/dynamic_array_template.c Inc/defs.h \
-  Inc/log.h Inc/Goal.h \
+  Inc/dynamic_array_template.h Inc/defs.h Src/dynamic_array_template.c \
+  Inc/defs.h Inc/log.h Inc/Goal.h \
   C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/sdk_tplus.h \
   C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/oem_stdint_def.h \
   C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/oem_string_def.h \
@@ -185,6 +185,8 @@ Inc/dynamic_arrays.h:
 Inc/dynamic_array_types.h:
 
 Inc/dynamic_array_template.h:
+
+Inc/defs.h:
 
 Src/dynamic_array_template.c:
 

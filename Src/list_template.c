@@ -24,6 +24,20 @@ TEMPLATE(LIST, TYPE_NAME)* TEMPLATE(create_list, TYPE_NAME)() {
     return result;
 }
 
+// delete only list node
+// don't delete node data
+void TEMPLATE(destroy_list_lite, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list) {
+    while (list->next != list) {
+        TEMPLATE(LIST_NODE, TYPE_NAME)* node = list->next;
+        list->next = node->next;
+        node->next->prev = list;
+        node->next = node->prev = NULL;
+        free(node);
+    }
+
+    free(list);
+}
+
 void TEMPLATE(destroy_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list) {
     while (list->next != list) {
         TEMPLATE(LIST_NODE, TYPE_NAME)* node = list->next;
@@ -101,6 +115,42 @@ int TEMPLATE(contains_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, T elem) 
 // int - concrete value
 // vec2 - interval [a, b]
 // return array of founded element
+
+// NOTE:
+// when use this function, destroy result list in your code with destroy_list_lite
+// types in template array is differ from types in list
+// because template can contain '*' (all values are matched)
+// NOTE! Only for VOP_DYN_ARRAY work
+TEMPLATE(LIST, TYPE_NAME)* TEMPLATE(search, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME)* list, TEMPLATE(DYN_ARRAY, vop)* pattern) {
+	TEMPLATE(LIST, TYPE_NAME)* result = TEMPLATE(create_list, TYPE_NAME)();
+
+	TEMPLATE(LIST_NODE, TYPE_NAME)* curr_node = list->next;
+	while (curr_node != list) {
+		#if TYPE_NUM == INT_DYN_ARRAY
+		{
+		#elif TYPE_NUM == STRING_DYN_ARRAY
+		{
+		#elif TYPE_NUM == VOP_DYN_ARRAY
+		if (TEMPLATE(array_match, vop)(&curr_node->data, pattern) == 1) {
+		#elif TYPE_NUM == VOP_DYN_ARRAY_ST
+		{
+		#elif TYPE_NUM == INT_VEC2 || TYPE_NUM == INT_VEC2_ST
+		{
+		#elif TYPE_NUM == INT_VEC3 || TYPE_NUM == INT_VEC3_ST
+		{
+		#elif TYPE_NUM == STRING || TYPE_NUM == STRING_ST
+		{
+		#else
+		{
+		#endif
+			TEMPLATE(add_to_list, TYPE_NAME)(result, curr_node->data);
+		}
+
+		curr_node = curr_node->next;
+	}
+
+	return result;
+}
 
 int TEMPLATE(add_to_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, T elem) {
     TEMPLATE(LIST_NODE, TYPE_NAME)* last = list->prev;
