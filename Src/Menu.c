@@ -340,6 +340,58 @@ void GL_SampleDialogVirtualKeyboard3(T_GL_HGRAPHIC_LIB graphicLib) {
 }
 
 
+// Sample of dialog multi choice
+
+void GL_SampleDialogMultiChoice(T_GL_HGRAPHIC_LIB graphicLib) {
+
+    const char * menu [] = {
+        "Zero",
+        "One",
+        "Two",
+        "Three",
+        "Four",
+        "Five",
+        "Six",
+        "Seven",
+        "Height",
+        "Nine",
+        "Ten",
+        "Eleven",
+        "Twelve",
+        "Exit",
+        0 //<- DO NOT FORGET THIS TO STOP THE LIST
+    };
+
+    // Initial state of checkboxes
+    bool checked [] = {
+        true, //"Zero",
+        false,//"One",
+        false,//"Two",
+        true, //"Three",
+        true, //"Four",
+        false,//"Five",
+        true, //"Six",
+        false,//"Seven",
+        false,//"Height",
+        false,//"Nine",
+        false,//"Ten",
+        true, //"Eleven",
+        true, //"Twelve",
+        false, // utf8
+    };
+    ulong result;
+    do {
+		// Display the multi choice and wait selection
+		result = GL_Dialog_MultiChoice (graphicLib, "Menu",
+				menu, result, checked, GL_BUTTON_DEFAULT, GL_KEY_0, GL_TIME_INFINITE);
+		(void)result;
+		if (result == 13) break;
+		checked[result] = (checked[result] == true) ? false : true;
+    } while (result != 13);
+}
+
+
+
 
 /**
  * Main menu
@@ -359,6 +411,7 @@ void menuGoalDisplay(void)
 		  "GL Dialog Menu",
 		  "Test file size",
 		  "Magnetic",
+		  "MultiChoiceDialog",
 		  "[TEST TASK MAIN MENU]",
 		  "Exit", 0 };
 
@@ -692,6 +745,10 @@ void menuGoalDisplay(void)
     	Magnetic();
     	break;
     case 11:
+    	// test multi choice dialog
+    	GL_SampleDialogMultiChoice(gGoalGraphicLibInstance);
+    	break;
+    case 12:
     	// Test task main processing
     	GL_Dialog_Message(gGoalGraphicLibInstance, "TEST TASK MAIN MENU",
     			"Hello in test task main menu", GL_ICON_INFORMATION, GL_BUTTON_VALID,
@@ -705,7 +762,7 @@ void menuGoalDisplay(void)
 		//exit
 		break;
     }
-  } while (choice != 12);
+  } while (choice != 13);
 
   releaseUIContext();
   return;

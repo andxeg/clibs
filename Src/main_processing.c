@@ -918,7 +918,7 @@ int print_document(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema,
 	GL_Widget_SetBackAlign(hPrint, GL_ALIGN_RIGHT);
 	GL_Widget_SetText(hPrint, document_line);
 
-	sprintf(document_line, "Customer card: %s\n\n\n\n", pan);
+	sprintf(document_line, "Customer card: %s\n\n\n\n\n\n", pan);
 	hPrint = GL_Print_Create(hLayout);
 	GL_Widget_SetFontScale(hPrint, GL_SCALE_LARGE);
 	GL_Widget_SetItem(hPrint, 0, usLine++);
@@ -1025,6 +1025,7 @@ int form_cart_and_buy(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 					sprintf(msg, "Cannot read card. Attempt %d from %d", i+1, CARD_READ_LIMIT);
 					print_message(hGraphicLib, msg);
 				} else {
+					print_message(hGraphicLib, "Payment was not completed");
 					break;
 				}
 			}
