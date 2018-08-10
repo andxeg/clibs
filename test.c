@@ -472,7 +472,7 @@ int test_array_match() {
     char* s3 = "*";
     char* w = (char *) malloc(strlen(s3) + 1);
     char* u = (char *) malloc(strlen(s3) + 1);
-    char* s4 = "fouth";
+    char* s4 = "fourth";
     char* v = (char *) malloc(strlen(s4) + 1);
     w = strcpy(w, s3);
     u = strcpy(u, s3);

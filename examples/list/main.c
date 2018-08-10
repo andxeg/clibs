@@ -509,7 +509,7 @@ int test_search_vop_dyn_array() {
     int* d = (int *) malloc(sizeof(int));
     char* s3 = "first";
     char* u = (char *) malloc(strlen(s3) + 1);
-    char* s4 = "fouth";
+    char* s4 = "fourth";
     char* v = (char *) malloc(strlen(s4) + 1);
     u = strcpy(u, s3);
     v = strcpy(v, s4);
@@ -555,7 +555,7 @@ int test_search_vop_dyn_array() {
     int* h = (int *) malloc(sizeof(int));
     char* s6 = "second";
     char* n = (char *) malloc(strlen(s6) + 1);
-    char* s7 = "fouth";
+    char* s7 = "fourth";
     char* m = (char *) malloc(strlen(s7) + 1);
     char* s8 = "fifth";
     char* l = (char *) malloc(strlen(s8) + 1);
@@ -580,7 +580,7 @@ int test_search_vop_dyn_array() {
     int* p = (int *) malloc(sizeof(int));
     char* s9 = "third";
     char* k = (char *) malloc(strlen(s9) + 1);
-    char* s10 = "fouth";
+    char* s10 = "fourth";
     char* r = (char *) malloc(strlen(s10) + 1);
     char* s11 = "sixth";
     char* z = (char *) malloc(strlen(s11) + 1); 
@@ -614,25 +614,27 @@ int test_search_vop_dyn_array() {
     char* fifth = "fifth";
     char* sixth = "sixth";
     char* asterisk = "*";
+    int* num = (int* ) malloc(sizeof(int));
+    *num = 2;
     // PATTERN 1
     TEMPLATE(DYN_ARRAY, vop) pattern1;
     TEMPLATE(create, vop)(10, &pattern1);
 
     char* ptr = (char *) malloc(strlen(first) + 1);
-    ptr = strcpy(ptr, first);
-    TEMPLATE(append, vop)(&pattern1, (void *)ptr);
-    ptr = (char *) malloc(strlen(asterisk) + 1);
     ptr = strcpy(ptr, asterisk);
     TEMPLATE(append, vop)(&pattern1, (void *)ptr);
+    //ptr = (char *) malloc(strlen(asterisk) + 1);
+    //ptr = strcpy(ptr, asterisk);
+    TEMPLATE(append, vop)(&pattern1, (void *)num);
     ptr = (char *) malloc(strlen(fourth) + 1);
-    ptr = strcpy(ptr, fourth);
+    ptr = strcpy(ptr, asterisk);
     TEMPLATE(append, vop)(&pattern1, (void *)ptr);
     ptr = (char *) malloc(strlen(asterisk) + 1);
     ptr = strcpy(ptr, asterisk);
     TEMPLATE(append, vop)(&pattern1, (void *)ptr);
 
     TEMPLATE(append, int)(pattern1.types, STRING);
-    TEMPLATE(append, int)(pattern1.types, STRING);
+    TEMPLATE(append, int)(pattern1.types, INT);
     TEMPLATE(append, int)(pattern1.types, STRING);
     TEMPLATE(append, int)(pattern1.types, STRING);
 
@@ -643,6 +645,7 @@ int test_search_vop_dyn_array() {
     printf("result:\n");
     TEMPLATE(print_list, dyn_array_vop)(res);
     TEMPLATE(destroy_list_lite, dyn_array_vop)(res);
+    TEMPLATE(destroy, vop)(&pattern1);
     // PATTERN 2
 
     // PATTERN 3
@@ -662,8 +665,8 @@ typedef struct {
 } TEST_CASE;
 
 int main(int argc, char** argv) {
-    TEST_CASE test_cases[13] = {
-        {"Test creation for list with int values", test_creation_int_list},
+    TEST_CASE test_cases[1] = {
+/*        {"Test creation for list with int values", test_creation_int_list},
         {"Test empty list verification", test_empty_list_verification},
         {"Test checking presence of element in list", test_contains_in_list},
         {"Test int vec2", test_vec2_list},
@@ -675,6 +678,7 @@ int main(int argc, char** argv) {
         {"Test removing element by index", test_remove_element_by_index},
         {"Test list of dynamic arrays", test_int_dyn_array},
         {"Test list with void* dynamic arrays", test_vop_dyn_array},
+*/
         {"Test search in list with template", test_search_vop_dyn_array}
     };
     

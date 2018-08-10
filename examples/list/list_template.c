@@ -125,7 +125,6 @@ TEMPLATE(LIST, TYPE_NAME)* TEMPLATE(search, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME)
     
     TEMPLATE(LIST_NODE, TYPE_NAME)* curr_node = list->next;
     while (curr_node != list) {
-        curr_node = curr_node->next;
         #if TYPE_NUM == INT_DYN_ARRAY
         {
         #elif TYPE_NUM == STRING_DYN_ARRAY
@@ -145,7 +144,8 @@ TEMPLATE(LIST, TYPE_NAME)* TEMPLATE(search, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME)
         #endif
             TEMPLATE(add_to_list, TYPE_NAME)(result, curr_node->data);
         }
- 
+       
+        curr_node = curr_node->next;
     }
 
     return result; 
