@@ -23,21 +23,41 @@ int read_file_with_goods(const char* filename, FILE_SCHEMA* schema, T_GL_HGRAPHI
 	file = GL_File_Open(filename, GL_FILE_OPEN_EXISTING, GL_FILE_ACCESS_READ);
 	CHECK(file != NULL, lblFileMissing);
     iRet = read_file_header(file, schema, hGraphicLib);
-    CHECK(iRet == 0, lblEnd);
+    CHECK(iRet == 0, lblFileHeaderError);
     iRet = read_goods(file, schema, hGraphicLib);
-    CHECK(iRet == 0, lblEnd);
+    CHECK(iRet == 0, lblFileError);
 	iRet = GL_File_Close(file);
-	file = NULL;
 	CHECK(iRet == GL_SUCCESS, lblHostKO);
+	file = NULL;
+
+	TEMPLATE(DYN_ARRAY, vop) good;
+	TEMPLATE(get_by_index, dyn_array_vop)(schema->goods, 0, &good);
+	if (good.length != schema->header->fields.length) {
+		goto lblFileIncompatibleHeaderBody;
+	}
 	print_message(hGraphicLib, "File was successfully imported");
 	goto lblEnd;
 
 lblHostKO:                                         // HOST disk failed
 	GL_Dialog_Message(hGraphicLib, NULL, "HOST Disk Failed", GL_ICON_ERROR, GL_BUTTON_VALID, 5*1000);
 	goto lblEnd;
+
 lblFileMissing:                                    // File not found
 	GL_Dialog_Message(hGraphicLib, NULL, "Cannot find such file", GL_ICON_ERROR, GL_BUTTON_VALID, 5*1000);
 	goto lblEnd;
+
+lblFileHeaderError:
+	print_message(hGraphicLib, "cannot read file: header has mistake.\n See ERROR.TXT");
+	goto lblEnd;
+
+lblFileIncompatibleHeaderBody:
+	print_message(hGraphicLib, "cannot read file: header and goods are incompatible.\n See ERROR.TXT");
+	goto lblEnd;
+
+lblFileError:
+	print_message(hGraphicLib, "cannot read file: goods have mistake.\nSee ERROR.TXT");
+	goto lblEnd;
+
 lblEnd:
 	if (file != NULL) {
 		GL_File_Close(file);
@@ -46,7 +66,80 @@ lblEnd:
     return 0;
 }
 
+int file_type(T_GL_HFILE file, T_GL_HGRAPHIC_LIB hGraphicLib) {
+	char type[FILE_TYPE_LEN];
+	type[FILE_TYPE_LEN-1] = '\0';
+	if (GL_File_Read(file, type, strlen("#dynamic\r")) != strlen("#dynamic\r")) {
+		return ERROR_FILE_TYPE;
+	}
+
+	if (memcmp(type, "#dynamic", strlen("#dynamic")) == 0) {
+		print_message(hGraphicLib, "file has dynamic type");
+		return DYNAMIC_FILE_TYPE;
+	}
+
+	print_message(hGraphicLib, "file has static type");
+	return STATIC_FILE_TYPE;
+}
+
+int assign_schema_header(FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicLib) {
+	char* fields[7] = {"NAME", "COUNT_UNIT_NAME", "PRICE",
+					   "EATABLE", "LIQUID", "IMPORTED", "PACKED"};
+
+	GOOD_FIELD_TYPE types[7] = {STRING_GOOD, STRING_GOOD, NUMBER_GOOD,
+							   BOOL_GOOD, BOOL_GOOD, BOOL_GOOD, BOOL_GOOD};
+
+	int length_min[7] = {1, 1, 1, 1, 1, 1, 1};
+	int length_max[7] = {31, 4, 6, 1, 1, 1, 1};
+
+	int i;
+	char* str;
+
+	// add fields name
+	for (i = 0; i < NUMBER_OF_ITEMS(fields); i++) {
+		str = (char *) malloc(sizeof(char) * (strlen(fields[i]) + 1));
+		str = strcpy(str, fields[i]);
+		TEMPLATE(append, string)(&schema->header->fields, str);
+	}
+
+	// add types
+	for (i = 0; i < NUMBER_OF_ITEMS(types); i++) {
+		TEMPLATE(append, good_field)(&schema->header->types, types[i]);
+	}
+
+	// add length min
+	for (i = 0; i < NUMBER_OF_ITEMS(length_min); i++) {
+		TEMPLATE(append, int(&schema->header->length_min, length_min[i]));
+	}
+
+	// add length max
+	for (i = 0; i < NUMBER_OF_ITEMS(length_max); i++) {
+		TEMPLATE(append, int(&schema->header->length_max, length_max[i]));
+	}
+
+	return 0;
+}
+
 int read_file_header(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicLib) {
+	int file_t = file_type(file, hGraphicLib);
+
+	if (file_t == ERROR_FILE_TYPE) {
+		print_message(hGraphicLib, "error file type");
+		ELOG("error file type");
+		return 1;
+	}
+
+	if (file_t == STATIC_FILE_TYPE) {
+		assign_schema_header(schema, hGraphicLib);
+		// move file pointer to the beginning of file
+		if (GL_File_Seek(file, 0, GL_FILE_SEEK_BEGIN) != GL_SUCCESS) {
+			print_message(hGraphicLib, "cannot read file with goods");
+			ELOG("error while move file pointer to the beginning of file");
+			return 1;
+		}
+		return 0;
+	}
+
     if (read_fields(file, schema, hGraphicLib)) {
         return 1;
     }
@@ -203,7 +296,6 @@ int get_int_value(TEMPLATE(DYN_ARRAY, char)* array_char, int* value) {
             return 1;
         }
     }
-    char msg[LOG_MSG_LENGTH_LIMIT];
     *value = (int) result;
     return 0;
 }

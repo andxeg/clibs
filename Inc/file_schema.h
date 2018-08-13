@@ -21,6 +21,7 @@ typedef struct {
 FILE_SCHEMA* create_file_schema();
 void destroy_file_schema(FILE_SCHEMA* schema);
 void print_file_schema(FILE_SCHEMA* schema);
+int is_empty_file_schema(FILE_SCHEMA* schema);
 
 #endif
 

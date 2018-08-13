@@ -106,7 +106,7 @@ typedef struct Params
 static char appName[OBJECT_NAME_LEN + 1];
 static char fileName[OBJECT_FILE_NAME_LEN + 1];
 static const char timeToCall[] = "Time to call\nFrom";
-static const char idleMsg[] = "\nIdle message from TEST_TASK\nPlease Insert\nA Smart Card...";
+static const char idleMsg[] = "\nPress 'F'\nAnd choose TEST_TASK\nMain menu";
 static const char szDate[] = "Date:%.2s/%.2s/%.2s  %.2s:%.2s\n";
 
 const char* ERROR_FILE = "file://flash/HOST/ERROR.TXT";

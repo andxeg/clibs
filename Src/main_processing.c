@@ -106,7 +106,7 @@ int import_file_with_goods(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_sche
 			filename, sizeof(filename), 0,
 			GL_TIME_INFINITE) == GL_KEY_VALID)
 	{
-		iRet = read_file_with_goods(filename, file_schema, hGraphicLib);
+		read_file_with_goods(filename, file_schema, hGraphicLib);
 		print_file_schema(file_schema);
 	}
 
@@ -1025,9 +1025,13 @@ int form_cart_and_buy(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 					sprintf(msg, "Cannot read card. Attempt %d from %d", i+1, CARD_READ_LIMIT);
 					print_message(hGraphicLib, msg);
 				} else {
-					print_message(hGraphicLib, "Payment was not completed");
+					print_message(hGraphicLib, "Thank you!");
 					break;
 				}
+			}
+
+			if (i == 5) {
+				print_message(hGraphicLib, "Payment was not completed");
 			}
 			break;
 		} else {
@@ -1077,7 +1081,8 @@ void create_menu(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 				break;
 			}
 
-			if (TEMPLATE(size_list, dyn_array_vop)(file_schema->goods) != 0) {
+			if (is_empty_file_schema(file_schema) == 0) {
+//			if (TEMPLATE(size_list, dyn_array_vop)(file_schema->goods) != 0) {
 				print_message(hGraphicLib, "Delete current list of goods");
 				destroy_file_schema(file_schema);
 				file_schema = create_file_schema();

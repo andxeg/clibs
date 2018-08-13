@@ -45,3 +45,10 @@ void print_file_schema(FILE_SCHEMA* schema) {
     TEMPLATE(print_list, dyn_array_vop)(schema->goods);
 }
 
+int is_empty_file_schema(FILE_SCHEMA* schema) {
+	return TEMPLATE(size_list, dyn_array_vop)(schema->goods) == 0 &&
+		   TEMPLATE(array_length, string)(&schema->header->fields) == 0 &&
+		   TEMPLATE(array_length, good_field)(&schema->header->types) == 0 &&
+		   TEMPLATE(array_length, int)(&schema->header->length_min) == 0 &&
+		   TEMPLATE(array_length, int)(&schema->header->length_max) == 0;
+}

@@ -11,6 +11,10 @@
 #define PAN_LIMIT 32
 #define CARD_READ_LIMIT 5
 #define DOC_LINE_LIMIT 64
+#define FILE_TYPE_LEN 10
+#define DYNAMIC_FILE_TYPE 1
+#define STATIC_FILE_TYPE 2
+#define ERROR_FILE_TYPE 3
 
 #define FILENAME_LIMIT 256
 #define CHECK(CND,LBL) {if(!(CND)){goto LBL;}}
