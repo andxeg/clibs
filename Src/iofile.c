@@ -18,8 +18,6 @@ int read_file_with_goods(const char* filename, FILE_SCHEMA* schema, T_GL_HGRAPHI
 	int iRet;
 	T_GL_HFILE file = NULL;
 
-	print_message(hGraphicLib, "Start file import");
-
 	file = GL_File_Open(filename, GL_FILE_OPEN_EXISTING, GL_FILE_ACCESS_READ);
 	CHECK(file != NULL, lblFileMissing);
     iRet = read_file_header(file, schema, hGraphicLib);
@@ -35,7 +33,6 @@ int read_file_with_goods(const char* filename, FILE_SCHEMA* schema, T_GL_HGRAPHI
 	if (good.length != schema->header->fields.length) {
 		goto lblFileIncompatibleHeaderBody;
 	}
-	print_message(hGraphicLib, "File was successfully imported");
 	goto lblEnd;
 
 lblHostKO:                                         // HOST disk failed
@@ -74,11 +71,9 @@ int file_type(T_GL_HFILE file, T_GL_HGRAPHIC_LIB hGraphicLib) {
 	}
 
 	if (memcmp(type, "#dynamic", strlen("#dynamic")) == 0) {
-		print_message(hGraphicLib, "file has dynamic type");
 		return DYNAMIC_FILE_TYPE;
 	}
 
-	print_message(hGraphicLib, "file has static type");
 	return STATIC_FILE_TYPE;
 }
 

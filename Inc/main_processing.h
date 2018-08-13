@@ -29,6 +29,7 @@ int import_file_with_goods(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_sche
 int print_list_with_goods(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema);
 int modify_list_with_goods(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema);
 int find_goods_by_template(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema);
+int find_goods_by_categories(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema);
 int form_cart_and_buy(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema);
 
 void get_first_fields(FILE_SCHEMA* file_schema, char** first_fields);
@@ -51,5 +52,7 @@ void pay(T_GL_HGRAPHIC_LIB hGraphicLib, char* pan, int len);
 int print_document(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, TEMPLATE(DYN_ARRAY, int)* indexes, TEMPLATE(DYN_ARRAY, int)* counts, char* pan);
 int get_good_price(FILE_SCHEMA* file_schema, TEMPLATE(DYN_ARRAY, vop)* good_fields);
 int get_index_of_price_field(FILE_SCHEMA* file_schema);
+
+int get_categories_pattern(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, char** bool_fields, bool* checked, int bool_fields_count, TEMPLATE(DYN_ARRAY, vop)* pattern);
 
 #endif // MAIN_PROCESSING_H

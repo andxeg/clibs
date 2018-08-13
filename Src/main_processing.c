@@ -695,6 +695,104 @@ int find_goods_by_template(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_sche
 	return 0;
 }
 
+int get_categories_pattern(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, char** bool_fields, bool* checked, int bool_fields_count, TEMPLATE(DYN_ARRAY, vop)* pattern) {
+	int fields_amount = file_schema->header->fields.length;
+
+	int i, j;
+	j = 0;
+	int* val;
+	char* asterisk = "*";
+	GOOD_FIELD_TYPE type;
+	for (i = 0; i < fields_amount; i++) {
+		TEMPLATE(get, good_field)(&file_schema->header->types, i, &type);
+		if (type != BOOL_GOOD) {
+			char* str = (char *) malloc(sizeof(char) * 2);
+			str = strcpy(str, asterisk);
+			TEMPLATE(append, vop)(pattern, (void *)str);
+			TEMPLATE(append, int)(pattern->types, STRING);
+			continue;
+		}
+
+		val = (int *) malloc(sizeof(int));
+		*val = (checked[j] == true) ? 1 : 0;
+		TEMPLATE(append, vop)(pattern, (void *)val);
+		TEMPLATE(append, int)(pattern->types, INT);
+		++j;
+	}
+
+	return 0;
+}
+
+
+int find_goods_by_categories(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
+	int goods_count = TEMPLATE(size_list, dyn_array_vop)(file_schema->goods);
+	if (file_schema == NULL || goods_count == 0) {
+		print_message(hGraphicLib, "List with goods is empty");
+		return 1;
+	}
+
+	int fields_amount = file_schema->header->fields.length;
+
+	// pattern is strictly defined - without '*'
+	TEMPLATE(DYN_ARRAY, vop) pattern;
+	TEMPLATE(create, vop)(fields_amount, &pattern);
+
+	// add bool fields to multi choice dialog
+	int bool_fields_count = 0;
+	char** bool_fields = (char **) malloc(sizeof(char*) * (fields_amount + 2));
+
+	int i;
+	char* str;
+	GOOD_FIELD_TYPE type;
+	for (i = 0; i < fields_amount; i++) {
+		TEMPLATE(get, string)(&file_schema->header->fields, i, &str);
+		TEMPLATE(get, good_field)(&file_schema->header->types, i, &type);
+		if (type == BOOL_GOOD) {
+			bool_fields[bool_fields_count++] = str;
+		}
+	}
+
+	bool_fields[bool_fields_count] = "Find";
+	bool_fields[bool_fields_count+1] = "Exit";
+	bool_fields[bool_fields_count+2] = 0;
+
+	bool_fields = (char**) realloc(bool_fields, sizeof(char*) * (bool_fields_count + 3));
+	bool* checked = (bool *) malloc(sizeof(bool) * (bool_fields_count + 2));
+	for (i = 0; i < bool_fields_count + 2; i++) {
+		checked[i] = false;
+	}
+
+	char choice = 0;
+	do {
+
+		choice = GL_Dialog_MultiChoice (hGraphicLib, "Categories",
+				bool_fields, choice, checked, GL_BUTTON_DEFAULT, GL_KEY_0, GL_TIME_INFINITE);
+		(void)choice;
+
+		if (choice == bool_fields_count + 1) break;
+
+		if (choice == bool_fields_count) {
+			get_categories_pattern(hGraphicLib, file_schema, bool_fields,
+								   checked, bool_fields_count, &pattern);
+			SLOG("pattern");
+			TEMPLATE(print, vop)(&pattern);
+			TEMPLATE(LIST, dyn_array_vop)* res = TEMPLATE(search, dyn_array_vop)(file_schema->goods,
+													                             &pattern);
+			print_message(hGraphicLib, "search");
+			show_search_results(hGraphicLib, file_schema, res);
+			TEMPLATE(destroy_list_lite, dyn_array_vop)(res);
+			break;
+		}
+
+		checked[choice] = (checked[choice] == true) ? false : true;
+	} while (choice != bool_fields_count + 1);
+
+	TEMPLATE(destroy, vop)(&pattern);
+	free(bool_fields);
+	free(checked);
+	return 0;
+}
+
 void pay(T_GL_HGRAPHIC_LIB hGraphicLib, char* pan, int len) {
 	// Flush pan
 	pan[0] = '\0';
@@ -1059,6 +1157,7 @@ void create_menu(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 			"Print list of goods",
 			"Modify list of goods",                // Add / Delete
 			"Find goods by template",
+			"Find goods by categories",
 			"Form shopping cart and pay for it",
 			"Exit",
 			0
@@ -1070,10 +1169,6 @@ void create_menu(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 		choice = GL_Dialog_Menu(hGraphicLib, "Select action", main_menu, choice,
 				GL_BUTTON_NONE , GL_KEY_0, GL_TIME_INFINITE);
 
-		GL_Dialog_Message(gGoalGraphicLibInstance, main_menu[choice],
-				main_menu[choice], GL_ICON_INFORMATION, GL_BUTTON_VALID,
-				main_menu_item_delay * GL_TIME_SECOND);
-
 		switch (choice) {
 		case 0:                                    // IMPORT
 			if (file_schema == NULL) {
@@ -1082,7 +1177,6 @@ void create_menu(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 			}
 
 			if (is_empty_file_schema(file_schema) == 0) {
-//			if (TEMPLATE(size_list, dyn_array_vop)(file_schema->goods) != 0) {
 				print_message(hGraphicLib, "Delete current list of goods");
 				destroy_file_schema(file_schema);
 				file_schema = create_file_schema();
@@ -1102,18 +1196,19 @@ void create_menu(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 		case 3:                                    // FIND
 			find_goods_by_template(hGraphicLib, file_schema);
 			break;
-		case 4:                                    // FORM CART AND BUY
+		case 4:
+			find_goods_by_categories(hGraphicLib, file_schema);
+			break;
+		case 5:                                    // FORM CART AND BUY
 			form_cart_and_buy(hGraphicLib, file_schema);
 			break;
 		default:
 			// Exit
 			break;
 		}
-	} while (choice != 5);
+	} while (choice != 6);
 }
 
 void main_processing(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
-	print_startup_message(hGraphicLib);
 	create_menu(hGraphicLib, file_schema);
-
 }
