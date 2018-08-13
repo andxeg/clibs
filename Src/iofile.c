@@ -596,7 +596,12 @@ int read_goods(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicL
             inside = 1;
             TEMPLATE(append, char)(&array_char, c);
         } else {
-            ELOG("unknown symbol in field");
+			char* field;
+			TEMPLATE(get, string)(&schema->header->fields, curr_field, &field);
+        	char msg[ERROR_LENGTH_LIMIT];
+        	sprintf(msg, "good #%d, unknown symbol '%c' in field '%s'", c, good_num, field);
+            ELOG(msg);
+            print_message(hGraphicLib, msg);
             TEMPLATE(destroy, char)(&array_char);
             TEMPLATE(destroy, vop)(&array_void);
             return 1;

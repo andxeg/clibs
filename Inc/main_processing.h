@@ -53,6 +53,7 @@ int print_document(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, TEMP
 int get_good_price(FILE_SCHEMA* file_schema, TEMPLATE(DYN_ARRAY, vop)* good_fields);
 int get_index_of_price_field(FILE_SCHEMA* file_schema);
 
-int get_categories_pattern(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, char** bool_fields, bool* checked, int bool_fields_count, TEMPLATE(DYN_ARRAY, vop)* pattern);
+int get_bool_fields_name(FILE_SCHEMA* file_schema, char** first_fields);
+int get_categories_pattern(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, TEMPLATE(DYN_ARRAY, vop)* pattern);
 
 #endif // MAIN_PROCESSING_H
