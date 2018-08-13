@@ -415,8 +415,6 @@ int add_new_good(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 		TEMPLATE(get, int)(max_limit, i, &max_len);
 		TEMPLATE(get, string)(fields, i, &field_name);
 
-		print_message(hGraphicLib, field_name);
-
 		field_value = read_field(hGraphicLib, field_name, min_len, max_len, type, 0);
 		if (field_value == NULL) {
 			TEMPLATE(destroy, vop)(&good_fields);
@@ -593,8 +591,6 @@ int read_search_pattern(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema,
 		TEMPLATE(get, int)(max_limit, i, &max_len);
 		TEMPLATE(get, string)(fields, i, &field_name);
 
-		print_message(hGraphicLib, field_name);
-
 		field_value = read_field(hGraphicLib, field_name, min_len, max_len, type, 1);
 		if (field_value == NULL) {
 			print_message(hGraphicLib, "Error in input field");
@@ -687,7 +683,6 @@ int find_goods_by_template(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_sche
 
 	TEMPLATE(LIST, dyn_array_vop)* res = TEMPLATE(search, dyn_array_vop)(file_schema->goods, &pattern);
 
-	print_message(hGraphicLib, "search");
 	show_search_results(hGraphicLib, file_schema, res);
 
 	TEMPLATE(destroy_list_lite, dyn_array_vop)(res);
@@ -716,7 +711,7 @@ int get_categories_pattern(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_sche
 		val = (int *) malloc(sizeof(int));
 		*val = (checked[j] == true) ? 1 : 0;
 		TEMPLATE(append, vop)(pattern, (void *)val);
-		TEMPLATE(append, int)(pattern->types, INT);
+		TEMPLATE(append, int)(pattern->types, BOOL);
 		++j;
 	}
 
@@ -778,7 +773,6 @@ int find_goods_by_categories(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_sc
 			TEMPLATE(print, vop)(&pattern);
 			TEMPLATE(LIST, dyn_array_vop)* res = TEMPLATE(search, dyn_array_vop)(file_schema->goods,
 													                             &pattern);
-			print_message(hGraphicLib, "search");
 			show_search_results(hGraphicLib, file_schema, res);
 			TEMPLATE(destroy_list_lite, dyn_array_vop)(res);
 			break;
@@ -1097,17 +1091,23 @@ int form_cart_and_buy(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 	first_fields[goods_count + 1] = "Exit";
 	first_fields[goods_count + 2] = NULL;
 
+	bool* checked = (bool* ) malloc(sizeof(bool) * (goods_count + 2));
+	int i;
+	for (i = 0; i < goods_count + 2; i++) {
+		checked[i] = false;
+	}
+
 	int count = 0;
 	TEMPLATE(DYN_ARRAY, int) indexes; // keep indexed of goods
 	TEMPLATE(DYN_ARRAY, int) counts;  // keep number of each goods in cart
 	TEMPLATE(create, int)(1, &indexes);
 	TEMPLATE(create, int)(1, &counts);
 
-	int i;
 	char choice = 0;
 	do {
-		choice = GL_Dialog_Choice(hGraphicLib, "Choose goods", first_fields,
-				choice, GL_BUTTON_DEFAULT, GL_KEY_0, GL_TIME_INFINITE);
+
+		choice = GL_Dialog_MultiChoice (hGraphicLib, "Choose goods", first_fields,
+				choice, checked, GL_BUTTON_DEFAULT, GL_KEY_0, GL_TIME_INFINITE);
 	    (void)choice;
 
 		if (choice == goods_count + 1) {
@@ -1137,6 +1137,7 @@ int form_cart_and_buy(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 			if (count != 0) {
 				TEMPLATE(append, int)(&indexes, choice);
 				TEMPLATE(append, int)(&counts, count);
+				checked[choice] = (checked[choice] == true) ? false : true;
 			}
 		}
 
@@ -1145,6 +1146,7 @@ int form_cart_and_buy(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 	TEMPLATE(destroy, int)(&indexes);
 	TEMPLATE(destroy, int)(&counts);
 	free(first_fields);
+	free(checked);
 	return 0;
 }
 
