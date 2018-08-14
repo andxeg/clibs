@@ -64,6 +64,7 @@ int Main(unsigned int size, StructPt *data)
     // This new prototype can be used with SDK version >= 6.5.
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     ret = more_function(No, NULL, NULL);
+
     break;
 
   case KEYBOARD_EVENT: // Activated when key is pressed

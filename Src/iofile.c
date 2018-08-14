@@ -33,6 +33,8 @@ int read_file_with_goods(const char* filename, FILE_SCHEMA* schema, T_GL_HGRAPHI
 	if (good.length != schema->header->fields.length) {
 		goto lblFileIncompatibleHeaderBody;
 	}
+
+	print_message(hGraphicLib, "File was successfully imported");
 	goto lblEnd;
 
 lblHostKO:                                         // HOST disk failed
@@ -495,6 +497,18 @@ int read_goods(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicL
                SLOG("Warning: empty line");
                inside = curr_field = 0;
                continue;
+           }
+
+           if (array_void.length != types->length) {
+        	   char error_msg[ERROR_LENGTH_LIMIT];
+        	   sprintf(error_msg, "good #%d has incorrect count of good", good_num);
+        	   ELOG(error_msg);
+        	   TEMPLATE(destroy, char)(&array_char);
+        	   TEMPLATE(destroy, vop)(&array_void);
+        	   if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
+				  TEMPLATE(destroy2, int)(int_types);
+        	   }
+        	   return 1;
            }
 
            // add copy of int_types to array_void.types
