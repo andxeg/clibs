@@ -608,11 +608,11 @@ int test_search_vop_dyn_array() {
 
     // ===============TEST_SEARCH===============
     char* first = "first";
-    char* second = "second";
-    char* third = "third";
+    //char* second = "second";
+    //char* third = "third";
     char* fourth = "fourth";
-    char* fifth = "fifth";
-    char* sixth = "sixth";
+    //char* fifth = "fifth";
+    //char* sixth = "sixth";
     char* asterisk = "*";
     int* num = (int* ) malloc(sizeof(int));
     *num = 2;
@@ -665,8 +665,8 @@ typedef struct {
 } TEST_CASE;
 
 int main(int argc, char** argv) {
-    TEST_CASE test_cases[1] = {
-/*        {"Test creation for list with int values", test_creation_int_list},
+    TEST_CASE test_cases[13] = {
+        {"Test creation for list with int values", test_creation_int_list},
         {"Test empty list verification", test_empty_list_verification},
         {"Test checking presence of element in list", test_contains_in_list},
         {"Test int vec2", test_vec2_list},
@@ -678,7 +678,6 @@ int main(int argc, char** argv) {
         {"Test removing element by index", test_remove_element_by_index},
         {"Test list of dynamic arrays", test_int_dyn_array},
         {"Test list with void* dynamic arrays", test_vop_dyn_array},
-*/
         {"Test search in list with template", test_search_vop_dyn_array}
     };
     

@@ -71,12 +71,11 @@ void TEMPLATE(destroy, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
     
     #if TYPE_NUM == VOIDP || TYPE_NUM == VOIDP_ST 
     if (a->types != NULL) {
-        //fprintf(stderr, "a->types != NULL -> %p, a->types->data -> %p\n", a->types, a->types->data); 
         if (a->types->data != NULL) {
             TEMPLATE(destroy2, int)(a->types);
         }
+        //free(a->types);
         a->types = NULL;
-        fprintf(stderr, "a->type is assigned NULL %p\n", a->types);
     }
     #endif
 }

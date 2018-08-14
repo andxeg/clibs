@@ -468,7 +468,7 @@ int test_array_match() {
     TEMPLATE(DYN_ARRAY, vop) array_void2;
     TEMPLATE(create, vop)(10, &array_void2);
     int* c = (int *) malloc(sizeof(int));
-    int* d = (int *) malloc(sizeof(int));
+    //int* d = (int *) malloc(sizeof(int));
     char* s3 = "*";
     char* w = (char *) malloc(strlen(s3) + 1);
     char* u = (char *) malloc(strlen(s3) + 1);
@@ -478,7 +478,7 @@ int test_array_match() {
     u = strcpy(u, s3);
     v = strcpy(v, s4);
     *c = 1;
-    *d = 2;
+    //*d = 2;
     TEMPLATE(append, vop)(&array_void2, (void *)c);
     TEMPLATE(append, vop)(&array_void2, (void *)w);
     TEMPLATE(append, vop)(&array_void2, (void *)u);
@@ -514,7 +514,8 @@ typedef struct {
 } TEST_CASE;
 
 int main(int argc, char** argv) {
-    TEST_CASE test_cases[17] = {
+    TEST_CASE test_cases[] = {
+/*
         {"Test array with integer values", test_array_int},
         {"Test array with char* (static)", test_array_string_st},
         {"Test array with char* (dynamic)", test_array_string},
@@ -525,13 +526,14 @@ int main(int argc, char** argv) {
         {"Test another version of array creation", test_create2},
         {"Test simple array comparison", test_array_comparison_simple},
         {"Test complex array comparison", test_array_comparison_complex},
-        {"Test file reading", test_file_read},
-        {"Test shrink to fit", test_shrink_to_fit},
+*/        {"Test file reading", test_file_read},
+/*        {"Test shrink to fit", test_shrink_to_fit},
         {"Test get raw data", test_get_raw_data},
         {"Test get types", test_get_types},
         {"Test recreate array", test_recreate_array},
         {"Test string dyn array with element raw data from dyn array char", test_array_string_raw_data},
         {"Test array match", test_array_match}
+*/
     };
     
     int all_tests = sizeof(test_cases) / sizeof(test_cases[0]);

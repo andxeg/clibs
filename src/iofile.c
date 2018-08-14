@@ -204,6 +204,10 @@ int get_int_value(TEMPLATE(DYN_ARRAY, char)* array_char, int* value) {
             ELOG("converted integer value is out of range");
             return 1;
         }
+        if (eptr == array_char->data) {
+            ELOG("string doesn't contain a number");
+            return 1;
+        }
     }
     char msg[LOG_MSG_LENGTH_LIMIT];
     sprintf(msg, "converted number -> %ld", result);
@@ -335,12 +339,14 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
                     char error_msg[ERROR_LENGTH_LIMIT];
                     char* field;
                     TEMPLATE(get, string)(&schema->header->fields, curr_field, &field);
-                    sprintf(error_msg, "good #%d has incorrect value in field %s", good_num, field);
+                    sprintf(error_msg, "good #%d has incorrect value in field %s", good_num + 1, field);
                     ELOG(error_msg);
                     TEMPLATE(destroy, char)(&array_char);
+                    TEMPLATE(destroy, vop)(&array_void);
                     if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
                         TEMPLATE(destroy2, int)(int_types);
                     }
+                    TEMPLATE(destroy2, int)(int_types);
                     return 1;
                 }
                
@@ -352,12 +358,14 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
                 case BOOL:
                      if (get_bool_value(&array_char, val)) {
                          char error_msg[ERROR_LENGTH_LIMIT];
-                         sprintf(error_msg, "cannot convert %s to bool value", array_char.data);
+                         sprintf(error_msg, "good #%d, cannot convert '%s' to bool value", good_num + 1, array_char.data);
                          ELOG(error_msg);
                          TEMPLATE(destroy, char)(&array_char);
+                         TEMPLATE(destroy, vop)(&array_void);
                          if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
                              TEMPLATE(destroy2, int)(int_types);
                          }
+                         TEMPLATE(destroy2, int)(int_types);
                          free(val);
                          return 1;     
                      }
@@ -368,12 +376,14 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
                 case INT:
                      if (get_int_value(&array_char, val)) {
                          char error_msg[ERROR_LENGTH_LIMIT];
-                         sprintf(error_msg, "cannot convert %s to integer value", array_char.data);
+                         sprintf(error_msg, "good #%d, cannot convert '%s' to integer value", good_num + 1, array_char.data);
                          ELOG(error_msg);
                          TEMPLATE(destroy, char)(&array_char);
+                         TEMPLATE(destroy, vop)(&array_void);
                          if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
                              TEMPLATE(destroy2, int)(int_types);
                          }
+                         TEMPLATE(destroy2, int)(int_types);
                          free(val);
                          return 1;
                      }
@@ -386,9 +396,11 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
                      if (TEMPLATE(shrink_to_fit, char)(&array_char)) {
                          ELOG("cannot shrink input field");
                          TEMPLATE(destroy, char)(&array_char);
+                         TEMPLATE(destroy, vop)(&array_void);
                          if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
                              TEMPLATE(destroy2, int)(int_types);
                          }
+                         TEMPLATE(destroy2, int)(int_types);
                          return 1;
                      }
                      
@@ -397,6 +409,12 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
                      break;
                 default:
                     free(val); 
+                    TEMPLATE(destroy, char)(&array_char);
+                    TEMPLATE(destroy, vop)(&array_void);
+                    if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
+                        TEMPLATE(destroy2, int)(int_types);
+                    }
+                    TEMPLATE(destroy2, int)(int_types);
                     ELOG("unknown type");
                     return 1;
                 } 
@@ -413,7 +431,22 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
                continue;
            }
 
+           if (array_void.length != types->length) {
+               char error_msg[128];
+               sprintf(error_msg, "good#%d has len < fields amount", good_num);
+               TEMPLATE(destroy, char)(&array_char);
+               TEMPLATE(destroy, vop)(&array_void);
+               if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
+                   TEMPLATE(destroy2, int)(int_types);
+               }
+               // if list node store copy of int_types destroy it 
+               TEMPLATE(destroy2, int)(int_types);
+               ELOG(error_msg);
+               return 1;
+           }
+
            // add copy of int_types to array_void.types
+
            for (int i = 0; i < array_void.length; i++) {
                int type;
                TEMPLATE(get, int)(int_types, i, &type);
@@ -435,6 +468,16 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
         if (c == GOODS_FILE_SEPARATOR) {
             printf("curr_field -> %d\n", curr_field);
             if (inside) {
+                if ((curr_field + 1) > types->length) {
+                    char error_msg[128];
+                    sprintf(error_msg, "good#%d has len > fields amount", good_num);
+                    TEMPLATE(destroy, char)(&array_char);
+                    TEMPLATE(destroy, vop)(&array_void);
+                    TEMPLATE(destroy2, int)(int_types);
+                    ELOG(error_msg);
+                    return 1;
+                }
+
                 int len = TEMPLATE(array_length, char)(&array_char);
                 int min, max;
                 TEMPLATE(get, int)(min_limit, curr_field, &min);
@@ -443,15 +486,18 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
                     char error_msg[ERROR_LENGTH_LIMIT];
                     char* field;
                     TEMPLATE(get, string)(&schema->header->fields, curr_field, &field);
-                    sprintf(error_msg, "good #%d has incorrect value in field %s", good_num, field);
+                    sprintf(error_msg, "good #%d has incorrect length in field %s", good_num, field);
                     ELOG(error_msg);
+                    TEMPLATE(destroy, vop)(&array_void);
                     TEMPLATE(destroy, char)(&array_char);
                     if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
                         TEMPLATE(destroy2, int)(int_types);
                     }
+                    // if list node store copy of int_types then destroy it
+                    TEMPLATE(destroy2, int)(int_types);
                     return 1;
                 }
-               
+                
                 int type;
                 int* val = (int *)malloc(sizeof(int));
                 TEMPLATE(get, int)(int_types, curr_field, &type);
@@ -460,12 +506,14 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
                 case BOOL:
                      if (get_bool_value(&array_char, val)) {
                          char error_msg[ERROR_LENGTH_LIMIT];
-                         sprintf(error_msg, "cannot convert %s to bool value", array_char.data);
+                         sprintf(error_msg, "good #%d, cannot convert '%s' to bool value", good_num + 1, array_char.data);
                          ELOG(error_msg);
                          TEMPLATE(destroy, char)(&array_char);
+                         TEMPLATE(destroy, vop)(&array_void);
                          if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
                              TEMPLATE(destroy2, int)(int_types);
                          }
+                         TEMPLATE(destroy2, int)(int_types);
                          free(val);
                          return 1;     
                      }
@@ -475,12 +523,14 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
                 case INT:
                      if (get_int_value(&array_char, val)) {
                          char error_msg[ERROR_LENGTH_LIMIT];
-                         sprintf(error_msg, "cannot convert %s to integer value", array_char.data);
+                         sprintf(error_msg, "good #%d, cannot convert '%s' to integer value", good_num + 1, array_char.data);
                          ELOG(error_msg);
                          TEMPLATE(destroy, char)(&array_char);
+                         TEMPLATE(destroy, vop)(&array_void);
                          if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
                              TEMPLATE(destroy2, int)(int_types);
                          }
+                         TEMPLATE(destroy2, int)(int_types);
                          free(val);
                          return 1;
                      }
@@ -492,15 +542,24 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
                      if (TEMPLATE(shrink_to_fit, char)(&array_char)) {
                          ELOG("cannot shrink input field");
                          TEMPLATE(destroy, char)(&array_char);
+                         TEMPLATE(destroy, vop)(&array_void);
                          if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
                              TEMPLATE(destroy2, int)(int_types);
                          }
+                         TEMPLATE(destroy2, int)(int_types);
                          return 1;
                      }
 
                      TEMPLATE(append, vop)(&array_void, (void*)array_char.data); 
                      break;
-                default: 
+                default:
+                    free(val); 
+                    TEMPLATE(destroy, char)(&array_char);
+                    TEMPLATE(destroy, vop)(&array_void);
+                    if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
+                        TEMPLATE(destroy2, int)(int_types);
+                    }
+                    TEMPLATE(destroy2, int)(int_types);
                     ELOG("unknown type");
                     break;
                 } 
@@ -516,11 +575,14 @@ int read_goods(FILE* file, FILE_SCHEMA* schema) {
             ELOG("unknown symbol in field");
             TEMPLATE(destroy, char)(&array_char); 
             TEMPLATE(destroy, vop)(&array_void);
+            TEMPLATE(destroy, int)(int_types);
             return 1;
         }
     }
    
     // delete int_types if add copy to node of list
+    // and not delete if one copy of int_types is stored 
+    // in each list node
     TEMPLATE(destroy2, int)(int_types);
     TEMPLATE(destroy, vop)(&array_void); 
     TEMPLATE(destroy, char)(&array_char);
