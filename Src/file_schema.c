@@ -6,9 +6,9 @@
 
 
 FILE_SCHEMA* create_file_schema() {
-    FILE_SCHEMA* schema = (FILE_SCHEMA *) malloc(sizeof(FILE_SCHEMA));
+    FILE_SCHEMA* schema = (FILE_SCHEMA *) umalloc(sizeof(FILE_SCHEMA));
 
-    schema->header = (FILE_HEADER *) malloc(sizeof(FILE_HEADER));
+    schema->header = (FILE_HEADER *) umalloc(sizeof(FILE_HEADER));
     TEMPLATE(create, string)(INITIAL_FIELDS_COUNT, &schema->header->fields);
     TEMPLATE(create, good_field)(INITIAL_FIELDS_COUNT, &schema->header->types);
     TEMPLATE(create, int)(INITIAL_FIELDS_COUNT, &schema->header->length_min);
@@ -25,8 +25,8 @@ void destroy_file_schema(FILE_SCHEMA* schema) {
     TEMPLATE(destroy, good_field)(&schema->header->types);
     TEMPLATE(destroy, int)(&schema->header->length_min);
     TEMPLATE(destroy, int)(&schema->header->length_max);
-    free(schema->header);
-    free(schema);
+    ufree(schema->header);
+    ufree(schema);
 }
 
 void print_file_schema(FILE_SCHEMA* schema) {

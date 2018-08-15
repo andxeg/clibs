@@ -44,6 +44,8 @@
 
 #include <sdk_tplus.h>
 #include "Menu.h"
+#include "log.h"
+#include "iofile.h"
 #include "file_schema.h"
 
 //+++++++++++++ Macros & preprocessor definitions ++++++++++++++
@@ -111,6 +113,7 @@ static const char szDate[] = "Date:%.2s/%.2s/%.2s  %.2s:%.2s\n";
 
 const char* ERROR_FILE = "file://flash/HOST/ERROR.TXT";
 const char* LOG_FILE = "file://flash/HOST/LOG.TXT";
+const char* BACKUP_FILE_SCHEMA = "file://flash/HOST/BACKUP.TXT";
 
 T_GL_HGRAPHIC_LIB gGoalGraphicLibInstance = NULL;
 FILE_SCHEMA* file_schema = NULL;
@@ -946,9 +949,14 @@ void entry(void)
   }
 
   // Create file schema for storing
-  // fields name, types, length constraint (min, max)
-  // and goods
+  // fields name, types, length constraint (min, max) and goods
   file_schema = create_file_schema();
+  // attempt to restore file schema from backup
+  if (read_file_with_goods(BACKUP_FILE_SCHEMA, file_schema, gGoalGraphicLibInstance)) {
+	  print_message(gGoalGraphicLibInstance, "Cannot restore list of goods");
+  } else {
+	  print_message(gGoalGraphicLibInstance, "List of goods was successfully restored");
+  }
   log_file = GL_File_Open(LOG_FILE, GL_FILE_CREATE_ALWAYS, GL_FILE_ACCESS_WRITE);
   error_log_file = GL_File_Open(ERROR_FILE, GL_FILE_CREATE_ALWAYS, GL_FILE_ACCESS_WRITE);
 }

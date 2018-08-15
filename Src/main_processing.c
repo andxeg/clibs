@@ -95,6 +95,50 @@ lblEnd:
 	}
 }
 
+int backup_file_schema(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, int type) {
+	// backup current file_schema if it is not empty
+	int iRet;
+	if (is_empty_file_schema(file_schema) == 0) {
+		iRet = write_file_schema_to_file(BACKUP_FILE_SCHEMA, file_schema, STATIC_FILE_TYPE, hGraphicLib);
+		if (iRet == 1) {
+			print_message(hGraphicLib, "Cannot backup current list of good");
+			return 1;
+		} else {
+			if (type == DELETE_FILE_SCHEMA) {
+				// delete current file_schema from RAM
+				print_message(hGraphicLib, "Delete current list of goods");
+				destroy_file_schema(file_schema);
+				file_schema = create_file_schema();
+			}
+		}
+	}
+
+	return 0;
+}
+
+int restore_file_schema(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
+	int iRet;
+
+	// destroy current file_schema in RAM if it is not empty
+	if (is_empty_file_schema(file_schema) == 0) {
+		destroy_file_schema(file_schema);
+		file_schema = create_file_schema();
+	}
+
+	iRet = read_file_with_goods(BACKUP_FILE_SCHEMA, file_schema, hGraphicLib);
+	CHECK(iRet == 0, lblReleaseResources);
+	print_message(hGraphicLib, "list of goods was successfully restored");
+	goto lblEnd;
+
+lblReleaseResources:
+	print_message(hGraphicLib, "cannot restore list of goods");
+	return 1;
+
+lblEnd:
+
+	return 0;
+}
+
 int import_file_with_goods(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 	T_GL_HWIDGET screen = NULL;
 	char filename[FILENAME_LIMIT];
@@ -104,17 +148,34 @@ int import_file_with_goods(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_sche
 			filename, sizeof(filename), 0,
 			GL_TIME_INFINITE) == GL_KEY_VALID)
 	{
-		if (is_empty_file_schema(file_schema) == 0) {
-			print_message(hGraphicLib, "Delete current list of goods");
-			destroy_file_schema(file_schema);
-			file_schema = create_file_schema();
+		int iRet = 0;
+		iRet = backup_file_schema(hGraphicLib, file_schema, DELETE_FILE_SCHEMA);
+		CHECK(iRet == 0, lblReleaseResources);
+
+		// read new list of goods
+		iRet = read_file_with_goods(filename, file_schema, hGraphicLib);
+		if (iRet == 1) {
+			print_message(hGraphicLib, "Error while import list of goods");
+			print_message(hGraphicLib, "Restore old list of goods.\nPlease wait.");
+			iRet = restore_file_schema(hGraphicLib, file_schema);
+			CHECK(iRet == 0, lblReleaseResources);
+			print_message(hGraphicLib, "Old list of goods\nwas successfully restored");
+		} else {
+			print_file_schema(file_schema);
+			iRet = backup_file_schema(hGraphicLib, file_schema, ONLY_BACKUP_FILE_SCHEMA);
+			CHECK(iRet == 0, lblReleaseResources);
 		}
-
-		read_file_with_goods(filename, file_schema, hGraphicLib);
-		print_file_schema(file_schema);
 	}
+	goto lblEnd;
 
-	if (screen) {
+lblReleaseResources:
+	if (screen != NULL) {
+		GoalDestroyScreen(&screen);
+	}
+	return 1;
+
+lblEnd:
+	if (screen != NULL) {
 		GoalDestroyScreen(&screen);
 	}
 

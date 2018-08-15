@@ -550,7 +550,7 @@ void GoalRefreshScreen(T_GL_HWIDGET hWindow)
 //   <0 : Display line failed.
 //****************************************************************************
 
-int GoalDspLine(T_GL_HWIDGET hWindow, ushort usLine, char *pcText, const ST_DSP_LINE* pxLine, ulong ulTimeOut, bool bRefresh)
+int GoalDspLine(T_GL_HWIDGET hWindow, ushort usLine, const char *pcText, const ST_DSP_LINE* pxLine, ulong ulTimeOut, bool bRefresh)
 {
 	// Local variables
     // ***************

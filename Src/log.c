@@ -11,7 +11,11 @@ void _log(T_GL_HFILE fd, const char* file, int line, const char* func, const cha
 ST_DSP_LINE line_prop = { {GL_ALIGN_CENTER, GL_ALIGN_CENTER, GL_COLOR_WHITE, GL_COLOR_BLACK, 100, FALSE, {1, 0, 0, 0}, {0, 0, 0, 0, GL_COLOR_WHITE}, {0, 0, 0, 0}, {NULL, GL_FONT_STYLE_NORMAL, GL_SCALE_MEDIUM}}, // Line0
 		                  {GL_ALIGN_CENTER, GL_ALIGN_CENTER, FALSE, 100, FALSE, {2, 0, 0, 0}, {0, 0, 0, 0, GL_COLOR_BLACK}, {0, 0, 0, 0}, {NULL, GL_FONT_STYLE_NORMAL, GL_SCALE_MEDIUM}} };
 
-void print_message(T_GL_HGRAPHIC_LIB hGraphicLib, char* message) {
+void print_message(T_GL_HGRAPHIC_LIB hGraphicLib, const char* message) {
+	if (hGraphicLib == NULL) {
+		return;
+	}
+
 	int iRet;
 	T_GL_HWIDGET screen = NULL;
 

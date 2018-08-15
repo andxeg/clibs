@@ -22,7 +22,7 @@ extern T_GL_HFILE log_file;
 
 void _log(T_GL_HFILE fd, const char* file, int line, const char* func, const char* msg);
 
-void print_message(T_GL_HGRAPHIC_LIB hGraphicLib, char* message);
+void print_message(T_GL_HGRAPHIC_LIB hGraphicLib, const char* message);
 void print_to_log(T_GL_HFILE fd, char* message);
 void print_to_error_log(T_GL_HFILE fd, char* message);
 

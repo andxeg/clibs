@@ -15,6 +15,8 @@
 #define DYNAMIC_FILE_TYPE 1
 #define STATIC_FILE_TYPE 2
 #define ERROR_FILE_TYPE 3
+#define DELETE_FILE_SCHEMA 1
+#define ONLY_BACKUP_FILE_SCHEMA 2
 
 #define FILENAME_LIMIT 256
 #define CHECK(CND,LBL) {if(!(CND)){goto LBL;}}

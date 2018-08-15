@@ -135,7 +135,7 @@ T_GL_HWIDGET GoalCreateScreen (T_GL_HGRAPHIC_LIB hGraphicLib, const ST_DSP_LINE 
 void GoalDestroyScreen(T_GL_HWIDGET *phWindow);
 int GoalClrScreen(T_GL_HWIDGET hWindow, T_GL_COLOR ulBackColor, unsigned int uiKeys, bool bRefresh);
 void GoalRefreshScreen(T_GL_HWIDGET hWindow);
-int GoalDspLine(T_GL_HWIDGET hWindow, ushort usLine, char *pcText, const ST_DSP_LINE* pxLine, ulong ulTimeOut, bool bRefresh);
+int GoalDspLine(T_GL_HWIDGET hWindow, ushort usLine, const char *pcText, const ST_DSP_LINE* pxLine, ulong ulTimeOut, bool bRefresh);
 int GoalDspMultiLine(T_GL_HWIDGET hWindow, ushort usLine, char *pcData , int iLen, const ST_DSP_LINE txLine[], ushort usMaxLine, ulong ulTimeOut, bool bRefresh);
 int GoalGetKey(T_GL_HWIDGET hWindow, T_GL_HGRAPHIC_LIB hGraphicLib, bool bShortcut, ulong ulTimeOut, bool bClear);
 // *** Drawing ***

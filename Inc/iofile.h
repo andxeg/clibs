@@ -15,9 +15,12 @@ int read_types(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicL
 int read_limits(T_GL_HFILE file, TEMPLATE(DYN_ARRAY, int)* limits, T_GL_HGRAPHIC_LIB hGraphicLib);
 int read_goods(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicLib);
 
-int write_file_with_goods(const char* filename, FILE_SCHEMA* schema);
-int write_file_header(T_GL_HFILE file, FILE_SCHEMA* schema);
-int write_goods(T_GL_HFILE file, FILE_SCHEMA* schema);
+int write_file_schema_to_file(const char* filename, FILE_SCHEMA* schema, int file_type, T_GL_HGRAPHIC_LIB hGraphicLib);
+int write_header_to_file(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicLib);
+int write_fields_to_file(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicLib);
+int write_types_to_file(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicLib);
+int write_limits_to_file(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicLib);
+int write_goods_to_file(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicLib);
 
 #endif
 

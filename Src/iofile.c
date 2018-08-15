@@ -10,6 +10,7 @@
 
 #include "defs.h"
 #include "log.h"
+#include "lists.h"
 #include "iofile.h"
 #include "good_field_types.h"
 
@@ -38,11 +39,11 @@ int read_file_with_goods(const char* filename, FILE_SCHEMA* schema, T_GL_HGRAPHI
 	goto lblEnd;
 
 lblHostKO:                                         // HOST disk failed
-	GL_Dialog_Message(hGraphicLib, NULL, "HOST Disk Failed", GL_ICON_ERROR, GL_BUTTON_VALID, 5*1000);
+	GL_Dialog_Message(hGraphicLib, NULL, "HOST Disk Failed", GL_ICON_ERROR, GL_BUTTON_VALID, 2*1000);
 	goto lblReleaseResources;
 
 lblFileMissing:                                    // File not found
-	GL_Dialog_Message(hGraphicLib, NULL, "Cannot find such file", GL_ICON_ERROR, GL_BUTTON_VALID, 5*1000);
+	GL_Dialog_Message(hGraphicLib, NULL, "Cannot find file\nwith list of goods", GL_ICON_ERROR, GL_BUTTON_VALID, 5*1000);
 	goto lblReleaseResources;
 
 lblFileHeaderError:
@@ -62,7 +63,11 @@ lblReleaseResources:
 		destroy_file_schema(schema);
 		schema = create_file_schema();
 	}
-	goto lblEnd;
+	if (file != NULL) {
+		GL_File_Close(file);
+	}
+
+	return 1;
 
 lblEnd:
 	if (file != NULL) {
@@ -544,6 +549,17 @@ int read_goods(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicL
 				}
 			}
 
+			if (array_void.length != types->length) {
+			   char error_msg[ERROR_LENGTH_LIMIT];
+			   sprintf(error_msg, "good #%d has len != fields amount ", good_num);
+			   TEMPLATE(destroy, char)(&array_char);
+			   TEMPLATE(destroy, vop)(&array_void);
+			   TEMPLATE(destroy2, int)(int_types);
+			   print_message(hGraphicLib, error_msg);
+			   ELOG(error_msg);
+			   return 1;
+			}
+
 			// add copy of int_types to array_void.types
 			int i;
 			for (i = 0; i < array_void.length; i++) {
@@ -694,26 +710,151 @@ int read_goods(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicL
         }
     }
 
-
-lblReleaseResources:
 	// delete int_types if add copy to node of list
 	TEMPLATE(destroy2, int)(int_types);
 	TEMPLATE(destroy, vop)(&array_void);
 	TEMPLATE(destroy, char)(&array_char);
+    return 0;
+}
+
+int write_file_schema_to_file(const char* filename, FILE_SCHEMA* schema, int file_type, T_GL_HGRAPHIC_LIB hGraphicLib) {
+	// file_type == DYNAMIC_FILE_TYPE -> write file schema with fields, types and limits to file
+	// file_type != DYNAMIC_FILE_TYPE ->  write only goods to file
+
+	int iRet;
+	T_GL_HFILE file = NULL;
+	file = GL_File_Open(filename, GL_FILE_CREATE_ALWAYS, GL_FILE_ACCESS_WRITE);
+	CHECK(file != NULL, lblFileMissing);
+
+	if (file_type == DYNAMIC_FILE_TYPE) {
+		iRet = write_header_to_file(file, schema, hGraphicLib);
+		CHECK(iRet == 0, lblHeaderWriteError);
+	}
+
+	iRet = write_goods_to_file(file, schema, hGraphicLib);
+	CHECK(iRet == 0, lblGoodsWriteError);
+	iRet = GL_File_Close(file);
+	CHECK(iRet == GL_SUCCESS, lblHostKO);
+	file = NULL;
+
+	print_message(hGraphicLib, "List of goods was successfully backuped");
+	goto lblEnd;
+
+lblFileMissing:                                    // File not found
+	GL_Dialog_Message(hGraphicLib, NULL, "Cannot find file\nwith list of goods", GL_ICON_ERROR, GL_BUTTON_VALID, 5*1000);
+	goto lblReleaseResources;
+
+lblHeaderWriteError:
+	GL_Dialog_Message(hGraphicLib, NULL, "Cannot write header to file", GL_ICON_ERROR, GL_BUTTON_VALID, 5*1000);
+	goto lblReleaseResources;
+
+lblGoodsWriteError:
+	GL_Dialog_Message(hGraphicLib, NULL, "Cannot write goods to file", GL_ICON_ERROR, GL_BUTTON_VALID, 5*1000);
+	goto lblReleaseResources;
+
+lblHostKO:                                         // HOST disk failed
+	GL_Dialog_Message(hGraphicLib, NULL, "HOST Disk Failed\nCannot close file", GL_ICON_ERROR, GL_BUTTON_VALID, 5*1000);
+	goto lblReleaseResources;
+
+lblReleaseResources:
+	if (file != NULL) {
+		// close and delete file
+		GL_File_Close(file);
+		iRet = GL_File_Delete(filename);
+		if (iRet != GL_SUCCESS) {
+			print_message(hGraphicLib, "Cannot delete backup file");
+		}
+	}
+
+	return 1;
+
 lblEnd:
-
-    return 0;
+	if (file != NULL) {
+		GL_File_Close(file);
+	}
+	return 0;
 }
 
-int write_file_with_goods(const char* filename, FILE_SCHEMA* schema) {
-    return 0;
+int write_header_to_file(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicLib) {
+	return 0;
+}
+int write_fields_to_file(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicLib) {
+	return 0;
 }
 
-int write_file_header(T_GL_HFILE file, FILE_SCHEMA* schema) {
-    return 0;
+int write_types_to_file(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicLib) {
+	return 0;
 }
 
-int write_goods(T_GL_HFILE file, FILE_SCHEMA* schema) {
-    return 0;
+int write_limits_to_file(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicLib) {
+	return 0;
 }
 
+int write_goods_to_file(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicLib) {
+	TEMPLATE(LIST, dyn_array_vop)* goods = schema->goods;
+	TEMPLATE(DYN_ARRAY, good_field)* types = &schema->header->types;
+	TEMPLATE(DYN_ARRAY, int)* length_max = &schema->header->length_max;
+
+	int iRet = 0;
+	int i, j;
+	int len;
+	int* val = NULL;
+	char* str = NULL;
+	char* field = NULL;
+	char delimiter;
+	GOOD_FIELD_TYPE type;
+	TEMPLATE(DYN_ARRAY, vop) good_fields;
+	int fields_amount = types->length;
+	int goods_amount = TEMPLATE(size_list, dyn_array_vop)(goods);
+	for (i = 0; i < goods_amount; i++) {
+		iRet = TEMPLATE(get_by_index, dyn_array_vop)(goods, i, &good_fields);
+		CHECK(iRet == 0, lblReleaseResources);
+		for (j = 0; j < fields_amount; j++) {
+			delimiter = (j == (fields_amount - 1)) ? '\n' : '|';
+			iRet = TEMPLATE(get, good_field)(types, j, &type);
+			CHECK(iRet == 0, lblReleaseResources);
+			if (type == BOOL_GOOD || type == NUMBER_GOOD) {
+				iRet = TEMPLATE(get, vop)(&good_fields, j, (void** )(&val));
+				CHECK(iRet == 0, lblReleaseResources);
+				iRet = TEMPLATE(get, int)(length_max, j, &len);
+				CHECK(iRet == 0, lblReleaseResources);
+				field = (char *) umalloc(sizeof(char) * (len + 1));
+				CHECK(field != NULL, lblReleaseResources);
+				sprintf(field, "%d", *val);
+				field[len] = '\0';
+				iRet = GL_File_Write(file, field, strlen(field) * sizeof(char));
+				CHECK(iRet == strlen(field) * sizeof(char), lblErrorWriteGood);
+				iRet = GL_File_Write(file, &delimiter, sizeof(char));
+				CHECK(iRet == sizeof(char), lblErrorWriteGood);
+				free(field);
+				field = NULL;
+			} else {
+				iRet = TEMPLATE(get, vop)(&good_fields, j, (void** )(&str));
+				CHECK(iRet == 0, lblReleaseResources);
+				iRet = GL_File_Write(file, str, strlen(str) * sizeof(char));
+				CHECK(iRet == (strlen(str) * sizeof(char)), lblErrorWriteGood);
+				iRet = GL_File_Write(file, &delimiter, sizeof(char));
+				CHECK(iRet == sizeof(char), lblErrorWriteGood);
+			}
+		}
+	}
+
+	goto lblEnd;
+
+lblErrorWriteGood:
+	GL_Dialog_Message(hGraphicLib, NULL, "Error when write to file", GL_ICON_ERROR, GL_BUTTON_VALID, 2*1000);
+	goto lblReleaseResources;
+
+lblReleaseResources:
+	if (field != NULL) {
+		ufree(field);
+	}
+
+	return 1;
+
+lblEnd:
+	if (field != NULL) {
+		ufree(field);
+	}
+	return 0;
+}
