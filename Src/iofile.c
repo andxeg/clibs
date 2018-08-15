@@ -39,22 +39,29 @@ int read_file_with_goods(const char* filename, FILE_SCHEMA* schema, T_GL_HGRAPHI
 
 lblHostKO:                                         // HOST disk failed
 	GL_Dialog_Message(hGraphicLib, NULL, "HOST Disk Failed", GL_ICON_ERROR, GL_BUTTON_VALID, 5*1000);
-	goto lblEnd;
+	goto lblReleaseResources;
 
 lblFileMissing:                                    // File not found
 	GL_Dialog_Message(hGraphicLib, NULL, "Cannot find such file", GL_ICON_ERROR, GL_BUTTON_VALID, 5*1000);
-	goto lblEnd;
+	goto lblReleaseResources;
 
 lblFileHeaderError:
 	print_message(hGraphicLib, "cannot read file: header has mistake.\n See ERROR.TXT");
-	goto lblEnd;
+	goto lblReleaseResources;
 
 lblFileIncompatibleHeaderBody:
 	print_message(hGraphicLib, "cannot read file: header and goods are incompatible.\n See ERROR.TXT");
-	goto lblEnd;
+	goto lblReleaseResources;
 
 lblFileError:
 	print_message(hGraphicLib, "cannot read file: goods have mistake.\nSee ERROR.TXT");
+	goto lblReleaseResources;
+
+lblReleaseResources:
+	if (is_empty_file_schema(schema) == 0) {
+		destroy_file_schema(schema);
+		schema = create_file_schema();
+	}
 	goto lblEnd;
 
 lblEnd:
@@ -292,7 +299,16 @@ int get_int_value(TEMPLATE(DYN_ARRAY, char)* array_char, int* value) {
             ELOG("converted integer value is out of range");
             return 1;
         }
+        if (eptr == array_char->data) {
+        	ELOG("string doesn't contain a number");
+        	return 1;
+        }
     }
+
+    if (strlen(eptr) != 0) {
+		ELOG("string contain not only digits");
+		return 1;
+	}
     *value = (int) result;
     return 0;
 }
@@ -388,150 +404,187 @@ int process_single_field() {
 
 
 int read_goods(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicLib) {
-    TEMPLATE(DYN_ARRAY, good_field)* types = &schema->header->types;
-    TEMPLATE(DYN_ARRAY, int)* min_limit = &schema->header->length_min;
-    TEMPLATE(DYN_ARRAY, int)* max_limit = &schema->header->length_max;
-    TEMPLATE(LIST, dyn_array_vop)* goods = schema->goods;
+	TEMPLATE(DYN_ARRAY, good_field)* types = &schema->header->types;
+	TEMPLATE(DYN_ARRAY, int)* min_limit = &schema->header->length_min;
+	TEMPLATE(DYN_ARRAY, int)* max_limit = &schema->header->length_max;
+	TEMPLATE(LIST, dyn_array_vop)* goods = schema->goods;
 
-    // create array with types
-    int length = types->length;
-    TEMPLATE(DYN_ARRAY, int)* int_types = create_array_with_types(types);
-    if (int_types == NULL) {
-        ELOG("cannot convert good field types to int types");
-        return 1;
-    }
-    TEMPLATE(DYN_ARRAY, vop) array_void;
-    TEMPLATE(create, vop)(length, &array_void);
+	// create array with types
+	int length = types->length;
+	TEMPLATE(DYN_ARRAY, int)* int_types = create_array_with_types(types);
+	if (int_types == NULL) {
+		ELOG("cannot convert good field types to int types");
+		return 1;
+	}
+	TEMPLATE(DYN_ARRAY, vop) array_void;
+	TEMPLATE(create, vop)(length, &array_void);
 
-    char c;
-    int inside = 0; // flag in word or not
-    int good_num = 1;
-    int curr_field = 0;
-    TEMPLATE(DYN_ARRAY, char) array_char;
-    TEMPLATE(create, char)(DEFAULT_FIELD_SIZE, &array_char);
+	char c;
+	int inside = 0; // flag in word or not
+	int good_num = 1;
+	int curr_field = 0;
+	int end_of_file = 0;
+	TEMPLATE(DYN_ARRAY, char) array_char;
+	TEMPLATE(create, char)(DEFAULT_FIELD_SIZE, &array_char);
     while (1) {
-    	if (GL_File_Read(file, &c, sizeof(char)) == 0) break;
-    	if (c == '\r') continue;
+		if (GL_File_Read(file, &c, sizeof(char)) == 0) {
+			end_of_file = 1;
+		}
 
-        if (c == '\n') {
-           // add last field
-           if (inside) {
-                int len = TEMPLATE(array_length, char)(&array_char);
-                int min, max;
-                TEMPLATE(get, int)(min_limit, curr_field, &min);
-                TEMPLATE(get, int)(max_limit, curr_field, &max);
-                if (len < min || len > max) {
-                    char error_msg[ERROR_LENGTH_LIMIT];
-                    char* field;
-                    TEMPLATE(get, string)(&schema->header->fields, curr_field, &field);
-                    sprintf(error_msg, "good #%d has incorrect value in field %s", good_num, field);
-                    ELOG(error_msg);
-                    TEMPLATE(destroy, char)(&array_char);
-                    if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
-                        TEMPLATE(destroy2, int)(int_types);
-                    }
-                    return 1;
-                }
+        if (c == '\n' || end_of_file == 1) {
+//        	print_message(hGraphicLib, "read end of line\nor end of file ");
+			// add last field
+			if (inside) {
+				if ((curr_field + 1) != types->length) {
+				   char error_msg[ERROR_LENGTH_LIMIT];
+				   sprintf(error_msg, "good #%d has len != fields amount ", good_num);
+				   TEMPLATE(destroy, char)(&array_char);
+				   TEMPLATE(destroy, vop)(&array_void);
+				   TEMPLATE(destroy2, int)(int_types);
+				   print_message(hGraphicLib, error_msg);
+				   ELOG(error_msg);
+				   return 1;
+				}
 
-                int type;
-                int* val = (int *)malloc(sizeof(int));
-                TEMPLATE(get, int)(int_types, curr_field, &type);
-                TEMPLATE(append, char)(&array_char, '\0');
-                switch (type) {
-                case BOOL:
-                     if (get_bool_value(&array_char, val)) {
-                         char error_msg[ERROR_LENGTH_LIMIT];
-                         sprintf(error_msg, "cannot convert %s to bool value", array_char.data);
-                         ELOG(error_msg);
-                         TEMPLATE(destroy, char)(&array_char);
-                         if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
-                             TEMPLATE(destroy2, int)(int_types);
-                         }
-                         free(val);
-                         return 1;
-                     }
-                     TEMPLATE(append, vop)(&array_void, (void *)val);
-                     TEMPLATE(destroy, char)(&array_char);
-                     break;
-                case INT:
-                     if (get_int_value(&array_char, val)) {
-                         char error_msg[ERROR_LENGTH_LIMIT];
-                         sprintf(error_msg, "cannot convert %s to integer value", array_char.data);
-                         ELOG(error_msg);
-                         TEMPLATE(destroy, char)(&array_char);
-                         if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
-                             TEMPLATE(destroy2, int)(int_types);
-                         }
-                         free(val);
-                         return 1;
-                     }
-                     TEMPLATE(append, vop)(&array_void, (void *)val);
-                     TEMPLATE(destroy, char)(&array_char);
-                     break;
-                case STRING:
-                     free(val);
-                     if (TEMPLATE(shrink_to_fit, char)(&array_char)) {
-                         ELOG("cannot shrink input field");
-                         TEMPLATE(destroy, char)(&array_char);
-                         if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
-                             TEMPLATE(destroy2, int)(int_types);
-                         }
-                         return 1;
-                     }
+				int len = TEMPLATE(array_length, char)(&array_char);
+				int min, max;
+				TEMPLATE(get, int)(min_limit, curr_field, &min);
+				TEMPLATE(get, int)(max_limit, curr_field, &max);
+				if (len < min || len > max) {
+					char error_msg[ERROR_LENGTH_LIMIT];
+					char* field;
+					TEMPLATE(get, string)(&schema->header->fields, curr_field, &field);
+					sprintf(error_msg, "good #%d has incorrect\nvalue in field '%s'", good_num, field);
+					TEMPLATE(destroy, char)(&array_char);
+					TEMPLATE(destroy, vop)(&array_void);
+					TEMPLATE(destroy2, int)(int_types);
+					print_message(hGraphicLib, error_msg);
+					ELOG(error_msg);
+					return 1;
+				}
 
-                     TEMPLATE(append, vop)(&array_void, (void*)array_char.data);
-                     break;
-                default:
-                    free(val);
-                    ELOG("unknown type");
-                    return 1;
-                }
+				int type;
+				int* val = (int *)malloc(sizeof(int)); // TODO check NULL
+				TEMPLATE(get, int)(int_types, curr_field, &type);
+				TEMPLATE(append, char)(&array_char, '\0');
+				switch (type) {
+				case BOOL:
+					 if (get_bool_value(&array_char, val)) {
+						 char error_msg[ERROR_LENGTH_LIMIT];
+						 sprintf(error_msg, "good#%d, cannot convert '%s'\nto bool value", good_num, array_char.data);
+						 TEMPLATE(destroy, char)(&array_char);
+						 TEMPLATE(destroy, vop)(&array_void);
+						 TEMPLATE(destroy2, int)(int_types);
+						 print_message(hGraphicLib, error_msg);
+						 ELOG(error_msg);
+						 free(val);
+						 return 1;
+					 }
+					 TEMPLATE(append, vop)(&array_void, (void *)val);
+					 TEMPLATE(destroy, char)(&array_char);
+					 break;
+				case INT:
+					 if (get_int_value(&array_char, val)) {
+						 char error_msg[ERROR_LENGTH_LIMIT];
+						 sprintf(error_msg, "good#%d, cannot convert '%s'\nto integer value", good_num, array_char.data);
+						 TEMPLATE(destroy, char)(&array_char);
+						 TEMPLATE(destroy, vop)(&array_void);
+						 TEMPLATE(destroy2, int)(int_types);
+						 print_message(hGraphicLib, error_msg);
+						 ELOG(error_msg);
+						 free(val);
+						 return 1;
+					 }
+					 TEMPLATE(append, vop)(&array_void, (void *)val);
+					 TEMPLATE(destroy, char)(&array_char);
+					 break;
+				case STRING:
+					 free(val);
+					 if (TEMPLATE(shrink_to_fit, char)(&array_char)) {
+						 char error_msg[ERROR_LENGTH_LIMIT];
+						 sprintf(error_msg, "cannot shrink\ninput field '%s'", array_char.data);
+						 TEMPLATE(destroy, char)(&array_char);
+						 TEMPLATE(destroy, vop)(&array_void);
+						 TEMPLATE(destroy2, int)(int_types);
+						 print_message(hGraphicLib, error_msg);
+						 ELOG(error_msg);
+						 return 1;
+					 }
 
-                TEMPLATE(create, char)(DEFAULT_FIELD_SIZE, &array_char);
-                ++curr_field;
-            }
-            inside = 0;
+					 TEMPLATE(append, vop)(&array_void, (void*)array_char.data);
+					 break;
+				default:
+					;char error_msg[ERROR_LENGTH_LIMIT];
+					sprintf(error_msg, "unknown type of field\nin good#%d", good_num);
+					TEMPLATE(destroy, char)(&array_char);
+					TEMPLATE(destroy, vop)(&array_void);
+					TEMPLATE(destroy2, int)(int_types);
+					print_message(hGraphicLib, error_msg);
+					ELOG(error_msg);
+					free(val);
+					return 1;
+				}
 
-           // add good to the list
-           if (array_void.length == 0) {
-               SLOG("Warning: empty line");
-               inside = curr_field = 0;
-               continue;
-           }
+				TEMPLATE(create, char)(DEFAULT_FIELD_SIZE, &array_char);
+				++curr_field;
+			}
 
-           if (array_void.length != types->length) {
-        	   char error_msg[ERROR_LENGTH_LIMIT];
-        	   sprintf(error_msg, "good #%d has incorrect count of good", good_num);
-        	   ELOG(error_msg);
-        	   TEMPLATE(destroy, char)(&array_char);
-        	   TEMPLATE(destroy, vop)(&array_void);
-        	   if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
-				  TEMPLATE(destroy2, int)(int_types);
-        	   }
-        	   return 1;
-           }
+			inside = 0;
 
-           // add copy of int_types to array_void.types
-           int i;
-           for (i = 0; i < array_void.length; i++) {
-               int type;
-               TEMPLATE(get, int)(int_types, i, &type);
-               TEMPLATE(append, int)(array_void.types, type);
-           }
+			// add good to the list
+			if (array_void.length == 0) {
+				char error_msg[ERROR_LENGTH_LIMIT];
+				if (end_of_file == 0) {
+					sprintf(error_msg, "Warning: empty line\nin good#%d", good_num);
+					print_message(hGraphicLib, error_msg);
+					ELOG(error_msg);
+					continue;
+				} else {
+					break;
+				}
+			}
 
-           // add one int_types to all node of list
-           // TEMPLATE(destroy2, int)(array_void.types);
-           // array_void.types = int_types;
-           TEMPLATE(add_to_list, dyn_array_vop)(goods, array_void);
-           TEMPLATE(create, vop)(types->length, &array_void);
-           ++good_num;
-           curr_field = 0;
-           continue;
-        }
+			// add copy of int_types to array_void.types
+			int i;
+			for (i = 0; i < array_void.length; i++) {
+			   int type;
+			   TEMPLATE(get, int)(int_types, i, &type);
+			   TEMPLATE(append, int)(array_void.types, type);
+			}
 
-        // process single field value
-        if (c == GOODS_FILE_SEPARATOR) {
+			TEMPLATE(add_to_list, dyn_array_vop)(goods, array_void);
+			TEMPLATE(create, vop)(types->length, &array_void);
+			++good_num;
+			curr_field = 0;
+
+			if (end_of_file == 1) {
+				break;
+			}
+        } else if (c == '\r') {
+			if (inside == 0) {
+				char error_msg[ERROR_LENGTH_LIMIT];
+				sprintf(error_msg, "good#%d, before end of line\nmust be a field value", good_num);
+				TEMPLATE(destroy, char)(&array_char);
+				TEMPLATE(destroy, vop)(&array_void);
+				TEMPLATE(destroy, int)(int_types);
+				print_message(hGraphicLib, error_msg);
+				ELOG(error_msg);
+				return 1;
+			}
+        } else if (c == GOODS_FILE_SEPARATOR) {
+        	// process single field value
             if (inside) {
+            	if ((curr_field + 1) > types->length) {
+            		char error_msg[ERROR_LENGTH_LIMIT];
+            		sprintf(error_msg, "good#%d has len > fields amount", good_num);
+            		TEMPLATE(destroy, char)(&array_char);
+            		TEMPLATE(destroy, vop)(&array_void);
+            		TEMPLATE(destroy2, int)(int_types);
+            		print_message(hGraphicLib, error_msg);
+            		ELOG(error_msg);
+            		return 1;
+            	}
+
                 int len = TEMPLATE(array_length, char)(&array_char);
                 int min, max;
                 TEMPLATE(get, int)(min_limit, curr_field, &min);
@@ -540,29 +593,29 @@ int read_goods(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicL
                     char error_msg[ERROR_LENGTH_LIMIT];
                     char* field;
                     TEMPLATE(get, string)(&schema->header->fields, curr_field, &field);
-                    sprintf(error_msg, "good #%d has incorrect value in field %s", good_num, field);
-                    ELOG(error_msg);
+                    sprintf(error_msg, "good #%d has incorrect length\nin field '%s'", good_num, field);
                     TEMPLATE(destroy, char)(&array_char);
-                    if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
-                        TEMPLATE(destroy2, int)(int_types);
-                    }
+                    TEMPLATE(destroy, vop)(&array_void);
+                    TEMPLATE(destroy2, int)(int_types);
+                    print_message(hGraphicLib, error_msg);
+                    ELOG(error_msg);
                     return 1;
                 }
 
                 int type;
-                int* val = (int *)malloc(sizeof(int));
+                int* val = (int *)malloc(sizeof(int)); // TODO check NULL
                 TEMPLATE(get, int)(int_types, curr_field, &type);
                 TEMPLATE(append, char)(&array_char, '\0');
                 switch (type) {
                 case BOOL:
                      if (get_bool_value(&array_char, val)) {
                          char error_msg[ERROR_LENGTH_LIMIT];
-                         sprintf(error_msg, "cannot convert %s to bool value", array_char.data);
-                         ELOG(error_msg);
+                         sprintf(error_msg, "good#%d, cannot convert %s\nto bool value", good_num, array_char.data);
                          TEMPLATE(destroy, char)(&array_char);
-                         if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
-                             TEMPLATE(destroy2, int)(int_types);
-                         }
+                         TEMPLATE(destroy, vop)(&array_void);
+                         TEMPLATE(destroy2, int)(int_types);
+                         print_message(hGraphicLib, error_msg);
+                         ELOG(error_msg);
                          free(val);
                          return 1;
                      }
@@ -572,12 +625,12 @@ int read_goods(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicL
                 case INT:
                      if (get_int_value(&array_char, val)) {
                          char error_msg[ERROR_LENGTH_LIMIT];
-                         sprintf(error_msg, "cannot convert %s to integer value", array_char.data);
-                         ELOG(error_msg);
+                         sprintf(error_msg, "good#%d, cannot convert %s\nto integer value", good_num, array_char.data);
                          TEMPLATE(destroy, char)(&array_char);
-                         if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
-                             TEMPLATE(destroy2, int)(int_types);
-                         }
+                         TEMPLATE(destroy, vop)(&array_void);
+                         TEMPLATE(destroy2, int)(int_types);
+                         print_message(hGraphicLib, error_msg);
+                         ELOG(error_msg);
                          free(val);
                          return 1;
                      }
@@ -587,23 +640,41 @@ int read_goods(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicL
                 case STRING:
                      free(val);
                      if (TEMPLATE(shrink_to_fit, char)(&array_char)) {
-                         ELOG("cannot shrink input field");
-                         TEMPLATE(destroy, char)(&array_char);
-                         if (TEMPLATE(size_list, dyn_array_vop)(goods) == 0) {
-                             TEMPLATE(destroy2, int)(int_types);
-                         }
-                         return 1;
+                         char error_msg[ERROR_LENGTH_LIMIT];
+						 sprintf(error_msg, "cannot shrink\ninput field '%s'", array_char.data);
+						 TEMPLATE(destroy, char)(&array_char);
+						 TEMPLATE(destroy, vop)(&array_void);
+						 TEMPLATE(destroy2, int)(int_types);
+						 print_message(hGraphicLib, error_msg);
+						 ELOG(error_msg);
+						 return 1;
                      }
 
                      TEMPLATE(append, vop)(&array_void, (void*)array_char.data);
                      break;
                 default:
-                    ELOG("unknown type");
-                    break;
+                    ;char error_msg[ERROR_LENGTH_LIMIT];
+					sprintf(error_msg, "unknown type of field\nin good#%d", good_num);
+					TEMPLATE(destroy, char)(&array_char);
+					TEMPLATE(destroy, vop)(&array_void);
+					TEMPLATE(destroy2, int)(int_types);
+					print_message(hGraphicLib, error_msg);
+					ELOG(error_msg);
+					free(val);
+					return 1;
                 }
 
                 TEMPLATE(create, char)(DEFAULT_FIELD_SIZE, &array_char);
                 ++curr_field;
+            } else {
+            	char error_msg[ERROR_LENGTH_LIMIT];
+            	sprintf(error_msg, "good#%d, separator '|' must be\nafter field value", good_num);
+            	TEMPLATE(destroy, char)(&array_char);
+				TEMPLATE(destroy, vop)(&array_void);
+				TEMPLATE(destroy2, int)(int_types);
+				ELOG(error_msg);
+				print_message(hGraphicLib, error_msg);
+				return 1;
             }
             inside = 0;
         } else if (isalpha(c) || isdigit(c) || c == ' ' || c == '.') {
@@ -613,19 +684,24 @@ int read_goods(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicL
 			char* field;
 			TEMPLATE(get, string)(&schema->header->fields, curr_field, &field);
         	char msg[ERROR_LENGTH_LIMIT];
-        	sprintf(msg, "good #%d, unknown symbol '%c' in field '%s'", c, good_num, field);
-            ELOG(msg);
-            print_message(hGraphicLib, msg);
+        	sprintf(msg, "good #%d, unknown symbol '%c'\nin field '%s'", good_num, c, field);
             TEMPLATE(destroy, char)(&array_char);
             TEMPLATE(destroy, vop)(&array_void);
+            TEMPLATE(destroy2, int)(int_types);
+            print_message(hGraphicLib, msg);
+            ELOG(msg);
             return 1;
         }
     }
 
-    // delete int_types if add copy to node of list
-    TEMPLATE(destroy2, int)(int_types);
-    TEMPLATE(destroy, vop)(&array_void);
-    TEMPLATE(destroy, char)(&array_char);
+
+lblReleaseResources:
+	// delete int_types if add copy to node of list
+	TEMPLATE(destroy2, int)(int_types);
+	TEMPLATE(destroy, vop)(&array_void);
+	TEMPLATE(destroy, char)(&array_char);
+lblEnd:
+
     return 0;
 }
 

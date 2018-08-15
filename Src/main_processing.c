@@ -544,6 +544,7 @@ int modify_list_with_goods(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_sche
 	int goods_count = TEMPLATE(size_list, dyn_array_vop)(file_schema->goods);
 	if (goods_count == 0) {
 		print_message(hGraphicLib, "List with goods is empty");
+		return 1;
 	}
 
 	char** first_fields = (char** ) malloc((goods_count + 3) * sizeof(char*));
@@ -885,6 +886,10 @@ int print_header_for_search_result(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* f
 }
 
 int print_search_results(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, TEMPLATE(LIST, dyn_array_vop)* res) {
+	if (TEMPLATE(size_list, dyn_array_vop)(res) == 0) {
+		return 0;
+	}
+
 	T_GL_HWIDGET hDocument, hLayout, hPrint;
 	T_GL_DIM usLine = 0;
 	hDocument = GL_Document_Create(hGraphicLib);

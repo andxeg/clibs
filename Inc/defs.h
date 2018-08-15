@@ -3,7 +3,7 @@
 
 #include "templates.h"
 
-#define ERROR_LENGTH_LIMIT 1024
+#define ERROR_LENGTH_LIMIT 128
 #define LOG_MSG_LENGTH_LIMIT 1024
 #define INITIAL_FIELDS_COUNT 10
 #define GOODS_FILE_SEPARATOR '|'
