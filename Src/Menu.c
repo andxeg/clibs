@@ -400,7 +400,7 @@ void GL_SampleDialogMultiChoice(T_GL_HGRAPHIC_LIB graphicLib) {
 void menuGoalDisplay(void)
 {
 	int i;
-	char choice = 0;
+	T_GL_WCHAR choice = 0;
 
 	const char *MenuUser[] = {
 			"Simple cash register",
@@ -414,7 +414,7 @@ void menuGoalDisplay(void)
   {
     //Display the menu using GOAL
     choice = GL_Dialog_Menu(gGoalGraphicLibInstance, "Select action", MenuUser, choice,
-            GL_BUTTON_NONE , GL_KEY_0, GL_TIME_INFINITE);
+            GL_BUTTON_CANCEL, GL_KEY_0, GL_TIME_INFINITE);
 
     if (choice == 0) {
     	// Test task main processing
@@ -426,7 +426,7 @@ void menuGoalDisplay(void)
     	break;
     }
 
-  } while (choice != 1);
+  } while (choice != GL_KEY_CANCEL && choice != 1);
 
   releaseUIContext();
   return;

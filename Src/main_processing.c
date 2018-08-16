@@ -319,19 +319,19 @@ int display_list_with_goods(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_sch
 	first_fields[goods_count] = "Exit";
 	first_fields[goods_count + 1] = NULL;
 
-	char choice = 0;
+	T_GL_WCHAR choice = 0;
 	TEMPLATE(DYN_ARRAY, vop) array_void;
 	do {
 		// display menu with first fields
 		choice = GL_Dialog_Menu(hGraphicLib, "List of goods", first_fields, choice,
-				GL_BUTTON_NONE , GL_KEY_0, GL_TIME_INFINITE);
+				GL_BUTTON_CANCEL, GL_KEY_0, GL_TIME_INFINITE);
 
-		if (choice == goods_count) {
+		if (choice == goods_count || choice == GL_KEY_CANCEL) {
 			break;
 		}
 
 		// get good fields values
-		TEMPLATE(get_by_index, dyn_array_vop)(file_schema->goods, choice, &array_void);
+		TEMPLATE(get_by_index, dyn_array_vop)(file_schema->goods, (int)choice, &array_void);
 		GL_Dialog_Message(gGoalGraphicLibInstance, first_fields[(unsigned char)choice],
 				first_fields[(unsigned char)choice], GL_ICON_INFORMATION, GL_BUTTON_VALID,
 				2 * GL_TIME_SECOND);
@@ -339,7 +339,7 @@ int display_list_with_goods(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_sch
 		// display fields
 		show_good_fields(hGraphicLib, file_schema, array_void, 0, NULL, NULL);
 
-	} while (choice != goods_count);
+	} while (choice != GL_KEY_CANCEL && choice != goods_count);
 
 	free(first_fields);
 	return 0;
@@ -579,12 +579,12 @@ int edit_good(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, int index
 	};
 
 	int menu_len = 3;
-	char choice = 0;
+	T_GL_WCHAR choice = 0;
 	do {
 		choice = GL_Dialog_Menu(hGraphicLib, "Select action", menu, choice,
-				GL_BUTTON_NONE , GL_KEY_0, GL_TIME_INFINITE);
+				GL_BUTTON_CANCEL, GL_KEY_0, GL_TIME_INFINITE);
 
-		if (choice == menu_len - 1) {
+		if (choice == menu_len - 1 || choice == GL_KEY_CANCEL) {
 			break;
 		} else if (choice == 0) {
 			delete_good(hGraphicLib, file_schema, index);
@@ -595,7 +595,7 @@ int edit_good(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, int index
 		}
 
 
-	} while (choice != menu_len - 1);
+	} while (choice != GL_KEY_CANCEL && choice != menu_len - 1);
 
 	return 0;
 }
@@ -614,13 +614,13 @@ int modify_list_with_goods(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_sche
 	first_fields[goods_count + 1] = "Exit";
 	first_fields[goods_count + 2] = NULL;
 
-	char choice = 0;
+	T_GL_WCHAR choice = 0;
 	do {
 		choice = GL_Dialog_Choice(hGraphicLib, "List of goods", first_fields,
-				choice, GL_BUTTON_DEFAULT, GL_KEY_0, GL_TIME_INFINITE);
+				choice, GL_BUTTON_CANCEL, GL_KEY_0, GL_TIME_INFINITE);
 	    (void)choice;
 
-		if (choice == goods_count + 1) {
+		if (choice == goods_count + 1 || choice == GL_KEY_CANCEL) {
 			break;
 		} else if (choice == goods_count) {
 			add_new_good(hGraphicLib, file_schema);
@@ -630,7 +630,7 @@ int modify_list_with_goods(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_sche
 			break;
 		}
 
-	} while(choice != goods_count + 1);
+	} while(choice != GL_KEY_CANCEL && choice != goods_count + 1);
 
 	free(first_fields);
 	return 0;
@@ -1039,13 +1039,13 @@ int find_goods_by_categories(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_sc
 		checked[i] = false;
 	}
 
-	unsigned char choice = 0;
+	T_GL_WCHAR choice = 0;
 	do {
 		choice = GL_Dialog_MultiChoice(hGraphicLib, "Categories",
 				bool_fields, choice, checked, GL_BUTTON_DEFAULT, GL_KEY_0, GL_TIME_INFINITE);
 		(void)choice;
 
-		if (choice == bool_fields_count + 1) break;
+		if (choice == bool_fields_count + 1 || choice == GL_KEY_CANCEL) break;
 
 		if (choice == bool_fields_count) {
 			get_categories_pattern(hGraphicLib, file_schema, bool_fields, checked, bool_fields_count, &pattern);
@@ -1059,7 +1059,7 @@ int find_goods_by_categories(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_sc
 		}
 
 		checked[choice] = (checked[choice] == true) ? false : true;
-	} while (choice != bool_fields_count + 1);
+	} while (choice != GL_KEY_CANCEL && choice != bool_fields_count + 1);
 
 	goto lblEnd;
 
@@ -1346,14 +1346,14 @@ int get_count_of_good(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 	};
 
 	int count = 0;
-	char choice = 0;
+	T_GL_WCHAR choice = 0;
 	int max_len = 5;
 	char* field_value;
 	do {
 		choice = GL_Dialog_Menu(hGraphicLib, "Select action", menu, choice,
-				GL_BUTTON_NONE , GL_KEY_0, GL_TIME_INFINITE);
+				GL_BUTTON_CANCEL, GL_KEY_0, GL_TIME_INFINITE);
 
-		if (choice == 1) break;
+		if (choice == 1 || choice == GL_KEY_CANCEL) break;
 
 		field_value = read_field(hGraphicLib, "Enter count of good", 0, max_len, NUMBER_GOOD, 0);
 		if (field_value == NULL) {
@@ -1368,7 +1368,7 @@ int get_count_of_good(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 		}
 
 		free(field_value);
-	} while (choice != 1);
+	} while (choice != GL_KEY_CANCEL && choice != 1);
 
 	return count;
 }
@@ -1399,14 +1399,14 @@ int form_cart_and_buy(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 	TEMPLATE(create, int)(1, &indexes);
 	TEMPLATE(create, int)(1, &counts);
 
-	char choice = 0;
+	T_GL_WCHAR choice = 0;
 	do {
 
 		choice = GL_Dialog_MultiChoice (hGraphicLib, "Choose goods", first_fields,
-				choice, checked, GL_BUTTON_DEFAULT, GL_KEY_0, GL_TIME_INFINITE);
+				choice, checked, GL_BUTTON_CANCEL, GL_KEY_0, GL_TIME_INFINITE);
 	    (void)choice;
 
-		if (choice == goods_count + 1) {
+		if (choice == goods_count + 1 || choice == GL_KEY_CANCEL) {
 			break;
 		} else if (choice == goods_count) {
 			if (indexes.length == 0) {
@@ -1437,7 +1437,7 @@ int form_cart_and_buy(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 			}
 		}
 
-	} while(choice != goods_count + 1);
+	} while(choice != GL_KEY_CANCEL && choice != goods_count + 1);
 
 	TEMPLATE(destroy, int)(&indexes);
 	TEMPLATE(destroy, int)(&counts);
@@ -1447,7 +1447,7 @@ int form_cart_and_buy(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 }
 
 void create_menu(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
-	char choice = 0;
+	T_GL_WCHAR choice = 0;
 
 	const char* main_menu[] = {
 			"Import file with goods",
@@ -1464,7 +1464,7 @@ void create_menu(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 
 	do {
 		choice = GL_Dialog_Menu(hGraphicLib, "Select action", main_menu, choice,
-				GL_BUTTON_NONE , GL_KEY_0, GL_TIME_INFINITE);
+				GL_BUTTON_CANCEL , GL_KEY_0, GL_TIME_INFINITE);
 
 		switch (choice) {
 		case 0:                                    // IMPORT
@@ -1498,7 +1498,7 @@ void create_menu(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 			// Exit
 			break;
 		}
-	} while (choice != 6);
+	} while (choice != GL_KEY_CANCEL && choice != 6);
 }
 
 void main_processing(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
