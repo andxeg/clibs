@@ -106,7 +106,12 @@ int assign_schema_header(FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicLib) {
 
 	// add fields name
 	for (i = 0; i < NUMBER_OF_ITEMS(fields); i++) {
-		str = (char *) malloc(sizeof(char) * (strlen(fields[i]) + 1));
+		str = (char *) umalloc(sizeof(char) * (strlen(fields[i]) + 1));
+		if (str == NULL) {
+			print_message(hGraphicLib, "cannot allocate memory\nfor field value\nin assign schema");
+			ELOG("cannot allocate memory for field value");
+			return 1;
+		}
 		str = strcpy(str, fields[i]);
 		TEMPLATE(append, string)(&schema->header->fields, str);
 	}
@@ -139,7 +144,9 @@ int read_file_header(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGr
 	}
 
 	if (file_t == STATIC_FILE_TYPE) {
-		assign_schema_header(schema, hGraphicLib);
+		if (assign_schema_header(schema, hGraphicLib)) {
+			return 1;
+		}
 		// move file pointer to the beginning of file
 		if (GL_File_Seek(file, 0, GL_FILE_SEEK_BEGIN) != GL_SUCCESS) {
 			print_message(hGraphicLib, "cannot read file with goods");
@@ -184,11 +191,13 @@ int read_file_header(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGr
 }
 
 int read_fields(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicLib) {
+	int iRet = 0;
 	char c;
     char* raw_data = NULL;
     int inside = 0;
     TEMPLATE(DYN_ARRAY, char) array_char;
-    TEMPLATE(create, char)(DEFAULT_FIELD_SIZE, &array_char);
+    iRet = TEMPLATE(create, char)(DEFAULT_FIELD_SIZE, &array_char);
+    CHECK(iRet == 0, lblCreationError);
 
     while (1) {
     	if (GL_File_Read(file, &c, sizeof(char)) == 0) break;
@@ -198,23 +207,19 @@ int read_fields(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphic
         if (c == GOODS_FILE_SEPARATOR) {
             if (inside) {
                 TEMPLATE(append, char)(&array_char, '\0');
-                if (TEMPLATE(shrink_to_fit, char)(&array_char)) {
-                	ELOG("cannot shrink input field");
-                    TEMPLATE(destroy, char)(&array_char);
-                    return 1;
-                }
+                iRet = TEMPLATE(shrink_to_fit, char)(&array_char);
+                CHECK(iRet == 0, lblShrinkError);
                 raw_data = TEMPLATE(get_raw_data, char)(&array_char);
                 TEMPLATE(append, string)(&schema->header->fields, raw_data);
-                TEMPLATE(create, char)(DEFAULT_FIELD_SIZE, &array_char);
+                iRet = TEMPLATE(create, char)(DEFAULT_FIELD_SIZE, &array_char);
+                CHECK(iRet == 0, lblCreationError);
             }
             inside = 0;
         } else if (isalpha(c) || isdigit(c) || c == ' ' || c == '.' || c == '_') {
             inside = 1;
             TEMPLATE(append, char)(&array_char, c);
         } else {
-        	ELOG("unknown symbol in field");
-            TEMPLATE(destroy, char)(&array_char);
-            return 1;
+        	goto lblSymbolError;
         }
 
     }
@@ -222,23 +227,44 @@ int read_fields(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphic
     // last field
     if (array_char.length != 0) {
          TEMPLATE(append, char)(&array_char, '\0');
-         if (TEMPLATE(shrink_to_fit, char)(&array_char)) {
-        	 ELOG("cannot shrink input field");
-             TEMPLATE(destroy, char)(&array_char);
-             return 1;
-         }
+         iRet = TEMPLATE(shrink_to_fit, char)(&array_char);
+         CHECK(iRet == 0, lblShrinkError);
          raw_data = TEMPLATE(get_raw_data, char)(&array_char);
          TEMPLATE(append, string)(&schema->header->fields, raw_data);
     }
+    goto lblEnd;
+
+lblCreationError:
+	GL_Dialog_Message(hGraphicLib, NULL, "Cannot create\narrray for field value", GL_ICON_ERROR, GL_BUTTON_VALID, 2*1000);
+	ELOG("cannot create array for field value");
+	goto lblReleaseResources;
+
+lblSymbolError:
+	GL_Dialog_Message(hGraphicLib, NULL, "Unknown symbol in field", GL_ICON_ERROR, GL_BUTTON_VALID, 2*1000);
+	ELOG("unknown symbol in field");
+	goto lblReleaseResources;
+
+lblShrinkError:
+	GL_Dialog_Message(hGraphicLib, NULL, "Cannot shrink input field", GL_ICON_ERROR, GL_BUTTON_VALID, 2*1000);
+	ELOG("cannot shrink input field");
+	goto lblReleaseResources;
+
+lblReleaseResources:
+	TEMPLATE(destroy, char)(&array_char);
+	return 1;
+lblEnd:
+
     return 0;
 }
 
 int read_types(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicLib) {
-    char c;
+    int iRet = 0;
+	char c;
     char* raw_data = NULL;
     int inside = 0;
     TEMPLATE(DYN_ARRAY, char) array_char;
-    TEMPLATE(create, char)(DEFAULT_FIELD_SIZE, &array_char);
+    iRet = TEMPLATE(create, char)(DEFAULT_FIELD_SIZE, &array_char);
+    CHECK(iRet == 0, lblCreationError);
     while (1) {
     	if (GL_File_Read(file, &c, sizeof(char)) == 0) break;
 		if (c == '\r') continue;
@@ -248,27 +274,24 @@ int read_types(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicL
             if (inside) {
                 TEMPLATE(append, char)(&array_char, '\0');
                 raw_data = TEMPLATE(get_raw_data, char)(&array_char);
-                if (strcmp(raw_data, "STRING\0") == 0) {
+                if (strncmp(raw_data, "STRING", strlen("STRING")) == 0) {
                     TEMPLATE(append, good_field)(&schema->header->types, STRING_GOOD);
-                } else if (strcmp(raw_data, "NUMBER\0") == 0) {
+                } else if (strncmp(raw_data, "NUMBER", strlen("NUMBER")) == 0) {
                     TEMPLATE(append, good_field)(&schema->header->types, NUMBER_GOOD);
-                } else if(strcmp(raw_data, "BOOL\0") == 0) {
+                } else if(strncmp(raw_data, "BOOL", strlen("BOOL")) == 0) {
                     TEMPLATE(append, good_field)(&schema->header->types, BOOL_GOOD);
                 } else {
-                    ELOG("unknown type of field");
-                    TEMPLATE(destroy, char)(&array_char);
-                    return 1;
+                	goto lblTypeError;
                 }
-                TEMPLATE(recreate, char)(DEFAULT_FIELD_SIZE, &array_char);
+                iRet = TEMPLATE(recreate, char)(DEFAULT_FIELD_SIZE, &array_char);
+                CHECK(iRet == 0, lblCreationError);
             }
             inside = 0;
         } else if (isalpha(c) || isdigit(c) || c == ' ' || c == '.' || c == '_') {
             inside = 1;
             TEMPLATE(append, char)(&array_char, c);
         } else {
-            ELOG("unknown symbol in field");
-            TEMPLATE(destroy, char)(&array_char);
-            return 1;
+        	goto lblSymbolError;
         }
     }
 
@@ -276,18 +299,38 @@ int read_types(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicL
     if (array_char.length != 0) {
         TEMPLATE(append, char)(&array_char, '\0');
         raw_data = TEMPLATE(get_raw_data, char)(&array_char);
-        if (strcmp(raw_data, "STRING\0") == 0) {
+        if (strncmp(raw_data, "STRING", strlen("STRING")) == 0) {
             TEMPLATE(append, good_field)(&schema->header->types, STRING_GOOD);
-        } else if (strcmp(raw_data, "NUMBER\0") == 0) {
+        } else if (strncmp(raw_data, "NUMBER", strlen("NUMBER")) == 0) {
             TEMPLATE(append, good_field)(&schema->header->types, NUMBER_GOOD);
-        } else if(strcmp(raw_data, "BOOL\0") == 0) {
+        } else if(strncmp(raw_data, "BOOL", strlen("BOOL")) == 0) {
             TEMPLATE(append, good_field)(&schema->header->types, BOOL_GOOD);
         } else {
-            ELOG("unknown type of field");
-            TEMPLATE(destroy, char)(&array_char);
-            return 1;
+        	goto lblTypeError;
         }
     }
+    goto lblEnd;
+
+lblCreationError:
+	GL_Dialog_Message(hGraphicLib, NULL, "Cannot create\narrray for field value", GL_ICON_ERROR, GL_BUTTON_VALID, 2*1000);
+	ELOG("cannot create array for field value");
+	goto lblReleaseResources;
+
+lblTypeError:
+	GL_Dialog_Message(hGraphicLib, NULL, "Unknown field type", GL_ICON_ERROR, GL_BUTTON_VALID, 2*1000);
+	ELOG("unknown field type");
+	goto lblReleaseResources;
+
+lblSymbolError:
+	GL_Dialog_Message(hGraphicLib, NULL, "Unknown symbol in field", GL_ICON_ERROR, GL_BUTTON_VALID, 2*1000);
+	ELOG("unknown symbol in field");
+	goto lblReleaseResources;
+
+lblReleaseResources:
+	TEMPLATE(destroy, char)(&array_char);
+	return 1;
+lblEnd:
+
     TEMPLATE(destroy, char)(&array_char);
     return 0;
 }
@@ -333,10 +376,12 @@ int get_bool_value(TEMPLATE(DYN_ARRAY, char)* array_char, int* value) {
 }
 
 int read_limits(T_GL_HFILE file, TEMPLATE(DYN_ARRAY, int)* limits, T_GL_HGRAPHIC_LIB hGraphicLib) {
+	int iRet = 0;
 	char c;
 	int inside = 0;
 	TEMPLATE(DYN_ARRAY, char) array_char;
 	TEMPLATE(create, char)(DEFAULT_FIELD_SIZE, &array_char);
+	CHECK(iRet == 0, lblCreationError);
 	while (1) {
 		if (GL_File_Read(file, &c, sizeof(char)) == 0) break;
 		if (c == '\r') continue;
@@ -346,18 +391,18 @@ int read_limits(T_GL_HFILE file, TEMPLATE(DYN_ARRAY, int)* limits, T_GL_HGRAPHIC
 			if (inside) {
 				TEMPLATE(append, char)(&array_char, '\0');
 				int val;
-				get_int_value(&array_char, &val); // insert check
+				iRet = get_int_value(&array_char, &val); // insert check
+				CHECK(iRet == 0, lblErrorConvertToNum);
 				TEMPLATE(append, int)(limits, val);
-				TEMPLATE(recreate, char)(DEFAULT_FIELD_SIZE, &array_char);
+				iRet = TEMPLATE(recreate, char)(DEFAULT_FIELD_SIZE, &array_char);
+				CHECK(iRet == 0, lblCreationError);
 			}
 			inside = 0;
 		} else if (isdigit(c)) {
 			inside = 1;
 			TEMPLATE(append, char)(&array_char, c);
 		} else {
-			ELOG("unknown symbol while read");
-			TEMPLATE(destroy, char)(&array_char);
-			return 1;
+			goto lblSymbolError;
 		}
 
 	}
@@ -366,9 +411,31 @@ int read_limits(T_GL_HFILE file, TEMPLATE(DYN_ARRAY, int)* limits, T_GL_HGRAPHIC
 	if (array_char.length != 0) {
 		TEMPLATE(append, char)(&array_char, '\0');
 		int val;
-		get_int_value(&array_char, &val); // add check
+		iRet = get_int_value(&array_char, &val); // add check
+		CHECK(iRet == 0, lblErrorConvertToNum);
 		TEMPLATE(append, int)(limits, val);
 	}
+	goto lblEnd;
+
+lblErrorConvertToNum:
+	GL_Dialog_Message(hGraphicLib, NULL, "Cannot convert field value to integer", GL_ICON_ERROR, GL_BUTTON_VALID, 2*1000);
+	ELOG("cannot convert field value to integer");
+	goto lblReleaseResources;
+
+lblCreationError:
+	GL_Dialog_Message(hGraphicLib, NULL, "Cannot create\narrray for field value", GL_ICON_ERROR, GL_BUTTON_VALID, 2*1000);
+	ELOG("cannot create array for field value");
+	goto lblReleaseResources;
+
+lblSymbolError:
+	GL_Dialog_Message(hGraphicLib, NULL, "Unknown symbol in field", GL_ICON_ERROR, GL_BUTTON_VALID, 2*1000);
+	ELOG("unknown symbol in field");
+	goto lblReleaseResources;
+
+lblReleaseResources:
+	TEMPLATE(destroy, char)(&array_char);
+	return 1;
+lblEnd:
 
 	TEMPLATE(destroy, char)(&array_char);
     return 0;

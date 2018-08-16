@@ -170,7 +170,8 @@ Obj/GNU_ARM_DEBUG_T2/dynamic_arrays.o: Src/dynamic_arrays.c \
   C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/GL_Version.h \
   C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/GL_ClassBinder.hpp \
   C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/GL_File.h \
-  Inc/dynamic_array_types.h
+  Inc/dynamic_array_types.h \
+  C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/oem_public_def.h
 
 Inc/templates.h:
 
@@ -531,3 +532,5 @@ C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/GL_C
 C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/GL_File.h:
 
 Inc/dynamic_array_types.h:
+
+C:/Program\ Files/TeliumSDK/SDK\ PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/inc/oem_public_def.h:

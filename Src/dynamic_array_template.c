@@ -7,9 +7,10 @@
 #include "log.h"
 #include "templates.h"
 #include "dynamic_array_types.h"
+#include "oem_public_def.h"     // ufree, umalloc
 
 TEMPLATE(DYN_ARRAY, TYPE_NAME)* TEMPLATE(create2, TYPE_NAME) (int size) {
-    TEMPLATE(DYN_ARRAY, TYPE_NAME)* result = (TEMPLATE(DYN_ARRAY, TYPE_NAME)*)malloc(sizeof(TEMPLATE(DYN_ARRAY, TYPE_NAME)));
+    TEMPLATE(DYN_ARRAY, TYPE_NAME)* result = (TEMPLATE(DYN_ARRAY, TYPE_NAME)*) umalloc(sizeof(TEMPLATE(DYN_ARRAY, TYPE_NAME)));
     if (result == NULL) {
         ELOG("create2: error in malloc");
         return NULL;
@@ -17,7 +18,7 @@ TEMPLATE(DYN_ARRAY, TYPE_NAME)* TEMPLATE(create2, TYPE_NAME) (int size) {
 
     if (TEMPLATE(create, TYPE_NAME)(size, result)) {
         ELOG("create2: error in dyn array creation");
-        free(result);
+        ufree(result);
         return NULL;
     }
 
@@ -27,7 +28,7 @@ TEMPLATE(DYN_ARRAY, TYPE_NAME)* TEMPLATE(create2, TYPE_NAME) (int size) {
 void TEMPLATE(destroy2, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
     if (a != NULL) {
         TEMPLATE(destroy, TYPE_NAME)(a);
-        free(a);
+        ufree(a);
         a = NULL;
     }
 }
@@ -68,7 +69,7 @@ void TEMPLATE(destroy, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a) {
             free(a->data[i]);
         }
         #endif
-        free(a->data);
+        ufree(a->data);
         a->data = NULL;
     }
 

@@ -12,7 +12,7 @@
 #include "dynamic_arrays.h"
 
 TEMPLATE(LIST, TYPE_NAME)* TEMPLATE(create_list, TYPE_NAME)() {
-    TEMPLATE(LIST, TYPE_NAME)* result = (TEMPLATE(LIST, TYPE_NAME)*)malloc(sizeof(TEMPLATE(LIST, TYPE_NAME)));
+    TEMPLATE(LIST, TYPE_NAME)* result = (TEMPLATE(LIST, TYPE_NAME)*) umalloc(sizeof(TEMPLATE(LIST, TYPE_NAME)));
     if (result == NULL) {
         ELOG("error in malloc");
         return NULL;
@@ -32,10 +32,10 @@ void TEMPLATE(destroy_list_lite, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list) {
         list->next = node->next;
         node->next->prev = list;
         node->next = node->prev = NULL;
-        free(node);
+        ufree(node);
     }
 
-    free(list);
+    ufree(list);
 }
 
 void TEMPLATE(destroy_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list) {
@@ -58,10 +58,10 @@ void TEMPLATE(destroy_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list) {
         free(node->data);
         #endif
 
-        free(node);
+        ufree(node);
     }
 
-    free(list);
+    ufree(list);
 }
 
 int TEMPLATE(is_empty_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list) {
@@ -154,7 +154,7 @@ TEMPLATE(LIST, TYPE_NAME)* TEMPLATE(search, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME)
 
 int TEMPLATE(add_to_list, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, T elem) {
     TEMPLATE(LIST_NODE, TYPE_NAME)* last = list->prev;
-    TEMPLATE(LIST_NODE, TYPE_NAME)* new_node = (TEMPLATE(LIST_NODE, TYPE_NAME)*)malloc(sizeof(TEMPLATE(LIST_NODE, TYPE_NAME)));
+    TEMPLATE(LIST_NODE, TYPE_NAME)* new_node = (TEMPLATE(LIST_NODE, TYPE_NAME)*) umalloc(sizeof(TEMPLATE(LIST_NODE, TYPE_NAME)));
     if (new_node == NULL) {
         ELOG("error in malloc");
         return 1;
@@ -385,7 +385,7 @@ int TEMPLATE(add_elem_by_index, TYPE_NAME)(TEMPLATE(LIST, TYPE_NAME) *list, int 
     while (curr_node != list) {
         if (curr_index == index) {
             TEMPLATE(LIST_NODE, TYPE_NAME)* prev = curr_node->prev;
-            TEMPLATE(LIST_NODE, TYPE_NAME)* new_node = (TEMPLATE(LIST_NODE, TYPE_NAME)*)malloc(sizeof(TEMPLATE(LIST_NODE, TYPE_NAME)));
+            TEMPLATE(LIST_NODE, TYPE_NAME)* new_node = (TEMPLATE(LIST_NODE, TYPE_NAME)*) umalloc(sizeof(TEMPLATE(LIST_NODE, TYPE_NAME)));
             if (new_node == NULL) {
                 ELOG("error in malloc");
                 return 1;

@@ -23,4 +23,3 @@ int write_limits_to_file(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB
 int write_goods_to_file(T_GL_HFILE file, FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicLib);
 
 #endif
-

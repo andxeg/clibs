@@ -278,6 +278,8 @@ C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork
                               Obj/GNU_ARM_DEBUG_T2/Entry.o (strcpy)
 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strlen.o)
                               Obj/GNU_ARM_DEBUG_T2/iofile.o (strlen)
+C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncmp.o)
+                              Obj/GNU_ARM_DEBUG_T2/iofile.o (strncmp)
 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncpy.o)
                               Obj/GNU_ARM_DEBUG_T2/Entry.o (strncpy)
 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok.o)
@@ -324,7 +326,7 @@ Linker script and memory map
                 0x00001000                . = 0x1000
                 0x00001000                __text_start = .
 
-.text           0x00001000    0x17130
+.text           0x00001000    0x17758
  *(.first)
  .first         0x00001000       0x8c C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/startfiles/cstartupTplus.o
                 0x00001000                _start
@@ -376,7 +378,7 @@ Linker script and memory map
                 0x00002f1c                initUIContext
                 0x00002fc4                releaseUIContext
  .text          0x00003048        0x0 Obj/GNU_ARM_DEBUG_T2/dynamic_array_template.o
- .text          0x00003048     0x3ac8 Obj/GNU_ARM_DEBUG_T2/dynamic_arrays.o
+ .text          0x00003048     0x3aac Obj/GNU_ARM_DEBUG_T2/dynamic_arrays.o
                 0x00003048                create2_int
                 0x000030ec                destroy2_int
                 0x0000312c                create_int
@@ -393,763 +395,763 @@ Linker script and memory map
                 0x00003618                set_array_types_int
                 0x0000365c                get_raw_data_int
                 0x00003688                shrink_to_fit_int
-                0x00003740                recreate_int
-                0x00003790                array_match_int
-                0x000037bc                create2_char
-                0x00003860                destroy2_char
-                0x000038a0                create_char
-                0x0000395c                destroy_char
-                0x00003998                is_empty_char
-                0x000039c8                array_length_char
-                0x000039f4                array_capacity_char
-                0x00003a20                get_char
-                0x00003a98                insert_char
-                0x00003b14                append_char
-                0x00003be8                print_char
-                0x00003cec                array_equal_char
-                0x00003d60                get_array_types_char
-                0x00003d8c                set_array_types_char
-                0x00003dd0                get_raw_data_char
-                0x00003dfc                shrink_to_fit_char
-                0x00003eb4                recreate_char
-                0x00003f04                array_match_char
-                0x00003f30                create2_string
-                0x00003fd4                destroy2_string
-                0x00004014                create_string
-                0x000040d0                destroy_string
-                0x00004134                is_empty_string
-                0x00004164                array_length_string
-                0x00004190                array_capacity_string
-                0x000041bc                get_string
-                0x00004238                insert_string
-                0x000042b0                append_string
-                0x00004380                print_string
-                0x0000447c                array_equal_string
-                0x00004504                get_array_types_string
-                0x00004530                set_array_types_string
-                0x00004574                get_raw_data_string
-                0x000045a0                shrink_to_fit_string
-                0x00004658                recreate_string
-                0x000046a8                array_match_string
-                0x000046d4                create2_string_st
-                0x00004778                destroy2_string_st
-                0x000047b8                create_string_st
-                0x00004874                destroy_string_st
-                0x000048b0                is_empty_string_st
-                0x000048e0                array_length_string_st
-                0x0000490c                array_capacity_string_st
-                0x00004938                get_string_st
-                0x000049b4                insert_string_st
-                0x00004a2c                append_string_st
-                0x00004afc                print_string_st
-                0x00004bf8                array_equal_string_st
-                0x00004c7c                get_array_types_string_st
-                0x00004ca8                set_array_types_string_st
-                0x00004cec                get_raw_data_string_st
-                0x00004d18                shrink_to_fit_string_st
-                0x00004dd0                recreate_string_st
-                0x00004e20                array_match_string_st
-                0x00004e4c                create2_good_field
-                0x00004ef0                destroy2_good_field
-                0x00004f30                create_good_field
-                0x00004fec                destroy_good_field
-                0x00005028                is_empty_good_field
-                0x00005058                array_length_good_field
-                0x00005084                array_capacity_good_field
-                0x000050b0                get_good_field
-                0x00005128                insert_good_field
-                0x000051a4                append_good_field
-                0x00005278                print_good_field
-                0x0000537c                array_equal_good_field
-                0x000053f0                get_array_types_good_field
-                0x0000541c                set_array_types_good_field
-                0x00005460                get_raw_data_good_field
-                0x0000548c                shrink_to_fit_good_field
-                0x00005544                recreate_good_field
-                0x00005594                array_match_good_field
-                0x000055c0                create2_vop
-                0x00005664                destroy2_vop
-                0x000056a4                create_vop
-                0x00005794                destroy_vop
-                0x0000581c                is_empty_vop
-                0x0000584c                array_length_vop
-                0x00005878                array_capacity_vop
-                0x000058a4                get_vop
-                0x00005920                insert_vop
-                0x00005998                append_vop
-                0x00005a68                print_vop
-                0x00005cc8                array_equal_vop
-                0x00005e34                get_array_types_vop
-                0x00005e60                set_array_types_vop
-                0x00005ea4                get_raw_data_vop
-                0x00005ed0                shrink_to_fit_vop
-                0x00005f88                recreate_vop
-                0x00005fd8                array_match_vop
-                0x000061e8                create2_vop_st
-                0x0000628c                destroy2_vop_st
-                0x000062cc                create_vop_st
-                0x000063bc                destroy_vop_st
-                0x0000641c                is_empty_vop_st
-                0x0000644c                array_length_vop_st
-                0x00006478                array_capacity_vop_st
-                0x000064a4                get_vop_st
-                0x00006520                insert_vop_st
-                0x00006598                append_vop_st
-                0x00006668                print_vop_st
-                0x000068c8                array_equal_vop_st
-                0x00006940                get_array_types_vop_st
-                0x0000696c                set_array_types_vop_st
-                0x000069b0                get_raw_data_vop_st
-                0x000069dc                shrink_to_fit_vop_st
-                0x00006a94                recreate_vop_st
-                0x00006ae4                array_match_vop_st
- .text          0x00006b10      0x2b8 Obj/GNU_ARM_DEBUG_T2/file_schema.o
-                0x00006b10                create_file_schema
-                0x00006b90                destroy_file_schema
-                0x00006c00                print_file_schema
-                0x00006d3c                is_empty_file_schema
- .text          0x00006dc8     0x1d70 Obj/GNU_ARM_DEBUG_T2/iofile.o
-                0x00006dc8                read_file_with_goods
-                0x00006f48                file_type
-                0x00006fc0                assign_schema_header
-                0x00007124                read_file_header
-                0x00007308                read_fields
-                0x000074f4                read_types
-                0x0000779c                get_int_value
-                0x000078b4                get_bool_value
-                0x00007914                read_limits
-                0x00007a60                create_array_with_types
-                0x00007b4c                process_single_field
-                0x00007b74                read_goods
-                0x000086a8                write_file_schema_to_file
-                0x00008820                write_header_to_file
-                0x0000884c                write_fields_to_file
-                0x00008878                write_types_to_file
-                0x000088a4                write_limits_to_file
-                0x000088d0                write_goods_to_file
- .text          0x00008b38        0x0 Obj/GNU_ARM_DEBUG_T2/list_template.o
- .text          0x00008b38     0x6cc4 Obj/GNU_ARM_DEBUG_T2/lists.o
-                0x00008b38                create_list_int
-                0x00008bac                destroy_list_lite_int
-                0x00008c10                destroy_list_int
-                0x00008c74                is_empty_list_int
-                0x00008cc0                size_list_int
-                0x00008d08                contains_list_int
-                0x00008d5c                search_int
-                0x00008db4                add_to_list_int
-                0x00008e44                remove_from_list_int
-                0x00008ec4                get_by_index_int
-                0x00008f54                insert_by_index_int
-                0x00008fe4                indexOf_int
-                0x00009048                print_list_int
-                0x0000913c                add_elem_by_index_int
-                0x00009290                remove_elem_by_index_int
-                0x00009378                create_list_string
-                0x000093ec                destroy_list_lite_string
-                0x00009450                destroy_list_string
-                0x000094c0                is_empty_list_string
-                0x0000950c                size_list_string
-                0x00009554                contains_list_string
-                0x000095b8                search_string
-                0x00009610                add_to_list_string
-                0x000096a0                remove_from_list_string
-                0x00009728                get_by_index_string
-                0x000097b8                insert_by_index_string
-                0x00009854                indexOf_string
-                0x000098c4                print_list_string
-                0x000099b0                add_elem_by_index_string
-                0x00009b04                remove_elem_by_index_string
-                0x00009bf4                create_list_string_st
-                0x00009c68                destroy_list_lite_string_st
-                0x00009ccc                destroy_list_string_st
-                0x00009d30                is_empty_list_string_st
-                0x00009d7c                size_list_string_st
-                0x00009dc4                contains_list_string_st
-                0x00009e24                search_string_st
-                0x00009e7c                add_to_list_string_st
-                0x00009f0c                remove_from_list_string_st
-                0x00009f94                get_by_index_string_st
-                0x0000a024                insert_by_index_string_st
-                0x0000a0b4                indexOf_string_st
-                0x0000a124                print_list_string_st
-                0x0000a210                add_elem_by_index_string_st
-                0x0000a364                remove_elem_by_index_string_st
-                0x0000a44c                create_list_float
-                0x0000a4c0                destroy_list_lite_float
-                0x0000a524                destroy_list_float
-                0x0000a588                is_empty_list_float
-                0x0000a5d4                size_list_float
-                0x0000a61c                contains_list_float
-                0x0000a678                search_float
-                0x0000a6d0                add_to_list_float
-                0x0000a760                remove_from_list_float
-                0x0000a7e8                get_by_index_float
-                0x0000a878                insert_by_index_float
-                0x0000a908                indexOf_float
-                0x0000a974                print_list_float
-                0x0000aa80                add_elem_by_index_float
-                0x0000abd4                remove_elem_by_index_float
-                0x0000acbc                create_list_dyn_array_int
-                0x0000ad30                destroy_list_lite_dyn_array_int
-                0x0000ad94                destroy_list_dyn_array_int
-                0x0000ae00                is_empty_list_dyn_array_int
-                0x0000ae4c                size_list_dyn_array_int
-                0x0000ae94                contains_list_dyn_array_int
-                0x0000af10                search_dyn_array_int
-                0x0000af74                add_to_list_dyn_array_int
-                0x0000b02c                remove_from_list_dyn_array_int
-                0x0000b0d4                get_by_index_dyn_array_int
-                0x0000b16c                insert_by_index_dyn_array_int
-                0x0000b224                indexOf_dyn_array_int
-                0x0000b2b0                print_list_dyn_array_int
-                0x0000b36c                add_elem_by_index_dyn_array_int
-                0x0000b4f0                remove_elem_by_index_dyn_array_int
-                0x0000b5e0                create_list_dyn_array_string
-                0x0000b654                destroy_list_lite_dyn_array_string
-                0x0000b6b8                destroy_list_dyn_array_string
-                0x0000b724                is_empty_list_dyn_array_string
-                0x0000b770                size_list_dyn_array_string
-                0x0000b7b8                contains_list_dyn_array_string
-                0x0000b834                search_dyn_array_string
-                0x0000b898                add_to_list_dyn_array_string
-                0x0000b950                remove_from_list_dyn_array_string
-                0x0000b9f8                get_by_index_dyn_array_string
-                0x0000ba90                insert_by_index_dyn_array_string
-                0x0000bb48                indexOf_dyn_array_string
-                0x0000bbd4                print_list_dyn_array_string
-                0x0000bc90                add_elem_by_index_dyn_array_string
-                0x0000be14                remove_elem_by_index_dyn_array_string
-                0x0000bf04                create_list_dyn_array_vop
-                0x0000bf78                destroy_list_lite_dyn_array_vop
-                0x0000bfdc                destroy_list_dyn_array_vop
-                0x0000c048                is_empty_list_dyn_array_vop
-                0x0000c094                size_list_dyn_array_vop
-                0x0000c0dc                contains_list_dyn_array_vop
-                0x0000c158                search_dyn_array_vop
-                0x0000c1cc                add_to_list_dyn_array_vop
-                0x0000c284                remove_from_list_dyn_array_vop
-                0x0000c32c                get_by_index_dyn_array_vop
-                0x0000c3c4                insert_by_index_dyn_array_vop
-                0x0000c47c                indexOf_dyn_array_vop
-                0x0000c508                print_list_dyn_array_vop
-                0x0000c5c4                add_elem_by_index_dyn_array_vop
-                0x0000c748                remove_elem_by_index_dyn_array_vop
-                0x0000c838                create_list_dyn_array_vop_st
-                0x0000c8ac                destroy_list_lite_dyn_array_vop_st
-                0x0000c910                destroy_list_dyn_array_vop_st
-                0x0000c97c                is_empty_list_dyn_array_vop_st
-                0x0000c9c8                size_list_dyn_array_vop_st
-                0x0000ca10                contains_list_dyn_array_vop_st
-                0x0000ca8c                search_dyn_array_vop_st
-                0x0000caf0                add_to_list_dyn_array_vop_st
-                0x0000cba8                remove_from_list_dyn_array_vop_st
-                0x0000cc50                get_by_index_dyn_array_vop_st
-                0x0000cce8                insert_by_index_dyn_array_vop_st
-                0x0000cda0                indexOf_dyn_array_vop_st
-                0x0000ce2c                print_list_dyn_array_vop_st
-                0x0000cee8                add_elem_by_index_dyn_array_vop_st
-                0x0000d06c                remove_elem_by_index_dyn_array_vop_st
-                0x0000d15c                create_list_int_vec2
-                0x0000d1d0                destroy_list_lite_int_vec2
-                0x0000d234                destroy_list_int_vec2
-                0x0000d2a4                is_empty_list_int_vec2
-                0x0000d2f0                size_list_int_vec2
-                0x0000d338                contains_list_int_vec2
-                0x0000d3a4                search_int_vec2
-                0x0000d3fc                add_to_list_int_vec2
-                0x0000d48c                remove_from_list_int_vec2
-                0x0000d520                get_by_index_int_vec2
-                0x0000d5c4                insert_by_index_int_vec2
-                0x0000d668                indexOf_int_vec2
-                0x0000d6e4                print_list_int_vec2
-                0x0000d8b0                add_elem_by_index_int_vec2
-                0x0000da04                remove_elem_by_index_int_vec2
-                0x0000daf4                create_list_int_vec3
-                0x0000db68                destroy_list_lite_int_vec3
-                0x0000dbcc                destroy_list_int_vec3
-                0x0000dc3c                is_empty_list_int_vec3
-                0x0000dc88                size_list_int_vec3
-                0x0000dcd0                contains_list_int_vec3
-                0x0000dd4c                search_int_vec3
-                0x0000dda4                add_to_list_int_vec3
-                0x0000de34                remove_from_list_int_vec3
-                0x0000dedc                get_by_index_int_vec3
-                0x0000df80                insert_by_index_int_vec3
-                0x0000e024                indexOf_int_vec3
-                0x0000e0b0                print_list_int_vec3
-                0x0000e27c                add_elem_by_index_int_vec3
-                0x0000e3d0                remove_elem_by_index_int_vec3
-                0x0000e4c0                create_list_int_vec2_st
-                0x0000e534                destroy_list_lite_int_vec2_st
-                0x0000e598                destroy_list_int_vec2_st
-                0x0000e5fc                is_empty_list_int_vec2_st
-                0x0000e648                size_list_int_vec2_st
-                0x0000e690                contains_list_int_vec2_st
-                0x0000e6fc                search_int_vec2_st
-                0x0000e754                add_to_list_int_vec2_st
-                0x0000e7e4                remove_from_list_int_vec2_st
-                0x0000e878                get_by_index_int_vec2_st
-                0x0000e91c                insert_by_index_int_vec2_st
-                0x0000e9c0                indexOf_int_vec2_st
-                0x0000ea3c                print_list_int_vec2_st
-                0x0000ec08                add_elem_by_index_int_vec2_st
-                0x0000ed5c                remove_elem_by_index_int_vec2_st
-                0x0000ee44                create_list_int_vec3_st
-                0x0000eeb8                destroy_list_lite_int_vec3_st
-                0x0000ef1c                destroy_list_int_vec3_st
-                0x0000ef80                is_empty_list_int_vec3_st
-                0x0000efcc                size_list_int_vec3_st
-                0x0000f014                contains_list_int_vec3_st
-                0x0000f090                search_int_vec3_st
-                0x0000f0e8                add_to_list_int_vec3_st
-                0x0000f178                remove_from_list_int_vec3_st
-                0x0000f220                get_by_index_int_vec3_st
-                0x0000f2c4                insert_by_index_int_vec3_st
-                0x0000f368                indexOf_int_vec3_st
-                0x0000f3f4                print_list_int_vec3_st
-                0x0000f5c0                add_elem_by_index_int_vec3_st
-                0x0000f714                remove_elem_by_index_int_vec3_st
- .text          0x0000f7fc     0x29e0 Obj/GNU_ARM_DEBUG_T2/Goal.o
-                0x0000f95c                GoalCreateScreen
-                0x0000fd6c                GoalClrScreen
-                0x0000ffa0                GoalRefreshScreen
-                0x0000ffd0                GoalDspLine
-                0x00010444                GoalDspMultiLine
-                0x00010628                GoalGetKey
-                0x000109a0                GoalDestroyScreen
-                0x000109d4                GoalCreateDrawing
-                0x00010c04                GoalClrDrawing
-                0x00010d38                GoalDrawLine
-                0x00010ec8                GoalDrawRect
-                0x0001106c                GoalDrawEllipse
-                0x00011210                GoalDrawText
-                0x000113f8                GoalDestroyDrawing
-                0x0001142c                GoalCreatePicture
-                0x00011688                GoalClrPicture
-                0x00011808                GoalDspPicture
-                0x00011b44                GoalDestroyPicture
-                0x00011b78                GoalCreateDocument
-                0x00011bfc                GoalPrnLine
-                0x00011e3c                GoalPrnMultiLine
-                0x0001208c                GoalPrnPicture
-                0x0001214c                GoalPrnDocument
-                0x000121a8                GoalDestroyDocument
- .text          0x000121dc     0x2f64 Obj/GNU_ARM_DEBUG_T2/main_processing.o
-                0x000121dc                display_startup_message
-                0x00012334                backup_file_schema
-                0x000123d4                restore_file_schema
-                0x00012468                import_file_with_goods
-                0x000125a0                get_fields_values_len
-                0x00012618                get_max_field_len
-                0x000126a8                show_good_fields
-                0x00012938                get_first_fields
-                0x000129ac                display_list_with_goods
-                0x00012b54                read_field
-                0x00012eec                convert_to_int_value
-                0x00012fb4                convert_to_bool_value
-                0x00013014                add_new_good
-                0x00013290                delete_good
-                0x00013300                edit_good
-                0x000133a0                modify_list_with_goods
-                0x000134b8                display_message_search_menu
-                0x000135d0                read_search_pattern
-                0x00013848                display_search_results
-                0x00013900                find_goods_by_template
-                0x000139e4                get_categories_pattern
-                0x00013b5c                get_bool_fields_name
-                0x00013bec                print_good
-                0x00013d6c                print_header_for_search_result
-                0x00013f94                print_search_results
-                0x000140ec                get_bool_fields_amount
-                0x0001415c                find_goods_by_categories
-                0x00014418                pay
-                0x00014768                get_index_of_price_field
-                0x000147e4                get_good_price
-                0x00014840                print_document
-                0x00014bf0                pay_for_goods
-                0x00014c68                get_count_of_good
-                0x00014d74                form_cart_and_buy
-                0x00014fe0                create_menu
-                0x0001510c                main_processing
- .text          0x00015140      0x1d4 Obj/GNU_ARM_DEBUG_T2/log.o
-                0x00015140                _log
-                0x000151d8                print_message
-                0x00015294                print_to_log
-                0x000152d4                print_to_error_log
- .text          0x00015314      0x9f0 Obj/GNU_ARM_DEBUG_T2/Magnetic.o
-                0x00015314                IsoError
-                0x000153dc                Magnetic
- .text          0x00015d04      0x3a0 Obj/GNU_ARM_DEBUG_T2/Timer.o
-                0x00015d04                TimerStart
-                0x00015df4                TimerGet
-                0x00015e8c                TimerStop
-                0x00015ee4                Timer
- .text          0x000160a4       0x5c C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(DisplayFooter.o)
-                0x000160b4                DisplayFooter
- .text          0x00016100       0x5c C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(DisplayHeader.o)
-                0x00016110                DisplayHeader
- .text          0x0001615c       0x58 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(DisplayLeds.o)
-                0x00016168                DisplayLeds
- .text          0x000161b4       0x60 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(Telium_Read_date.o)
-                0x000161c8                Telium_Read_date
- .text          0x00016214       0x64 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(IsColorDisplay.o)
-                0x00016224                IsColorDisplay
- .text          0x00016278       0x5c C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(IsISO1.o)
-                0x00016280                IsISO1
- .text          0x000162d4       0x5c C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(IsISO2.o)
-                0x000162dc                IsISO2
- .text          0x00016330       0x5c C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(IsISO3.o)
-                0x00016338                IsISO3
- .text          0x0001638c       0x60 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(IsPrinter.o)
-                0x00016398                IsPrinter
- .text          0x000163ec       0x64 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(Telium_ServiceRegister.o)
-                0x00016404                Telium_ServiceRegister
- .text          0x00016450       0x20 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(Telium_Fprintf.o)
-                0x00016450                Telium_Fprintf
- .text          0x00016470       0x34 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(Telium_Pprintf.o)
-                0x00016470                Telium_Pprintf
- .text          0x000164a4       0x20 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(Telium_Stdprt.o)
-                0x000164ac                Telium_Stdprt
- .text          0x000164c4       0x20 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(sprintf.o)
-                0x000164c4                sprintf
- .text          0x000164e4       0x74 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(extenstp1.o)
-                0x000164e4                extenslib_close
-                0x000164f8                extenslib_open
-                0x00016534                GetProcAddressExtens
- .text          0x00016558       0x78 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(toolstp1.o)
-                0x00016558                toolslib_close
-                0x0001656c                toolslib_open
-                0x000165ac                GetProcAddressTools
- .text          0x000165d0        0xc C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/OSLAYER.LIB(OSL_Dll_Close.o)
-                0x000165d0                OSL_Dll_Close
- .text          0x000165dc        0xc C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/OSLAYER.LIB(OSL_Dll_GetSymbolByName.o)
-                0x000165dc                OSL_Dll_GetSymbolByName
- .text          0x000165e8        0xc C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/OSLAYER.LIB(OSL_Dll_OpenByAppliType.o)
-                0x000165e8                OSL_Dll_OpenByAppliType
- .text          0x000165f4        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/OSLAYER.LIB(OSL_TimeStp_ElapsedMs.o)
-                0x000165f4                OSL_TimeStp_ElapsedMs
- .text          0x00016602        0xc C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/OSLAYER.LIB(OSL_TimeStp_Now.o)
-                0x00016602                OSL_TimeStp_Now
- .text          0x0001660e        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(ApplicationGetCurrent.o)
-                0x0001660e                ApplicationGetCurrent
- .text          0x0001661c        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(FS_close.o)
-                0x0001661c                FS_close
- .text          0x0001662a        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(FS_length.o)
-                0x0001662a                FS_length
- .text          0x00016638        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(FS_mount.o)
-                0x00016638                FS_mount
- .text          0x00016646        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(FS_open.o)
-                0x00016646                FS_open
- .text          0x00016654        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(FS_read.o)
-                0x00016654                FS_read
- .text          0x00016662        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(FS_unmount.o)
-                0x00016662                FS_unmount
- .text          0x00016670        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(ObjectGetInfo.o)
-                0x00016670                ObjectGetInfo
- .text          0x0001667e        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Exit.o)
-                0x0001667e                Telium_Exit
- .text          0x0001668c        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Fclose.o)
-                0x0001668c                Telium_Fclose
- .text          0x0001669a        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Fopen.o)
-                0x0001669a                Telium_Fopen
- .text          0x000166a8        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Fread.o)
-                0x000166a8                Telium_Fread
- .text          0x000166b6        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Is_iso1.o)
-                0x000166b6                Telium_Is_iso1
- .text          0x000166c4        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Is_iso2.o)
-                0x000166c4                Telium_Is_iso2
- .text          0x000166d2        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Is_iso3.o)
-                0x000166d2                Telium_Is_iso3
- .text          0x000166e0        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Mask_event.o)
-                0x000166e0                Telium_Mask_event
- .text          0x000166ee        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Reset_buf.o)
-                0x000166ee                Telium_Reset_buf
- .text          0x000166fc        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Stdperif.o)
-                0x000166fc                Telium_Stdperif
- .text          0x0001670a        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Ttestall.o)
-                0x0001670a                Telium_Ttestall
- .text          0x00016718        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Vfprintf.o)
-                0x00016718                Telium_Vfprintf
- .text          0x00016726        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Vsprintf.o)
-                0x00016726                Telium_Vsprintf
- .text          0x00016734        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(buzzer.o)
-                0x00016734                buzzer
- .text          0x00016742        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(first_init.o)
-                0x00016742                first_init
- .text          0x00016750        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(raz_init.o)
-                0x00016750                raz_init
- .text          0x0001675e        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(ufree.o)
-                0x0001675e                ufree
- .text          0x0001676c        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(umalloc.o)
-                0x0001676c                umalloc
- .text          0x0001677a        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(urealloc.o)
-                0x0001677a                urealloc
- .text          0x00016788       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Button_Create.o)
-                0x00016794                GL_Button_Create
- .text          0x000167ac       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Dialog_Choice.o)
-                0x000167b8                GL_Dialog_Choice
- .text          0x000167d0       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Dialog_File.o)
-                0x000167dc                GL_Dialog_File
- .text          0x000167f4       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Dialog_Menu.o)
-                0x00016800                GL_Dialog_Menu
- .text          0x00016818       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Dialog_Message.o)
-                0x00016824                GL_Dialog_Message
- .text          0x0001683c       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Dialog_MultiChoice.o)
-                0x00016848                GL_Dialog_MultiChoice
- .text          0x00016860       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Dialog_Text.o)
-                0x0001686c                GL_Dialog_Text
- .text          0x00016884       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Dialog_VirtualKeyboard.o)
-                0x00016890                GL_Dialog_VirtualKeyboard
- .text          0x000168a8       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Document_Create.o)
-                0x000168b4                GL_Document_Create
- .text          0x000168cc       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Document_Print.o)
-                0x000168d8                GL_Document_Print
- .text          0x000168f0       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Drawing_Clear.o)
-                0x000168fc                GL_Drawing_Clear
- .text          0x00016914       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Drawing_Create.o)
-                0x00016920                GL_Drawing_Create
- .text          0x00016938       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Drawing_DrawEllipse.o)
-                0x00016944                GL_Drawing_DrawEllipse
- .text          0x0001695c       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Drawing_DrawLine.o)
-                0x00016968                GL_Drawing_DrawLine
- .text          0x00016980       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Drawing_DrawRect.o)
-                0x0001698c                GL_Drawing_DrawRect
- .text          0x000169a4       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Drawing_DrawText.o)
-                0x000169b0                GL_Drawing_DrawText
- .text          0x000169c8       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Drawing_SetBrush.o)
-                0x000169d4                GL_Drawing_SetBrush
- .text          0x000169ec       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Drawing_SetFont.o)
-                0x000169f8                GL_Drawing_SetFont
- .text          0x00016a10       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Drawing_SetPen.o)
-                0x00016a1c                GL_Drawing_SetPen
- .text          0x00016a34       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_File_Close.o)
-                0x00016a40                GL_File_Close
- .text          0x00016a58       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_File_Delete.o)
-                0x00016a64                GL_File_Delete
- .text          0x00016a7c       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_File_Open.o)
-                0x00016a88                GL_File_Open
- .text          0x00016aa0       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_File_Read.o)
-                0x00016aac                GL_File_Read
- .text          0x00016ac4       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_File_Seek.o)
-                0x00016ad0                GL_File_Seek
- .text          0x00016ae8       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_File_Write.o)
-                0x00016af4                GL_File_Write
- .text          0x00016b0c       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_GraphicLib_BindSingleKey.o)
-                0x00016b18                GL_GraphicLib_BindSingleKey
- .text          0x00016b30       0xbc C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_GraphicLib_Create.o)
-                0x00016b30                GL_GraphicLib_Create
-                0x00016bac                GL_GraphicLib_Create_Init
- .text          0x00016bec       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_GraphicLib_IsTouchPresent.o)
-                0x00016bf8                GL_GraphicLib_IsTouchPresent
- .text          0x00016c10       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_GraphicLib_SetCharset.o)
-                0x00016c1c                GL_GraphicLib_SetCharset
- .text          0x00016c34       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_GraphicLib_UnbindKey.o)
-                0x00016c40                GL_GraphicLib_UnbindKey
- .text          0x00016c58       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Label_Create.o)
-                0x00016c64                GL_Label_Create
- .text          0x00016c7c       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Layout_Create.o)
-                0x00016c88                GL_Layout_Create
- .text          0x00016ca0       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Message_GetKey.o)
-                0x00016cac                GL_Message_GetKey
- .text          0x00016cc4       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Message_GetWidget.o)
-                0x00016cd0                GL_Message_GetWidget
- .text          0x00016ce8       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Message_GetWidgetById.o)
-                0x00016cf4                GL_Message_GetWidgetById
- .text          0x00016d0c       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Message_SetResult.o)
-                0x00016d18                GL_Message_SetResult
- .text          0x00016d30       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Message_SetUserData.o)
-                0x00016d3c                GL_Message_SetUserData
- .text          0x00016d54       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Picture_Create.o)
-                0x00016d60                GL_Picture_Create
- .text          0x00016d78       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Print_Create.o)
-                0x00016d84                GL_Print_Create
- .text          0x00016d9c       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Timer_Create.o)
-                0x00016da8                GL_Timer_Create
- .text          0x00016dc0       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Timer_SetInterval.o)
-                0x00016dcc                GL_Timer_SetInterval
- .text          0x00016de4       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Timer_Stop.o)
-                0x00016df0                GL_Timer_Stop
- .text          0x00016e08       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_Destroy.o)
-                0x00016e14                GL_Widget_Destroy
- .text          0x00016e2c       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_GetBackColor.o)
-                0x00016e38                GL_Widget_GetBackColor
- .text          0x00016e50       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_GetUserData.o)
-                0x00016e5c                GL_Widget_GetUserData
- .text          0x00016e74       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_RegisterCallback.o)
-                0x00016e80                GL_Widget_RegisterCallback
- .text          0x00016e98       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SearchId.o)
-                0x00016ea4                GL_Widget_SearchId
- .text          0x00016ebc       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetBackAlign.o)
-                0x00016ec8                GL_Widget_SetBackAlign
- .text          0x00016ee0       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetBackColor.o)
-                0x00016eec                GL_Widget_SetBackColor
- .text          0x00016f04       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetBorders.o)
-                0x00016f10                GL_Widget_SetBorders
- .text          0x00016f28       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetExpand.o)
-                0x00016f34                GL_Widget_SetExpand
- .text          0x00016f4c       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetFocusable.o)
-                0x00016f58                GL_Widget_SetFocusable
- .text          0x00016f70       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetFontName.o)
-                0x00016f7c                GL_Widget_SetFontName
- .text          0x00016f94       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetFontScale.o)
-                0x00016fa0                GL_Widget_SetFontScale
- .text          0x00016fb8       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetFontStyle.o)
-                0x00016fc4                GL_Widget_SetFontStyle
- .text          0x00016fdc       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetForeColor.o)
-                0x00016fe8                GL_Widget_SetForeColor
- .text          0x00017000       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetGrow.o)
-                0x0001700c                GL_Widget_SetGrow
- .text          0x00017024       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetId.o)
-                0x00017030                GL_Widget_SetId
- .text          0x00017048       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetItem.o)
-                0x00017054                GL_Widget_SetItem
- .text          0x0001706c       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetMargins.o)
-                0x00017078                GL_Widget_SetMargins
- .text          0x00017090       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetMinSize.o)
-                0x0001709c                GL_Widget_SetMinSize
- .text          0x000170b4       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetShortcut.o)
-                0x000170c0                GL_Widget_SetShortcut
- .text          0x000170d8       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetShrink.o)
-                0x000170e4                GL_Widget_SetShrink
- .text          0x000170fc       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetSize.o)
-                0x00017108                GL_Widget_SetSize
- .text          0x00017120       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetSource.o)
-                0x0001712c                GL_Widget_SetSource
- .text          0x00017144       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetText.o)
-                0x00017150                GL_Widget_SetText
- .text          0x00017168       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetTextAlign.o)
-                0x00017174                GL_Widget_SetTextAlign
- .text          0x0001718c       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetTextPaddings.o)
-                0x00017198                GL_Widget_SetTextPaddings
- .text          0x000171b0       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetTransformation.o)
-                0x000171bc                GL_Widget_SetTransformation
- .text          0x000171d4       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetVisible.o)
-                0x000171e0                GL_Widget_SetVisible
- .text          0x000171f8       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetWrap.o)
-                0x00017204                GL_Widget_SetWrap
- .text          0x0001721c       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_UnregisterCallback.o)
-                0x00017228                GL_Widget_UnregisterCallback
- .text          0x00017240       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Window_Create.o)
-                0x0001724c                GL_Window_Create
- .text          0x00017264       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Window_Dispatch.o)
-                0x00017270                GL_Window_Dispatch
- .text          0x00017288       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Window_GetResult.o)
-                0x00017294                GL_Window_GetResult
- .text          0x000172ac       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Window_MainLoop.o)
-                0x000172b8                GL_Window_MainLoop
- .text          0x000172d0      0x114 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_link.o)
-                0x000172d0                GL_IsPresent
-                0x0001730c                GL_GetProcAddressWithoutExit
-                0x000173a4                GL_GetProcAddress
- .text          0x000173e4       0x2c C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(gl_asm_link.o)
-                0x000173e4                GL_InitFuncAndBranch
-                0x000173f4                GL_Swi_ObjectLoad
-                0x00017402                GL_Swi_DllLink
- .text          0x00017410       0x1c C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-calloc.o)
-                0x00017410                calloc
- .text          0x0001742c        0x0 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-ctype_.o)
- .text          0x0001742c        0xc C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-errno.o)
-                0x0001742c                __errno
- .text          0x00017438        0x0 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-impure.o)
- .text          0x00017438       0x28 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-malloc.o)
-                0x00017438                free
-                0x0001744c                malloc
- .text          0x00017460       0x28 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcmp.o)
-                0x00017460                memcmp
- .text          0x00017488       0x1c C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcpy.o)
-                0x00017488                memcpy
- .text          0x000174a4       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memset.o)
-                0x000174a4                memset
- .text          0x000174b4       0x1c C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-realloc.o)
-                0x000174b4                realloc
- .text          0x000174d0       0x1c C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strchr.o)
-                0x000174d0                strchr
- .text          0x000174ec       0x14 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcmp.o)
-                0x000174ec                strcmp
- .text          0x00017500       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcpy.o)
-                0x00017500                strcpy
- .text          0x00017510       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strlen.o)
-                0x00017510                strlen
- .text          0x00017520       0x34 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncpy.o)
-                0x00017520                strncpy
- .text          0x00017554       0x18 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok.o)
-                0x00017554                strtok
- .text          0x0001756c       0x78 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok_r.o)
-                0x0001756c                __strtok_r
-                0x000175d8                strtok_r
- .text          0x000175e4      0x154 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtol.o)
-                0x000175e4                _strtol_r
-                0x00017718                strtol
- .text          0x00017738       0x8c C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_udivsi3.o)
-                0x00017738                __udivsi3
-                0x00017738                __aeabi_uidiv
-                0x000177b4                __aeabi_uidivmod
- .text          0x000177c4       0xa4 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_divsi3.o)
-                0x000177c4                __aeabi_idiv
-                0x000177c4                __divsi3
-                0x00017858                __aeabi_idivmod
- .text          0x00017868       0xc8 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_umodsi3.o)
-                0x00017868                __umodsi3
- .text          0x00017930       0xd8 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_modsi3.o)
-                0x00017930                __modsi3
- .text          0x00017a08        0x4 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_dvmd_tls.o)
-                0x00017a08                __aeabi_ldiv0
-                0x00017a08                __div0
-                0x00017a08                __aeabi_idiv0
- .text          0x00017a0c      0x430 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_addsubdf3.o)
-                0x00017a0c                __aeabi_drsub
-                0x00017a14                __subdf3
-                0x00017a14                __aeabi_dsub
-                0x00017a18                __aeabi_dadd
-                0x00017a18                __adddf3
-                0x00017d28                __aeabi_ui2d
-                0x00017d28                __floatunsidf
-                0x00017d50                __floatsidf
-                0x00017d50                __aeabi_i2d
-                0x00017d7c                __extendsfdf2
-                0x00017d7c                __aeabi_f2d
-                0x00017dbc                __aeabi_ul2d
-                0x00017dbc                __floatundidf
-                0x00017dd0                __aeabi_l2d
-                0x00017dd0                __floatdidf
- .text          0x00017e3c      0x140 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_cmpdf2.o)
-                0x00017e3c                __gtdf2
-                0x00017e3c                __gedf2
-                0x00017e44                __ltdf2
-                0x00017e44                __ledf2
-                0x00017e4c                __eqdf2
-                0x00017e4c                __nedf2
-                0x00017e4c                __cmpdf2
-                0x00017ed0                __aeabi_cdrcmple
-                0x00017eec                __aeabi_cdcmple
-                0x00017eec                __aeabi_cdcmpeq
-                0x00017f04                __aeabi_dcmpeq
-                0x00017f1c                __aeabi_dcmplt
-                0x00017f34                __aeabi_dcmple
-                0x00017f4c                __aeabi_dcmpge
-                0x00017f64                __aeabi_dcmpgt
- .text          0x00017f7c      0x110 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_cmpsf2.o)
-                0x00017f7c                __gesf2
-                0x00017f7c                __gtsf2
-                0x00017f84                __ltsf2
-                0x00017f84                __lesf2
-                0x00017f8c                __nesf2
-                0x00017f8c                __eqsf2
-                0x00017f8c                __cmpsf2
-                0x00017fec                __aeabi_cfrcmple
-                0x00017ffc                __aeabi_cfcmpeq
-                0x00017ffc                __aeabi_cfcmple
-                0x00018014                __aeabi_fcmpeq
-                0x0001802c                __aeabi_fcmplt
-                0x00018044                __aeabi_fcmple
-                0x0001805c                __aeabi_fcmpge
-                0x00018074                __aeabi_fcmpgt
- .text          0x0001808c       0x70 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_muldi3.o)
-                0x0001808c                __muldi3
- .text          0x000180fc        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(upload_diagnostic_txt.o)
-                0x000180fc                upload_diagnostic_txt
- *fill*         0x0001810a        0x6 00
- .text.stub     0x00018110       0x20 linker stubs
+                0x0000373c                recreate_int
+                0x0000378c                array_match_int
+                0x000037b8                create2_char
+                0x0000385c                destroy2_char
+                0x0000389c                create_char
+                0x00003958                destroy_char
+                0x00003994                is_empty_char
+                0x000039c4                array_length_char
+                0x000039f0                array_capacity_char
+                0x00003a1c                get_char
+                0x00003a94                insert_char
+                0x00003b10                append_char
+                0x00003be4                print_char
+                0x00003ce8                array_equal_char
+                0x00003d5c                get_array_types_char
+                0x00003d88                set_array_types_char
+                0x00003dcc                get_raw_data_char
+                0x00003df8                shrink_to_fit_char
+                0x00003eac                recreate_char
+                0x00003efc                array_match_char
+                0x00003f28                create2_string
+                0x00003fcc                destroy2_string
+                0x0000400c                create_string
+                0x000040c8                destroy_string
+                0x0000412c                is_empty_string
+                0x0000415c                array_length_string
+                0x00004188                array_capacity_string
+                0x000041b4                get_string
+                0x00004230                insert_string
+                0x000042a8                append_string
+                0x00004378                print_string
+                0x00004474                array_equal_string
+                0x000044fc                get_array_types_string
+                0x00004528                set_array_types_string
+                0x0000456c                get_raw_data_string
+                0x00004598                shrink_to_fit_string
+                0x0000464c                recreate_string
+                0x0000469c                array_match_string
+                0x000046c8                create2_string_st
+                0x0000476c                destroy2_string_st
+                0x000047ac                create_string_st
+                0x00004868                destroy_string_st
+                0x000048a4                is_empty_string_st
+                0x000048d4                array_length_string_st
+                0x00004900                array_capacity_string_st
+                0x0000492c                get_string_st
+                0x000049a8                insert_string_st
+                0x00004a20                append_string_st
+                0x00004af0                print_string_st
+                0x00004bec                array_equal_string_st
+                0x00004c70                get_array_types_string_st
+                0x00004c9c                set_array_types_string_st
+                0x00004ce0                get_raw_data_string_st
+                0x00004d0c                shrink_to_fit_string_st
+                0x00004dc0                recreate_string_st
+                0x00004e10                array_match_string_st
+                0x00004e3c                create2_good_field
+                0x00004ee0                destroy2_good_field
+                0x00004f20                create_good_field
+                0x00004fdc                destroy_good_field
+                0x00005018                is_empty_good_field
+                0x00005048                array_length_good_field
+                0x00005074                array_capacity_good_field
+                0x000050a0                get_good_field
+                0x00005118                insert_good_field
+                0x00005194                append_good_field
+                0x00005268                print_good_field
+                0x0000536c                array_equal_good_field
+                0x000053e0                get_array_types_good_field
+                0x0000540c                set_array_types_good_field
+                0x00005450                get_raw_data_good_field
+                0x0000547c                shrink_to_fit_good_field
+                0x00005530                recreate_good_field
+                0x00005580                array_match_good_field
+                0x000055ac                create2_vop
+                0x00005650                destroy2_vop
+                0x00005690                create_vop
+                0x00005780                destroy_vop
+                0x00005808                is_empty_vop
+                0x00005838                array_length_vop
+                0x00005864                array_capacity_vop
+                0x00005890                get_vop
+                0x0000590c                insert_vop
+                0x00005984                append_vop
+                0x00005a54                print_vop
+                0x00005cb4                array_equal_vop
+                0x00005e20                get_array_types_vop
+                0x00005e4c                set_array_types_vop
+                0x00005e90                get_raw_data_vop
+                0x00005ebc                shrink_to_fit_vop
+                0x00005f70                recreate_vop
+                0x00005fc0                array_match_vop
+                0x000061d0                create2_vop_st
+                0x00006274                destroy2_vop_st
+                0x000062b4                create_vop_st
+                0x000063a4                destroy_vop_st
+                0x00006404                is_empty_vop_st
+                0x00006434                array_length_vop_st
+                0x00006460                array_capacity_vop_st
+                0x0000648c                get_vop_st
+                0x00006508                insert_vop_st
+                0x00006580                append_vop_st
+                0x00006650                print_vop_st
+                0x000068b0                array_equal_vop_st
+                0x00006928                get_array_types_vop_st
+                0x00006954                set_array_types_vop_st
+                0x00006998                get_raw_data_vop_st
+                0x000069c4                shrink_to_fit_vop_st
+                0x00006a78                recreate_vop_st
+                0x00006ac8                array_match_vop_st
+ .text          0x00006af4      0x2b8 Obj/GNU_ARM_DEBUG_T2/file_schema.o
+                0x00006af4                create_file_schema
+                0x00006b74                destroy_file_schema
+                0x00006be4                print_file_schema
+                0x00006d20                is_empty_file_schema
+ .text          0x00006dac     0x1f70 Obj/GNU_ARM_DEBUG_T2/iofile.o
+                0x00006dac                read_file_with_goods
+                0x00006f2c                file_type
+                0x00006fa4                assign_schema_header
+                0x0000714c                read_file_header
+                0x0000733c                read_fields
+                0x00007594                read_types
+                0x000078ac                get_int_value
+                0x000079cc                get_bool_value
+                0x00007a2c                read_limits
+                0x00007c40                create_array_with_types
+                0x00007d2c                process_single_field
+                0x00007d54                read_goods
+                0x0000888c                write_file_schema_to_file
+                0x00008a04                write_header_to_file
+                0x00008a30                write_fields_to_file
+                0x00008a5c                write_types_to_file
+                0x00008a88                write_limits_to_file
+                0x00008ab4                write_goods_to_file
+ .text          0x00008d1c        0x0 Obj/GNU_ARM_DEBUG_T2/list_template.o
+ .text          0x00008d1c     0x6cc4 Obj/GNU_ARM_DEBUG_T2/lists.o
+                0x00008d1c                create_list_int
+                0x00008d90                destroy_list_lite_int
+                0x00008df4                destroy_list_int
+                0x00008e58                is_empty_list_int
+                0x00008ea4                size_list_int
+                0x00008eec                contains_list_int
+                0x00008f40                search_int
+                0x00008f98                add_to_list_int
+                0x00009028                remove_from_list_int
+                0x000090a8                get_by_index_int
+                0x00009138                insert_by_index_int
+                0x000091c8                indexOf_int
+                0x0000922c                print_list_int
+                0x00009320                add_elem_by_index_int
+                0x00009474                remove_elem_by_index_int
+                0x0000955c                create_list_string
+                0x000095d0                destroy_list_lite_string
+                0x00009634                destroy_list_string
+                0x000096a4                is_empty_list_string
+                0x000096f0                size_list_string
+                0x00009738                contains_list_string
+                0x0000979c                search_string
+                0x000097f4                add_to_list_string
+                0x00009884                remove_from_list_string
+                0x0000990c                get_by_index_string
+                0x0000999c                insert_by_index_string
+                0x00009a38                indexOf_string
+                0x00009aa8                print_list_string
+                0x00009b94                add_elem_by_index_string
+                0x00009ce8                remove_elem_by_index_string
+                0x00009dd8                create_list_string_st
+                0x00009e4c                destroy_list_lite_string_st
+                0x00009eb0                destroy_list_string_st
+                0x00009f14                is_empty_list_string_st
+                0x00009f60                size_list_string_st
+                0x00009fa8                contains_list_string_st
+                0x0000a008                search_string_st
+                0x0000a060                add_to_list_string_st
+                0x0000a0f0                remove_from_list_string_st
+                0x0000a178                get_by_index_string_st
+                0x0000a208                insert_by_index_string_st
+                0x0000a298                indexOf_string_st
+                0x0000a308                print_list_string_st
+                0x0000a3f4                add_elem_by_index_string_st
+                0x0000a548                remove_elem_by_index_string_st
+                0x0000a630                create_list_float
+                0x0000a6a4                destroy_list_lite_float
+                0x0000a708                destroy_list_float
+                0x0000a76c                is_empty_list_float
+                0x0000a7b8                size_list_float
+                0x0000a800                contains_list_float
+                0x0000a85c                search_float
+                0x0000a8b4                add_to_list_float
+                0x0000a944                remove_from_list_float
+                0x0000a9cc                get_by_index_float
+                0x0000aa5c                insert_by_index_float
+                0x0000aaec                indexOf_float
+                0x0000ab58                print_list_float
+                0x0000ac64                add_elem_by_index_float
+                0x0000adb8                remove_elem_by_index_float
+                0x0000aea0                create_list_dyn_array_int
+                0x0000af14                destroy_list_lite_dyn_array_int
+                0x0000af78                destroy_list_dyn_array_int
+                0x0000afe4                is_empty_list_dyn_array_int
+                0x0000b030                size_list_dyn_array_int
+                0x0000b078                contains_list_dyn_array_int
+                0x0000b0f4                search_dyn_array_int
+                0x0000b158                add_to_list_dyn_array_int
+                0x0000b210                remove_from_list_dyn_array_int
+                0x0000b2b8                get_by_index_dyn_array_int
+                0x0000b350                insert_by_index_dyn_array_int
+                0x0000b408                indexOf_dyn_array_int
+                0x0000b494                print_list_dyn_array_int
+                0x0000b550                add_elem_by_index_dyn_array_int
+                0x0000b6d4                remove_elem_by_index_dyn_array_int
+                0x0000b7c4                create_list_dyn_array_string
+                0x0000b838                destroy_list_lite_dyn_array_string
+                0x0000b89c                destroy_list_dyn_array_string
+                0x0000b908                is_empty_list_dyn_array_string
+                0x0000b954                size_list_dyn_array_string
+                0x0000b99c                contains_list_dyn_array_string
+                0x0000ba18                search_dyn_array_string
+                0x0000ba7c                add_to_list_dyn_array_string
+                0x0000bb34                remove_from_list_dyn_array_string
+                0x0000bbdc                get_by_index_dyn_array_string
+                0x0000bc74                insert_by_index_dyn_array_string
+                0x0000bd2c                indexOf_dyn_array_string
+                0x0000bdb8                print_list_dyn_array_string
+                0x0000be74                add_elem_by_index_dyn_array_string
+                0x0000bff8                remove_elem_by_index_dyn_array_string
+                0x0000c0e8                create_list_dyn_array_vop
+                0x0000c15c                destroy_list_lite_dyn_array_vop
+                0x0000c1c0                destroy_list_dyn_array_vop
+                0x0000c22c                is_empty_list_dyn_array_vop
+                0x0000c278                size_list_dyn_array_vop
+                0x0000c2c0                contains_list_dyn_array_vop
+                0x0000c33c                search_dyn_array_vop
+                0x0000c3b0                add_to_list_dyn_array_vop
+                0x0000c468                remove_from_list_dyn_array_vop
+                0x0000c510                get_by_index_dyn_array_vop
+                0x0000c5a8                insert_by_index_dyn_array_vop
+                0x0000c660                indexOf_dyn_array_vop
+                0x0000c6ec                print_list_dyn_array_vop
+                0x0000c7a8                add_elem_by_index_dyn_array_vop
+                0x0000c92c                remove_elem_by_index_dyn_array_vop
+                0x0000ca1c                create_list_dyn_array_vop_st
+                0x0000ca90                destroy_list_lite_dyn_array_vop_st
+                0x0000caf4                destroy_list_dyn_array_vop_st
+                0x0000cb60                is_empty_list_dyn_array_vop_st
+                0x0000cbac                size_list_dyn_array_vop_st
+                0x0000cbf4                contains_list_dyn_array_vop_st
+                0x0000cc70                search_dyn_array_vop_st
+                0x0000ccd4                add_to_list_dyn_array_vop_st
+                0x0000cd8c                remove_from_list_dyn_array_vop_st
+                0x0000ce34                get_by_index_dyn_array_vop_st
+                0x0000cecc                insert_by_index_dyn_array_vop_st
+                0x0000cf84                indexOf_dyn_array_vop_st
+                0x0000d010                print_list_dyn_array_vop_st
+                0x0000d0cc                add_elem_by_index_dyn_array_vop_st
+                0x0000d250                remove_elem_by_index_dyn_array_vop_st
+                0x0000d340                create_list_int_vec2
+                0x0000d3b4                destroy_list_lite_int_vec2
+                0x0000d418                destroy_list_int_vec2
+                0x0000d488                is_empty_list_int_vec2
+                0x0000d4d4                size_list_int_vec2
+                0x0000d51c                contains_list_int_vec2
+                0x0000d588                search_int_vec2
+                0x0000d5e0                add_to_list_int_vec2
+                0x0000d670                remove_from_list_int_vec2
+                0x0000d704                get_by_index_int_vec2
+                0x0000d7a8                insert_by_index_int_vec2
+                0x0000d84c                indexOf_int_vec2
+                0x0000d8c8                print_list_int_vec2
+                0x0000da94                add_elem_by_index_int_vec2
+                0x0000dbe8                remove_elem_by_index_int_vec2
+                0x0000dcd8                create_list_int_vec3
+                0x0000dd4c                destroy_list_lite_int_vec3
+                0x0000ddb0                destroy_list_int_vec3
+                0x0000de20                is_empty_list_int_vec3
+                0x0000de6c                size_list_int_vec3
+                0x0000deb4                contains_list_int_vec3
+                0x0000df30                search_int_vec3
+                0x0000df88                add_to_list_int_vec3
+                0x0000e018                remove_from_list_int_vec3
+                0x0000e0c0                get_by_index_int_vec3
+                0x0000e164                insert_by_index_int_vec3
+                0x0000e208                indexOf_int_vec3
+                0x0000e294                print_list_int_vec3
+                0x0000e460                add_elem_by_index_int_vec3
+                0x0000e5b4                remove_elem_by_index_int_vec3
+                0x0000e6a4                create_list_int_vec2_st
+                0x0000e718                destroy_list_lite_int_vec2_st
+                0x0000e77c                destroy_list_int_vec2_st
+                0x0000e7e0                is_empty_list_int_vec2_st
+                0x0000e82c                size_list_int_vec2_st
+                0x0000e874                contains_list_int_vec2_st
+                0x0000e8e0                search_int_vec2_st
+                0x0000e938                add_to_list_int_vec2_st
+                0x0000e9c8                remove_from_list_int_vec2_st
+                0x0000ea5c                get_by_index_int_vec2_st
+                0x0000eb00                insert_by_index_int_vec2_st
+                0x0000eba4                indexOf_int_vec2_st
+                0x0000ec20                print_list_int_vec2_st
+                0x0000edec                add_elem_by_index_int_vec2_st
+                0x0000ef40                remove_elem_by_index_int_vec2_st
+                0x0000f028                create_list_int_vec3_st
+                0x0000f09c                destroy_list_lite_int_vec3_st
+                0x0000f100                destroy_list_int_vec3_st
+                0x0000f164                is_empty_list_int_vec3_st
+                0x0000f1b0                size_list_int_vec3_st
+                0x0000f1f8                contains_list_int_vec3_st
+                0x0000f274                search_int_vec3_st
+                0x0000f2cc                add_to_list_int_vec3_st
+                0x0000f35c                remove_from_list_int_vec3_st
+                0x0000f404                get_by_index_int_vec3_st
+                0x0000f4a8                insert_by_index_int_vec3_st
+                0x0000f54c                indexOf_int_vec3_st
+                0x0000f5d8                print_list_int_vec3_st
+                0x0000f7a4                add_elem_by_index_int_vec3_st
+                0x0000f8f8                remove_elem_by_index_int_vec3_st
+ .text          0x0000f9e0     0x29e0 Obj/GNU_ARM_DEBUG_T2/Goal.o
+                0x0000fb40                GoalCreateScreen
+                0x0000ff50                GoalClrScreen
+                0x00010184                GoalRefreshScreen
+                0x000101b4                GoalDspLine
+                0x00010628                GoalDspMultiLine
+                0x0001080c                GoalGetKey
+                0x00010b84                GoalDestroyScreen
+                0x00010bb8                GoalCreateDrawing
+                0x00010de8                GoalClrDrawing
+                0x00010f1c                GoalDrawLine
+                0x000110ac                GoalDrawRect
+                0x00011250                GoalDrawEllipse
+                0x000113f4                GoalDrawText
+                0x000115dc                GoalDestroyDrawing
+                0x00011610                GoalCreatePicture
+                0x0001186c                GoalClrPicture
+                0x000119ec                GoalDspPicture
+                0x00011d28                GoalDestroyPicture
+                0x00011d5c                GoalCreateDocument
+                0x00011de0                GoalPrnLine
+                0x00012020                GoalPrnMultiLine
+                0x00012270                GoalPrnPicture
+                0x00012330                GoalPrnDocument
+                0x0001238c                GoalDestroyDocument
+ .text          0x000123c0     0x3380 Obj/GNU_ARM_DEBUG_T2/main_processing.o
+                0x000123c0                display_startup_message
+                0x00012518                backup_file_schema
+                0x000125b8                restore_file_schema
+                0x0001264c                import_file_with_goods
+                0x00012784                get_fields_values_len
+                0x000127f0                get_max_field_len
+                0x00012874                show_good_fields
+                0x00012b84                get_first_fields
+                0x00012c64                display_list_with_goods
+                0x00012e84                read_field
+                0x00013160                convert_to_int_value
+                0x0001322c                convert_to_bool_value
+                0x0001328c                add_new_good
+                0x000135e0                delete_good
+                0x00013650                edit_good
+                0x000136f0                modify_list_with_goods
+                0x0001387c                display_message_search_menu
+                0x00013994                read_search_pattern
+                0x00013cec                display_search_results
+                0x00013da4                find_goods_by_template
+                0x00013ee0                get_categories_pattern
+                0x0001408c                print_header_for_search_result
+                0x00014304                print_search_results
+                0x000144b0                get_bool_fields_amount
+                0x00014520                find_goods_by_categories
+                0x00014894                pay
+                0x00014be4                get_index_of_price_field
+                0x00014c60                get_good_price
+                0x00014cbc                print_document
+                0x000150dc                pay_for_goods
+                0x00015154                get_count_of_good
+                0x00015290                form_cart_and_buy
+                0x000155e0                create_menu
+                0x0001570c                main_processing
+ .text          0x00015740      0x1d4 Obj/GNU_ARM_DEBUG_T2/log.o
+                0x00015740                _log
+                0x000157d8                print_message
+                0x00015894                print_to_log
+                0x000158d4                print_to_error_log
+ .text          0x00015914      0x9f0 Obj/GNU_ARM_DEBUG_T2/Magnetic.o
+                0x00015914                IsoError
+                0x000159dc                Magnetic
+ .text          0x00016304      0x3a0 Obj/GNU_ARM_DEBUG_T2/Timer.o
+                0x00016304                TimerStart
+                0x000163f4                TimerGet
+                0x0001648c                TimerStop
+                0x000164e4                Timer
+ .text          0x000166a4       0x5c C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(DisplayFooter.o)
+                0x000166b4                DisplayFooter
+ .text          0x00016700       0x5c C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(DisplayHeader.o)
+                0x00016710                DisplayHeader
+ .text          0x0001675c       0x58 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(DisplayLeds.o)
+                0x00016768                DisplayLeds
+ .text          0x000167b4       0x60 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(Telium_Read_date.o)
+                0x000167c8                Telium_Read_date
+ .text          0x00016814       0x64 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(IsColorDisplay.o)
+                0x00016824                IsColorDisplay
+ .text          0x00016878       0x5c C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(IsISO1.o)
+                0x00016880                IsISO1
+ .text          0x000168d4       0x5c C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(IsISO2.o)
+                0x000168dc                IsISO2
+ .text          0x00016930       0x5c C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(IsISO3.o)
+                0x00016938                IsISO3
+ .text          0x0001698c       0x60 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(IsPrinter.o)
+                0x00016998                IsPrinter
+ .text          0x000169ec       0x64 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(Telium_ServiceRegister.o)
+                0x00016a04                Telium_ServiceRegister
+ .text          0x00016a50       0x20 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(Telium_Fprintf.o)
+                0x00016a50                Telium_Fprintf
+ .text          0x00016a70       0x34 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(Telium_Pprintf.o)
+                0x00016a70                Telium_Pprintf
+ .text          0x00016aa4       0x20 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(Telium_Stdprt.o)
+                0x00016aac                Telium_Stdprt
+ .text          0x00016ac4       0x20 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(sprintf.o)
+                0x00016ac4                sprintf
+ .text          0x00016ae4       0x74 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(extenstp1.o)
+                0x00016ae4                extenslib_close
+                0x00016af8                extenslib_open
+                0x00016b34                GetProcAddressExtens
+ .text          0x00016b58       0x78 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(toolstp1.o)
+                0x00016b58                toolslib_close
+                0x00016b6c                toolslib_open
+                0x00016bac                GetProcAddressTools
+ .text          0x00016bd0        0xc C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/OSLAYER.LIB(OSL_Dll_Close.o)
+                0x00016bd0                OSL_Dll_Close
+ .text          0x00016bdc        0xc C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/OSLAYER.LIB(OSL_Dll_GetSymbolByName.o)
+                0x00016bdc                OSL_Dll_GetSymbolByName
+ .text          0x00016be8        0xc C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/OSLAYER.LIB(OSL_Dll_OpenByAppliType.o)
+                0x00016be8                OSL_Dll_OpenByAppliType
+ .text          0x00016bf4        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/OSLAYER.LIB(OSL_TimeStp_ElapsedMs.o)
+                0x00016bf4                OSL_TimeStp_ElapsedMs
+ .text          0x00016c02        0xc C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/OSLAYER.LIB(OSL_TimeStp_Now.o)
+                0x00016c02                OSL_TimeStp_Now
+ .text          0x00016c0e        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(ApplicationGetCurrent.o)
+                0x00016c0e                ApplicationGetCurrent
+ .text          0x00016c1c        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(FS_close.o)
+                0x00016c1c                FS_close
+ .text          0x00016c2a        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(FS_length.o)
+                0x00016c2a                FS_length
+ .text          0x00016c38        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(FS_mount.o)
+                0x00016c38                FS_mount
+ .text          0x00016c46        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(FS_open.o)
+                0x00016c46                FS_open
+ .text          0x00016c54        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(FS_read.o)
+                0x00016c54                FS_read
+ .text          0x00016c62        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(FS_unmount.o)
+                0x00016c62                FS_unmount
+ .text          0x00016c70        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(ObjectGetInfo.o)
+                0x00016c70                ObjectGetInfo
+ .text          0x00016c7e        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Exit.o)
+                0x00016c7e                Telium_Exit
+ .text          0x00016c8c        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Fclose.o)
+                0x00016c8c                Telium_Fclose
+ .text          0x00016c9a        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Fopen.o)
+                0x00016c9a                Telium_Fopen
+ .text          0x00016ca8        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Fread.o)
+                0x00016ca8                Telium_Fread
+ .text          0x00016cb6        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Is_iso1.o)
+                0x00016cb6                Telium_Is_iso1
+ .text          0x00016cc4        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Is_iso2.o)
+                0x00016cc4                Telium_Is_iso2
+ .text          0x00016cd2        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Is_iso3.o)
+                0x00016cd2                Telium_Is_iso3
+ .text          0x00016ce0        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Mask_event.o)
+                0x00016ce0                Telium_Mask_event
+ .text          0x00016cee        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Reset_buf.o)
+                0x00016cee                Telium_Reset_buf
+ .text          0x00016cfc        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Stdperif.o)
+                0x00016cfc                Telium_Stdperif
+ .text          0x00016d0a        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Ttestall.o)
+                0x00016d0a                Telium_Ttestall
+ .text          0x00016d18        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Vfprintf.o)
+                0x00016d18                Telium_Vfprintf
+ .text          0x00016d26        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(Telium_Vsprintf.o)
+                0x00016d26                Telium_Vsprintf
+ .text          0x00016d34        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(buzzer.o)
+                0x00016d34                buzzer
+ .text          0x00016d42        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(first_init.o)
+                0x00016d42                first_init
+ .text          0x00016d50        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(raz_init.o)
+                0x00016d50                raz_init
+ .text          0x00016d5e        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(ufree.o)
+                0x00016d5e                ufree
+ .text          0x00016d6c        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(umalloc.o)
+                0x00016d6c                umalloc
+ .text          0x00016d7a        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(urealloc.o)
+                0x00016d7a                urealloc
+ .text          0x00016d88       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Button_Create.o)
+                0x00016d94                GL_Button_Create
+ .text          0x00016dac       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Dialog_Choice.o)
+                0x00016db8                GL_Dialog_Choice
+ .text          0x00016dd0       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Dialog_File.o)
+                0x00016ddc                GL_Dialog_File
+ .text          0x00016df4       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Dialog_Menu.o)
+                0x00016e00                GL_Dialog_Menu
+ .text          0x00016e18       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Dialog_Message.o)
+                0x00016e24                GL_Dialog_Message
+ .text          0x00016e3c       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Dialog_MultiChoice.o)
+                0x00016e48                GL_Dialog_MultiChoice
+ .text          0x00016e60       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Dialog_Text.o)
+                0x00016e6c                GL_Dialog_Text
+ .text          0x00016e84       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Dialog_VirtualKeyboard.o)
+                0x00016e90                GL_Dialog_VirtualKeyboard
+ .text          0x00016ea8       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Document_Create.o)
+                0x00016eb4                GL_Document_Create
+ .text          0x00016ecc       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Document_Print.o)
+                0x00016ed8                GL_Document_Print
+ .text          0x00016ef0       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Drawing_Clear.o)
+                0x00016efc                GL_Drawing_Clear
+ .text          0x00016f14       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Drawing_Create.o)
+                0x00016f20                GL_Drawing_Create
+ .text          0x00016f38       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Drawing_DrawEllipse.o)
+                0x00016f44                GL_Drawing_DrawEllipse
+ .text          0x00016f5c       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Drawing_DrawLine.o)
+                0x00016f68                GL_Drawing_DrawLine
+ .text          0x00016f80       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Drawing_DrawRect.o)
+                0x00016f8c                GL_Drawing_DrawRect
+ .text          0x00016fa4       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Drawing_DrawText.o)
+                0x00016fb0                GL_Drawing_DrawText
+ .text          0x00016fc8       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Drawing_SetBrush.o)
+                0x00016fd4                GL_Drawing_SetBrush
+ .text          0x00016fec       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Drawing_SetFont.o)
+                0x00016ff8                GL_Drawing_SetFont
+ .text          0x00017010       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Drawing_SetPen.o)
+                0x0001701c                GL_Drawing_SetPen
+ .text          0x00017034       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_File_Close.o)
+                0x00017040                GL_File_Close
+ .text          0x00017058       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_File_Delete.o)
+                0x00017064                GL_File_Delete
+ .text          0x0001707c       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_File_Open.o)
+                0x00017088                GL_File_Open
+ .text          0x000170a0       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_File_Read.o)
+                0x000170ac                GL_File_Read
+ .text          0x000170c4       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_File_Seek.o)
+                0x000170d0                GL_File_Seek
+ .text          0x000170e8       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_File_Write.o)
+                0x000170f4                GL_File_Write
+ .text          0x0001710c       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_GraphicLib_BindSingleKey.o)
+                0x00017118                GL_GraphicLib_BindSingleKey
+ .text          0x00017130       0xbc C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_GraphicLib_Create.o)
+                0x00017130                GL_GraphicLib_Create
+                0x000171ac                GL_GraphicLib_Create_Init
+ .text          0x000171ec       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_GraphicLib_IsTouchPresent.o)
+                0x000171f8                GL_GraphicLib_IsTouchPresent
+ .text          0x00017210       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_GraphicLib_SetCharset.o)
+                0x0001721c                GL_GraphicLib_SetCharset
+ .text          0x00017234       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_GraphicLib_UnbindKey.o)
+                0x00017240                GL_GraphicLib_UnbindKey
+ .text          0x00017258       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Label_Create.o)
+                0x00017264                GL_Label_Create
+ .text          0x0001727c       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Layout_Create.o)
+                0x00017288                GL_Layout_Create
+ .text          0x000172a0       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Message_GetKey.o)
+                0x000172ac                GL_Message_GetKey
+ .text          0x000172c4       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Message_GetWidget.o)
+                0x000172d0                GL_Message_GetWidget
+ .text          0x000172e8       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Message_GetWidgetById.o)
+                0x000172f4                GL_Message_GetWidgetById
+ .text          0x0001730c       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Message_SetResult.o)
+                0x00017318                GL_Message_SetResult
+ .text          0x00017330       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Message_SetUserData.o)
+                0x0001733c                GL_Message_SetUserData
+ .text          0x00017354       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Picture_Create.o)
+                0x00017360                GL_Picture_Create
+ .text          0x00017378       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Print_Create.o)
+                0x00017384                GL_Print_Create
+ .text          0x0001739c       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Timer_Create.o)
+                0x000173a8                GL_Timer_Create
+ .text          0x000173c0       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Timer_SetInterval.o)
+                0x000173cc                GL_Timer_SetInterval
+ .text          0x000173e4       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Timer_Stop.o)
+                0x000173f0                GL_Timer_Stop
+ .text          0x00017408       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_Destroy.o)
+                0x00017414                GL_Widget_Destroy
+ .text          0x0001742c       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_GetBackColor.o)
+                0x00017438                GL_Widget_GetBackColor
+ .text          0x00017450       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_GetUserData.o)
+                0x0001745c                GL_Widget_GetUserData
+ .text          0x00017474       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_RegisterCallback.o)
+                0x00017480                GL_Widget_RegisterCallback
+ .text          0x00017498       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SearchId.o)
+                0x000174a4                GL_Widget_SearchId
+ .text          0x000174bc       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetBackAlign.o)
+                0x000174c8                GL_Widget_SetBackAlign
+ .text          0x000174e0       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetBackColor.o)
+                0x000174ec                GL_Widget_SetBackColor
+ .text          0x00017504       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetBorders.o)
+                0x00017510                GL_Widget_SetBorders
+ .text          0x00017528       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetExpand.o)
+                0x00017534                GL_Widget_SetExpand
+ .text          0x0001754c       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetFocusable.o)
+                0x00017558                GL_Widget_SetFocusable
+ .text          0x00017570       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetFontName.o)
+                0x0001757c                GL_Widget_SetFontName
+ .text          0x00017594       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetFontScale.o)
+                0x000175a0                GL_Widget_SetFontScale
+ .text          0x000175b8       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetFontStyle.o)
+                0x000175c4                GL_Widget_SetFontStyle
+ .text          0x000175dc       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetForeColor.o)
+                0x000175e8                GL_Widget_SetForeColor
+ .text          0x00017600       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetGrow.o)
+                0x0001760c                GL_Widget_SetGrow
+ .text          0x00017624       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetId.o)
+                0x00017630                GL_Widget_SetId
+ .text          0x00017648       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetItem.o)
+                0x00017654                GL_Widget_SetItem
+ .text          0x0001766c       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetMargins.o)
+                0x00017678                GL_Widget_SetMargins
+ .text          0x00017690       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetMinSize.o)
+                0x0001769c                GL_Widget_SetMinSize
+ .text          0x000176b4       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetShortcut.o)
+                0x000176c0                GL_Widget_SetShortcut
+ .text          0x000176d8       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetShrink.o)
+                0x000176e4                GL_Widget_SetShrink
+ .text          0x000176fc       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetSize.o)
+                0x00017708                GL_Widget_SetSize
+ .text          0x00017720       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetSource.o)
+                0x0001772c                GL_Widget_SetSource
+ .text          0x00017744       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetText.o)
+                0x00017750                GL_Widget_SetText
+ .text          0x00017768       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetTextAlign.o)
+                0x00017774                GL_Widget_SetTextAlign
+ .text          0x0001778c       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetTextPaddings.o)
+                0x00017798                GL_Widget_SetTextPaddings
+ .text          0x000177b0       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetTransformation.o)
+                0x000177bc                GL_Widget_SetTransformation
+ .text          0x000177d4       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetVisible.o)
+                0x000177e0                GL_Widget_SetVisible
+ .text          0x000177f8       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_SetWrap.o)
+                0x00017804                GL_Widget_SetWrap
+ .text          0x0001781c       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Widget_UnregisterCallback.o)
+                0x00017828                GL_Widget_UnregisterCallback
+ .text          0x00017840       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Window_Create.o)
+                0x0001784c                GL_Window_Create
+ .text          0x00017864       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Window_Dispatch.o)
+                0x00017870                GL_Window_Dispatch
+ .text          0x00017888       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Window_GetResult.o)
+                0x00017894                GL_Window_GetResult
+ .text          0x000178ac       0x24 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_Window_MainLoop.o)
+                0x000178b8                GL_Window_MainLoop
+ .text          0x000178d0      0x114 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_link.o)
+                0x000178d0                GL_IsPresent
+                0x0001790c                GL_GetProcAddressWithoutExit
+                0x000179a4                GL_GetProcAddress
+ .text          0x000179e4       0x2c C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(gl_asm_link.o)
+                0x000179e4                GL_InitFuncAndBranch
+                0x000179f4                GL_Swi_ObjectLoad
+                0x00017a02                GL_Swi_DllLink
+ .text          0x00017a10       0x1c C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-calloc.o)
+                0x00017a10                calloc
+ .text          0x00017a2c        0x0 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-ctype_.o)
+ .text          0x00017a2c        0xc C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-errno.o)
+                0x00017a2c                __errno
+ .text          0x00017a38        0x0 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-impure.o)
+ .text          0x00017a38       0x28 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-malloc.o)
+                0x00017a38                free
+                0x00017a4c                malloc
+ .text          0x00017a60       0x28 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcmp.o)
+                0x00017a60                memcmp
+ .text          0x00017a88       0x1c C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcpy.o)
+                0x00017a88                memcpy
+ .text          0x00017aa4       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memset.o)
+                0x00017aa4                memset
+ .text          0x00017ab4       0x1c C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-realloc.o)
+                0x00017ab4                realloc
+ .text          0x00017ad0       0x1c C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strchr.o)
+                0x00017ad0                strchr
+ .text          0x00017aec       0x14 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcmp.o)
+                0x00017aec                strcmp
+ .text          0x00017b00       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcpy.o)
+                0x00017b00                strcpy
+ .text          0x00017b10       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strlen.o)
+                0x00017b10                strlen
+ .text          0x00017b20       0x2c C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncmp.o)
+                0x00017b20                strncmp
+ .text          0x00017b4c       0x34 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncpy.o)
+                0x00017b4c                strncpy
+ .text          0x00017b80       0x18 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok.o)
+                0x00017b80                strtok
+ .text          0x00017b98       0x78 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok_r.o)
+                0x00017b98                __strtok_r
+                0x00017c04                strtok_r
+ .text          0x00017c10      0x154 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtol.o)
+                0x00017c10                _strtol_r
+                0x00017d44                strtol
+ .text          0x00017d64       0x8c C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_udivsi3.o)
+                0x00017d64                __udivsi3
+                0x00017d64                __aeabi_uidiv
+                0x00017de0                __aeabi_uidivmod
+ .text          0x00017df0       0xa4 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_divsi3.o)
+                0x00017df0                __aeabi_idiv
+                0x00017df0                __divsi3
+                0x00017e84                __aeabi_idivmod
+ .text          0x00017e94       0xc8 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_umodsi3.o)
+                0x00017e94                __umodsi3
+ .text          0x00017f5c       0xd8 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_modsi3.o)
+                0x00017f5c                __modsi3
+ .text          0x00018034        0x4 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_dvmd_tls.o)
+                0x00018034                __aeabi_ldiv0
+                0x00018034                __div0
+                0x00018034                __aeabi_idiv0
+ .text          0x00018038      0x430 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_addsubdf3.o)
+                0x00018038                __aeabi_drsub
+                0x00018040                __subdf3
+                0x00018040                __aeabi_dsub
+                0x00018044                __aeabi_dadd
+                0x00018044                __adddf3
+                0x00018354                __aeabi_ui2d
+                0x00018354                __floatunsidf
+                0x0001837c                __floatsidf
+                0x0001837c                __aeabi_i2d
+                0x000183a8                __extendsfdf2
+                0x000183a8                __aeabi_f2d
+                0x000183e8                __aeabi_ul2d
+                0x000183e8                __floatundidf
+                0x000183fc                __aeabi_l2d
+                0x000183fc                __floatdidf
+ .text          0x00018468      0x140 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_cmpdf2.o)
+                0x00018468                __gtdf2
+                0x00018468                __gedf2
+                0x00018470                __ltdf2
+                0x00018470                __ledf2
+                0x00018478                __eqdf2
+                0x00018478                __nedf2
+                0x00018478                __cmpdf2
+                0x000184fc                __aeabi_cdrcmple
+                0x00018518                __aeabi_cdcmple
+                0x00018518                __aeabi_cdcmpeq
+                0x00018530                __aeabi_dcmpeq
+                0x00018548                __aeabi_dcmplt
+                0x00018560                __aeabi_dcmple
+                0x00018578                __aeabi_dcmpge
+                0x00018590                __aeabi_dcmpgt
+ .text          0x000185a8      0x110 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_cmpsf2.o)
+                0x000185a8                __gesf2
+                0x000185a8                __gtsf2
+                0x000185b0                __ltsf2
+                0x000185b0                __lesf2
+                0x000185b8                __nesf2
+                0x000185b8                __eqsf2
+                0x000185b8                __cmpsf2
+                0x00018618                __aeabi_cfrcmple
+                0x00018628                __aeabi_cfcmpeq
+                0x00018628                __aeabi_cfcmple
+                0x00018640                __aeabi_fcmpeq
+                0x00018658                __aeabi_fcmplt
+                0x00018670                __aeabi_fcmple
+                0x00018688                __aeabi_fcmpge
+                0x000186a0                __aeabi_fcmpgt
+ .text          0x000186b8       0x70 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_muldi3.o)
+                0x000186b8                __muldi3
+ .text          0x00018728        0xe C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(upload_diagnostic_txt.o)
+                0x00018728                upload_diagnostic_txt
+ *fill*         0x00018736        0x2 00
+ .text.stub     0x00018738       0x20 linker stubs
  *(.gnu.linkonce.t.*)
  *(.strings .strings.*)
  *(.glue_7)
@@ -1158,10 +1160,10 @@ Linker script and memory map
  .glue_7t       0x00000000        0x0 linker stubs
  *(.gcc_except_table)
 
-.vfp11_veneer   0x00018130        0x0
+.vfp11_veneer   0x00018758        0x0
  .vfp11_veneer  0x00000000        0x0 linker stubs
 
-.v4_bx          0x00018130        0x0
+.v4_bx          0x00018758        0x0
  .v4_bx         0x00000000        0x0 linker stubs
 
 .eh_frame
@@ -1170,51 +1172,51 @@ Linker script and memory map
 .jcr
  *(.jcr)
 
-.ctors          0x00018130        0x0
-                0x00018130                __ctors_start = .
+.ctors          0x00018758        0x0
+                0x00018758                __ctors_start = .
  *(SORT(.ctors.*))
  *(.ctors)
-                0x00018130                __ctors_end = .
+                0x00018758                __ctors_end = .
 
-.dtors          0x00018130        0x0
-                0x00018130                __dtors_start = .
+.dtors          0x00018758        0x0
+                0x00018758                __dtors_start = .
  *(SORT(.dtors.*))
  *(.dtors)
-                0x00018130                __dtors_end = .
+                0x00018758                __dtors_end = .
 
-.rodata         0x00018130     0x36c6
+.rodata         0x00018758     0x3baa
  *(.rodata .rodata.*)
- .rodata        0x00018130       0x18 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/startfiles/cstartupTplus.o
- .rodata        0x00018148       0xb0 Obj/GNU_ARM_DEBUG_T2/Main.o
- .rodata        0x000181f8      0x3fc Obj/GNU_ARM_DEBUG_T2/Entry.o
- .rodata        0x000185f4      0x5e8 Obj/GNU_ARM_DEBUG_T2/Menu.o
- .rodata        0x00018bdc      0x524 Obj/GNU_ARM_DEBUG_T2/dynamic_arrays.o
- .rodata        0x00019100       0xd8 Obj/GNU_ARM_DEBUG_T2/file_schema.o
- .rodata        0x000191d8      0x798 Obj/GNU_ARM_DEBUG_T2/iofile.o
- .rodata        0x00019970      0x890 Obj/GNU_ARM_DEBUG_T2/lists.o
- .rodata        0x0001a200       0xb0 Obj/GNU_ARM_DEBUG_T2/Goal.o
- .rodata        0x0001a2b0      0xd68 Obj/GNU_ARM_DEBUG_T2/main_processing.o
- .rodata        0x0001b018       0x30 Obj/GNU_ARM_DEBUG_T2/log.o
- .rodata        0x0001b048      0x4c0 Obj/GNU_ARM_DEBUG_T2/Magnetic.o
- .rodata        0x0001b508      0x174 Obj/GNU_ARM_DEBUG_T2/Timer.o
+ .rodata        0x00018758       0x18 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/startfiles/cstartupTplus.o
+ .rodata        0x00018770       0xb0 Obj/GNU_ARM_DEBUG_T2/Main.o
+ .rodata        0x00018820      0x3fc Obj/GNU_ARM_DEBUG_T2/Entry.o
+ .rodata        0x00018c1c      0x5e8 Obj/GNU_ARM_DEBUG_T2/Menu.o
+ .rodata        0x00019204      0x524 Obj/GNU_ARM_DEBUG_T2/dynamic_arrays.o
+ .rodata        0x00019728       0xd8 Obj/GNU_ARM_DEBUG_T2/file_schema.o
+ .rodata        0x00019800      0x8d4 Obj/GNU_ARM_DEBUG_T2/iofile.o
+ .rodata        0x0001a0d4      0x890 Obj/GNU_ARM_DEBUG_T2/lists.o
+ .rodata        0x0001a964       0xb0 Obj/GNU_ARM_DEBUG_T2/Goal.o
+ .rodata        0x0001aa14     0x1110 Obj/GNU_ARM_DEBUG_T2/main_processing.o
+ .rodata        0x0001bb24       0x30 Obj/GNU_ARM_DEBUG_T2/log.o
+ .rodata        0x0001bb54      0x4c0 Obj/GNU_ARM_DEBUG_T2/Magnetic.o
+ .rodata        0x0001c014      0x174 Obj/GNU_ARM_DEBUG_T2/Timer.o
  .rodata.str1.1
-                0x0001b67c        0x8 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(extenstp1.o)
+                0x0001c188        0x8 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(extenstp1.o)
  .rodata.str1.1
                 0x00000000        0x8 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/eft30tplus.lib(toolstp1.o)
  .rodata.str1.1
-                0x0001b684       0x6a C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_link.o)
- .rodata        0x0001b6ee      0x101 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-ctype_.o)
-                0x0001b6ee                _ctype_
- *fill*         0x0001b7ef        0x1 00
- .rodata        0x0001b7f0        0x4 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-impure.o)
-                0x0001b7f0                _global_impure_ptr
+                0x0001c190       0x6a C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/GRAPHICLIB.LIB(GL_link.o)
+ .rodata        0x0001c1fa      0x101 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-ctype_.o)
+                0x0001c1fa                _ctype_
+ *fill*         0x0001c2fb        0x1 00
+ .rodata        0x0001c2fc        0x4 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-impure.o)
+                0x0001c2fc                _global_impure_ptr
  .rodata.str1.1
-                0x0001b7f4        0x2 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-impure.o)
+                0x0001c300        0x2 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-impure.o)
  *(.gnu.linkonce.r.*)
-                0x0001b7f6                __text_end = .
+                0x0001c302                __text_end = .
                 0x00200000                . = 0x200000
 
-.data           0x00200000      0xa9c load address 0x0001b7f6
+.data           0x00200000      0xa9c load address 0x0001c302
                 0x00200000                __data_start = .
  *(.data .data.*)
  .data          0x00200000        0x8 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/startfiles/cstartupTplus.o
@@ -1384,6 +1386,7 @@ Linker script and memory map
  .data          0x00200a9c        0x0 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcmp.o)
  .data          0x00200a9c        0x0 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcpy.o)
  .data          0x00200a9c        0x0 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strlen.o)
+ .data          0x00200a9c        0x0 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncmp.o)
  .data          0x00200a9c        0x0 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncpy.o)
  .data          0x00200a9c        0x0 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok.o)
  .data          0x00200a9c        0x0 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok_r.o)
@@ -1401,7 +1404,7 @@ Linker script and memory map
  *(.gnu.linkonce.d.*)
                 0x00200a9c                __data_end = .
 
-.bss            0x00200a9c       0x8c load address 0x0001c292
+.bss            0x00200a9c       0x8c load address 0x0001cd9e
                 0x00200a9c                __bss_start = .
  *(.bss .bss.*)
  .bss           0x00200a9c        0x0 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/startfiles/cstartupTplus.o
@@ -1567,6 +1570,7 @@ Linker script and memory map
  .bss           0x00200b1c        0x0 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcmp.o)
  .bss           0x00200b1c        0x0 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcpy.o)
  .bss           0x00200b1c        0x0 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strlen.o)
+ .bss           0x00200b1c        0x0 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncmp.o)
  .bss           0x00200b1c        0x0 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncpy.o)
  .bss           0x00200b1c        0x0 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok.o)
  .bss           0x00200b1c        0x0 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok_r.o)
@@ -1952,33 +1956,35 @@ OUTPUT(Obj/GNU_ARM_DEBUG_T2/TEST_TASK.axf elf32-littlearm)
  .ARM.attributes
                 0x00000990       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strlen.o)
  .ARM.attributes
-                0x000009a0       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncpy.o)
+                0x000009a0       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncmp.o)
  .ARM.attributes
-                0x000009b0       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok.o)
+                0x000009b0       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncpy.o)
  .ARM.attributes
-                0x000009c0       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok_r.o)
+                0x000009c0       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok.o)
  .ARM.attributes
-                0x000009d0       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtol.o)
+                0x000009d0       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok_r.o)
  .ARM.attributes
-                0x000009e0       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_udivsi3.o)
+                0x000009e0       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtol.o)
  .ARM.attributes
-                0x000009f0       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_divsi3.o)
+                0x000009f0       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_udivsi3.o)
  .ARM.attributes
-                0x00000a00       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_umodsi3.o)
+                0x00000a00       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_divsi3.o)
  .ARM.attributes
-                0x00000a10       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_modsi3.o)
+                0x00000a10       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_umodsi3.o)
  .ARM.attributes
-                0x00000a20       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_dvmd_tls.o)
+                0x00000a20       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_modsi3.o)
  .ARM.attributes
-                0x00000a30       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_addsubdf3.o)
+                0x00000a30       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_dvmd_tls.o)
  .ARM.attributes
-                0x00000a40       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_cmpdf2.o)
+                0x00000a40       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_addsubdf3.o)
  .ARM.attributes
-                0x00000a50       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_cmpsf2.o)
+                0x00000a50       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_cmpdf2.o)
  .ARM.attributes
-                0x00000a60       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_muldi3.o)
+                0x00000a60       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_cmpsf2.o)
  .ARM.attributes
-                0x00000a70       0x10 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(upload_diagnostic_txt.o)
+                0x00000a70       0x10 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_muldi3.o)
+ .ARM.attributes
+                0x00000a80       0x10 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/lib/TRAP_TELIUM_PLUS.LIB(upload_diagnostic_txt.o)
 
 .comment        0x00000000       0x23
  .comment       0x00000000       0x12 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/startfiles/libcpatch.o
@@ -2017,13 +2023,14 @@ OUTPUT(Obj/GNU_ARM_DEBUG_T2/TEST_TASK.axf elf32-littlearm)
  .comment       0x00000000       0x12 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcmp.o)
  .comment       0x00000000       0x12 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcpy.o)
  .comment       0x00000000       0x12 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strlen.o)
+ .comment       0x00000000       0x12 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncmp.o)
  .comment       0x00000000       0x12 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncpy.o)
  .comment       0x00000000       0x12 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok.o)
  .comment       0x00000000       0x12 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok_r.o)
  .comment       0x00000000       0x12 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtol.o)
  .comment       0x00000000       0x12 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_muldi3.o)
 
-.debug_abbrev   0x00000000     0x25d7
+.debug_abbrev   0x00000000     0x265c
  .debug_abbrev  0x00000000      0x1ab C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/startfiles/libcpatch.o
  .debug_abbrev  0x000001ab      0x151 Obj/GNU_ARM_DEBUG_T2/Main.o
  .debug_abbrev  0x000002fc      0x237 Obj/GNU_ARM_DEBUG_T2/Entry.o
@@ -2052,21 +2059,22 @@ OUTPUT(Obj/GNU_ARM_DEBUG_T2/TEST_TASK.axf elf32-littlearm)
  .debug_abbrev  0x00001e31       0x78 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcmp.o)
  .debug_abbrev  0x00001ea9       0x78 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcpy.o)
  .debug_abbrev  0x00001f21       0x94 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strlen.o)
- .debug_abbrev  0x00001fb5       0x85 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncpy.o)
- .debug_abbrev  0x0000203a      0x188 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok.o)
- .debug_abbrev  0x000021c2       0xba C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok_r.o)
- .debug_abbrev  0x0000227c      0x1b7 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtol.o)
- .debug_abbrev  0x00002433       0x14 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_udivsi3.o)
- .debug_abbrev  0x00002447       0x14 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_divsi3.o)
- .debug_abbrev  0x0000245b       0x14 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_umodsi3.o)
- .debug_abbrev  0x0000246f       0x14 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_modsi3.o)
- .debug_abbrev  0x00002483       0x14 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_dvmd_tls.o)
- .debug_abbrev  0x00002497       0x14 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_addsubdf3.o)
- .debug_abbrev  0x000024ab       0x14 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_cmpdf2.o)
- .debug_abbrev  0x000024bf       0x14 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_cmpsf2.o)
- .debug_abbrev  0x000024d3      0x104 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_muldi3.o)
+ .debug_abbrev  0x00001fb5       0x85 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncmp.o)
+ .debug_abbrev  0x0000203a       0x85 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncpy.o)
+ .debug_abbrev  0x000020bf      0x188 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok.o)
+ .debug_abbrev  0x00002247       0xba C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok_r.o)
+ .debug_abbrev  0x00002301      0x1b7 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtol.o)
+ .debug_abbrev  0x000024b8       0x14 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_udivsi3.o)
+ .debug_abbrev  0x000024cc       0x14 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_divsi3.o)
+ .debug_abbrev  0x000024e0       0x14 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_umodsi3.o)
+ .debug_abbrev  0x000024f4       0x14 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_modsi3.o)
+ .debug_abbrev  0x00002508       0x14 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_dvmd_tls.o)
+ .debug_abbrev  0x0000251c       0x14 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_addsubdf3.o)
+ .debug_abbrev  0x00002530       0x14 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_cmpdf2.o)
+ .debug_abbrev  0x00002544       0x14 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_cmpsf2.o)
+ .debug_abbrev  0x00002558      0x104 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_muldi3.o)
 
-.debug_info     0x00000000    0x18508
+.debug_info     0x00000000    0x1891f
  .debug_info    0x00000000      0xcb8 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/startfiles/libcpatch.o
  .debug_info    0x00000cb8     0x23e8 Obj/GNU_ARM_DEBUG_T2/Main.o
  .debug_info    0x000030a0     0x1af0 Obj/GNU_ARM_DEBUG_T2/Entry.o
@@ -2074,42 +2082,43 @@ OUTPUT(Obj/GNU_ARM_DEBUG_T2/TEST_TASK.axf elf32-littlearm)
  .debug_info    0x00005a44        0x0 Obj/GNU_ARM_DEBUG_T2/dynamic_array_template.o
  .debug_info    0x00005a44     0x24b2 Obj/GNU_ARM_DEBUG_T2/dynamic_arrays.o
  .debug_info    0x00007ef6      0x3ea Obj/GNU_ARM_DEBUG_T2/file_schema.o
- .debug_info    0x000082e0     0x12c8 Obj/GNU_ARM_DEBUG_T2/iofile.o
- .debug_info    0x000095a8        0x0 Obj/GNU_ARM_DEBUG_T2/list_template.o
- .debug_info    0x000095a8     0x4ae3 Obj/GNU_ARM_DEBUG_T2/lists.o
- .debug_info    0x0000e08b     0x19d0 Obj/GNU_ARM_DEBUG_T2/Goal.o
- .debug_info    0x0000fa5b     0x2038 Obj/GNU_ARM_DEBUG_T2/main_processing.o
- .debug_info    0x00011a93      0x6f1 Obj/GNU_ARM_DEBUG_T2/log.o
- .debug_info    0x00012184      0x80f Obj/GNU_ARM_DEBUG_T2/Magnetic.o
- .debug_info    0x00012993      0x768 Obj/GNU_ARM_DEBUG_T2/Timer.o
- .debug_info    0x000130fb      0x97e C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-calloc.o)
- .debug_info    0x00013a79       0x75 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-ctype_.o)
- .debug_info    0x00013aee      0x956 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-errno.o)
- .debug_info    0x00014444      0x965 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-impure.o)
- .debug_info    0x00014da9      0x99a C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-malloc.o)
- .debug_info    0x00015743       0xe7 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcmp.o)
- .debug_info    0x0001582a       0xfa C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcpy.o)
- .debug_info    0x00015924       0xcd C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memset.o)
- .debug_info    0x000159f1      0x97f C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-realloc.o)
- .debug_info    0x00016370       0xe1 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strchr.o)
- .debug_info    0x00016451       0xb3 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcmp.o)
- .debug_info    0x00016504       0xbb C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcpy.o)
- .debug_info    0x000165bf       0xcf C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strlen.o)
- .debug_info    0x0001668e       0xf3 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncpy.o)
- .debug_info    0x00016781      0x973 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok.o)
- .debug_info    0x000170f4      0x16a C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok_r.o)
- .debug_info    0x0001725e      0xa54 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtol.o)
- .debug_info    0x00017cb2       0xcb C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_udivsi3.o)
- .debug_info    0x00017d7d       0xcb C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_divsi3.o)
- .debug_info    0x00017e48       0xcb C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_umodsi3.o)
- .debug_info    0x00017f13       0xcb C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_modsi3.o)
- .debug_info    0x00017fde       0xcb C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_dvmd_tls.o)
- .debug_info    0x000180a9       0xca C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_addsubdf3.o)
- .debug_info    0x00018173       0xca C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_cmpdf2.o)
- .debug_info    0x0001823d       0xca C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_cmpsf2.o)
- .debug_info    0x00018307      0x201 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_muldi3.o)
+ .debug_info    0x000082e0     0x13d0 Obj/GNU_ARM_DEBUG_T2/iofile.o
+ .debug_info    0x000096b0        0x0 Obj/GNU_ARM_DEBUG_T2/list_template.o
+ .debug_info    0x000096b0     0x4ae3 Obj/GNU_ARM_DEBUG_T2/lists.o
+ .debug_info    0x0000e193     0x19d0 Obj/GNU_ARM_DEBUG_T2/Goal.o
+ .debug_info    0x0000fb63     0x227a Obj/GNU_ARM_DEBUG_T2/main_processing.o
+ .debug_info    0x00011ddd      0x6f1 Obj/GNU_ARM_DEBUG_T2/log.o
+ .debug_info    0x000124ce      0x80f Obj/GNU_ARM_DEBUG_T2/Magnetic.o
+ .debug_info    0x00012cdd      0x768 Obj/GNU_ARM_DEBUG_T2/Timer.o
+ .debug_info    0x00013445      0x97e C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-calloc.o)
+ .debug_info    0x00013dc3       0x75 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-ctype_.o)
+ .debug_info    0x00013e38      0x956 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-errno.o)
+ .debug_info    0x0001478e      0x965 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-impure.o)
+ .debug_info    0x000150f3      0x99a C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-malloc.o)
+ .debug_info    0x00015a8d       0xe7 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcmp.o)
+ .debug_info    0x00015b74       0xfa C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcpy.o)
+ .debug_info    0x00015c6e       0xcd C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memset.o)
+ .debug_info    0x00015d3b      0x97f C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-realloc.o)
+ .debug_info    0x000166ba       0xe1 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strchr.o)
+ .debug_info    0x0001679b       0xb3 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcmp.o)
+ .debug_info    0x0001684e       0xbb C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcpy.o)
+ .debug_info    0x00016909       0xcf C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strlen.o)
+ .debug_info    0x000169d8       0xcd C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncmp.o)
+ .debug_info    0x00016aa5       0xf3 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncpy.o)
+ .debug_info    0x00016b98      0x973 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok.o)
+ .debug_info    0x0001750b      0x16a C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok_r.o)
+ .debug_info    0x00017675      0xa54 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtol.o)
+ .debug_info    0x000180c9       0xcb C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_udivsi3.o)
+ .debug_info    0x00018194       0xcb C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_divsi3.o)
+ .debug_info    0x0001825f       0xcb C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_umodsi3.o)
+ .debug_info    0x0001832a       0xcb C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_modsi3.o)
+ .debug_info    0x000183f5       0xcb C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_dvmd_tls.o)
+ .debug_info    0x000184c0       0xca C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_addsubdf3.o)
+ .debug_info    0x0001858a       0xca C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_cmpdf2.o)
+ .debug_info    0x00018654       0xca C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_cmpsf2.o)
+ .debug_info    0x0001871e      0x201 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_muldi3.o)
 
-.debug_line     0x00000000     0x43ee
+.debug_line     0x00000000     0x4551
  .debug_line    0x00000000      0x1b2 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/startfiles/libcpatch.o
  .debug_line    0x000001b2       0xe8 Obj/GNU_ARM_DEBUG_T2/Main.o
  .debug_line    0x0000029a      0x2dc Obj/GNU_ARM_DEBUG_T2/Entry.o
@@ -2117,42 +2126,43 @@ OUTPUT(Obj/GNU_ARM_DEBUG_T2/TEST_TASK.axf elf32-littlearm)
  .debug_line    0x000007a7        0x0 Obj/GNU_ARM_DEBUG_T2/dynamic_array_template.o
  .debug_line    0x000007a7      0x609 Obj/GNU_ARM_DEBUG_T2/dynamic_arrays.o
  .debug_line    0x00000db0      0x12e Obj/GNU_ARM_DEBUG_T2/file_schema.o
- .debug_line    0x00000ede      0x3e3 Obj/GNU_ARM_DEBUG_T2/iofile.o
- .debug_line    0x000012c1        0x0 Obj/GNU_ARM_DEBUG_T2/list_template.o
- .debug_line    0x000012c1      0xdcc Obj/GNU_ARM_DEBUG_T2/lists.o
- .debug_line    0x0000208d      0x446 Obj/GNU_ARM_DEBUG_T2/Goal.o
- .debug_line    0x000024d3      0x520 Obj/GNU_ARM_DEBUG_T2/main_processing.o
- .debug_line    0x000029f3       0xd6 Obj/GNU_ARM_DEBUG_T2/log.o
- .debug_line    0x00002ac9      0x18e Obj/GNU_ARM_DEBUG_T2/Magnetic.o
- .debug_line    0x00002c57      0x125 Obj/GNU_ARM_DEBUG_T2/Timer.o
- .debug_line    0x00002d7c      0x146 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-calloc.o)
- .debug_line    0x00002ec2       0x68 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-ctype_.o)
- .debug_line    0x00002f2a      0x144 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-errno.o)
- .debug_line    0x0000306e      0x132 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-impure.o)
- .debug_line    0x000031a0      0x14e C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-malloc.o)
- .debug_line    0x000032ee       0xd7 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcmp.o)
- .debug_line    0x000033c5       0xd8 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcpy.o)
- .debug_line    0x0000349d       0xd6 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memset.o)
- .debug_line    0x00003573      0x147 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-realloc.o)
- .debug_line    0x000036ba       0x7f C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strchr.o)
- .debug_line    0x00003739       0x81 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcmp.o)
- .debug_line    0x000037ba       0x81 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcpy.o)
- .debug_line    0x0000383b       0xdc C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strlen.o)
- .debug_line    0x00003917       0xde C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncpy.o)
- .debug_line    0x000039f5      0x147 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok.o)
- .debug_line    0x00003b3c       0x96 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok_r.o)
- .debug_line    0x00003bd2      0x1de C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtol.o)
- .debug_line    0x00003db0       0x90 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_udivsi3.o)
- .debug_line    0x00003e40       0x9c C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_divsi3.o)
- .debug_line    0x00003edc       0x88 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_umodsi3.o)
- .debug_line    0x00003f64       0x91 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_modsi3.o)
- .debug_line    0x00003ff5       0x7a C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_dvmd_tls.o)
- .debug_line    0x0000406f      0x182 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_addsubdf3.o)
- .debug_line    0x000041f1       0xc4 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_cmpdf2.o)
- .debug_line    0x000042b5       0xb8 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_cmpsf2.o)
- .debug_line    0x0000436d       0x81 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_muldi3.o)
+ .debug_line    0x00000ede      0x3ff Obj/GNU_ARM_DEBUG_T2/iofile.o
+ .debug_line    0x000012dd        0x0 Obj/GNU_ARM_DEBUG_T2/list_template.o
+ .debug_line    0x000012dd      0xdcc Obj/GNU_ARM_DEBUG_T2/lists.o
+ .debug_line    0x000020a9      0x446 Obj/GNU_ARM_DEBUG_T2/Goal.o
+ .debug_line    0x000024ef      0x58b Obj/GNU_ARM_DEBUG_T2/main_processing.o
+ .debug_line    0x00002a7a       0xd6 Obj/GNU_ARM_DEBUG_T2/log.o
+ .debug_line    0x00002b50      0x18e Obj/GNU_ARM_DEBUG_T2/Magnetic.o
+ .debug_line    0x00002cde      0x125 Obj/GNU_ARM_DEBUG_T2/Timer.o
+ .debug_line    0x00002e03      0x146 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-calloc.o)
+ .debug_line    0x00002f49       0x68 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-ctype_.o)
+ .debug_line    0x00002fb1      0x144 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-errno.o)
+ .debug_line    0x000030f5      0x132 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-impure.o)
+ .debug_line    0x00003227      0x14e C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-malloc.o)
+ .debug_line    0x00003375       0xd7 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcmp.o)
+ .debug_line    0x0000344c       0xd8 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcpy.o)
+ .debug_line    0x00003524       0xd6 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memset.o)
+ .debug_line    0x000035fa      0x147 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-realloc.o)
+ .debug_line    0x00003741       0x7f C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strchr.o)
+ .debug_line    0x000037c0       0x81 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcmp.o)
+ .debug_line    0x00003841       0x81 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcpy.o)
+ .debug_line    0x000038c2       0xdc C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strlen.o)
+ .debug_line    0x0000399e       0xdc C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncmp.o)
+ .debug_line    0x00003a7a       0xde C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncpy.o)
+ .debug_line    0x00003b58      0x147 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok.o)
+ .debug_line    0x00003c9f       0x96 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok_r.o)
+ .debug_line    0x00003d35      0x1de C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtol.o)
+ .debug_line    0x00003f13       0x90 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_udivsi3.o)
+ .debug_line    0x00003fa3       0x9c C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_divsi3.o)
+ .debug_line    0x0000403f       0x88 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_umodsi3.o)
+ .debug_line    0x000040c7       0x91 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_modsi3.o)
+ .debug_line    0x00004158       0x7a C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_dvmd_tls.o)
+ .debug_line    0x000041d2      0x182 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_addsubdf3.o)
+ .debug_line    0x00004354       0xc4 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_cmpdf2.o)
+ .debug_line    0x00004418       0xb8 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_cmpsf2.o)
+ .debug_line    0x000044d0       0x81 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_muldi3.o)
 
-.debug_frame    0x00000000     0x32ac
+.debug_frame    0x00000000     0x3298
  .debug_frame   0x00000000       0x70 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/startfiles/libcpatch.o
  .debug_frame   0x00000070       0x28 Obj/GNU_ARM_DEBUG_T2/Main.o
  .debug_frame   0x00000098      0x274 Obj/GNU_ARM_DEBUG_T2/Entry.o
@@ -2162,33 +2172,34 @@ OUTPUT(Obj/GNU_ARM_DEBUG_T2/TEST_TASK.axf elf32-littlearm)
  .debug_frame   0x000011dc      0x1f4 Obj/GNU_ARM_DEBUG_T2/iofile.o
  .debug_frame   0x000013d0     0x12e4 Obj/GNU_ARM_DEBUG_T2/lists.o
  .debug_frame   0x000026b4      0x324 Obj/GNU_ARM_DEBUG_T2/Goal.o
- .debug_frame   0x000029d8      0x420 Obj/GNU_ARM_DEBUG_T2/main_processing.o
- .debug_frame   0x00002df8       0x84 Obj/GNU_ARM_DEBUG_T2/log.o
- .debug_frame   0x00002e7c       0x48 Obj/GNU_ARM_DEBUG_T2/Magnetic.o
- .debug_frame   0x00002ec4       0x88 Obj/GNU_ARM_DEBUG_T2/Timer.o
- .debug_frame   0x00002f4c       0x28 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-calloc.o)
- .debug_frame   0x00002f74       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-errno.o)
- .debug_frame   0x00002f94       0x40 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-malloc.o)
- .debug_frame   0x00002fd4       0x2c C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcmp.o)
- .debug_frame   0x00003000       0x28 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcpy.o)
- .debug_frame   0x00003028       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memset.o)
- .debug_frame   0x00003048       0x28 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-realloc.o)
- .debug_frame   0x00003070       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strchr.o)
- .debug_frame   0x00003090       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcmp.o)
- .debug_frame   0x000030b0       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcpy.o)
- .debug_frame   0x000030d0       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strlen.o)
- .debug_frame   0x000030f0       0x28 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncpy.o)
- .debug_frame   0x00003118       0x28 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok.o)
- .debug_frame   0x00003140       0x48 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok_r.o)
- .debug_frame   0x00003188       0x4c C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtol.o)
- .debug_frame   0x000031d4       0x28 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_udivsi3.o)
- .debug_frame   0x000031fc       0x28 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_divsi3.o)
- .debug_frame   0x00003224       0x28 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_umodsi3.o)
- .debug_frame   0x0000324c       0x28 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_modsi3.o)
- .debug_frame   0x00003274       0x38 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_muldi3.o)
+ .debug_frame   0x000029d8      0x3e4 Obj/GNU_ARM_DEBUG_T2/main_processing.o
+ .debug_frame   0x00002dbc       0x84 Obj/GNU_ARM_DEBUG_T2/log.o
+ .debug_frame   0x00002e40       0x48 Obj/GNU_ARM_DEBUG_T2/Magnetic.o
+ .debug_frame   0x00002e88       0x88 Obj/GNU_ARM_DEBUG_T2/Timer.o
+ .debug_frame   0x00002f10       0x28 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-calloc.o)
+ .debug_frame   0x00002f38       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-errno.o)
+ .debug_frame   0x00002f58       0x40 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-malloc.o)
+ .debug_frame   0x00002f98       0x2c C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcmp.o)
+ .debug_frame   0x00002fc4       0x28 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcpy.o)
+ .debug_frame   0x00002fec       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memset.o)
+ .debug_frame   0x0000300c       0x28 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-realloc.o)
+ .debug_frame   0x00003034       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strchr.o)
+ .debug_frame   0x00003054       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcmp.o)
+ .debug_frame   0x00003074       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcpy.o)
+ .debug_frame   0x00003094       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strlen.o)
+ .debug_frame   0x000030b4       0x28 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncmp.o)
+ .debug_frame   0x000030dc       0x28 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncpy.o)
+ .debug_frame   0x00003104       0x28 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok.o)
+ .debug_frame   0x0000312c       0x48 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok_r.o)
+ .debug_frame   0x00003174       0x4c C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtol.o)
+ .debug_frame   0x000031c0       0x28 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_udivsi3.o)
+ .debug_frame   0x000031e8       0x28 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_divsi3.o)
+ .debug_frame   0x00003210       0x28 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_umodsi3.o)
+ .debug_frame   0x00003238       0x28 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_modsi3.o)
+ .debug_frame   0x00003260       0x38 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_muldi3.o)
 
 .debug_pubnames
-                0x00000000     0x2d2f
+                0x00000000     0x2d25
  .debug_pubnames
                 0x00000000       0x49 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/startfiles/libcpatch.o
  .debug_pubnames
@@ -2208,51 +2219,53 @@ OUTPUT(Obj/GNU_ARM_DEBUG_T2/TEST_TASK.axf elf32-littlearm)
  .debug_pubnames
                 0x0000248e      0x1ee Obj/GNU_ARM_DEBUG_T2/Goal.o
  .debug_pubnames
-                0x0000267c      0x378 Obj/GNU_ARM_DEBUG_T2/main_processing.o
+                0x0000267c      0x350 Obj/GNU_ARM_DEBUG_T2/main_processing.o
  .debug_pubnames
-                0x000029f4       0x63 Obj/GNU_ARM_DEBUG_T2/log.o
+                0x000029cc       0x63 Obj/GNU_ARM_DEBUG_T2/log.o
  .debug_pubnames
-                0x00002a57       0x2c Obj/GNU_ARM_DEBUG_T2/Magnetic.o
+                0x00002a2f       0x2c Obj/GNU_ARM_DEBUG_T2/Magnetic.o
  .debug_pubnames
-                0x00002a83       0x46 Obj/GNU_ARM_DEBUG_T2/Timer.o
+                0x00002a5b       0x46 Obj/GNU_ARM_DEBUG_T2/Timer.o
  .debug_pubnames
-                0x00002ac9       0x1d C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-calloc.o)
+                0x00002aa1       0x1d C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-calloc.o)
  .debug_pubnames
-                0x00002ae6       0x30 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-ctype_.o)
+                0x00002abe       0x30 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-ctype_.o)
  .debug_pubnames
-                0x00002b16       0x1e C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-errno.o)
+                0x00002aee       0x1e C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-errno.o)
  .debug_pubnames
-                0x00002b34       0x39 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-impure.o)
+                0x00002b0c       0x39 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-impure.o)
  .debug_pubnames
-                0x00002b6d       0x26 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-malloc.o)
+                0x00002b45       0x26 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-malloc.o)
  .debug_pubnames
-                0x00002b93       0x1d C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcmp.o)
+                0x00002b6b       0x1d C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcmp.o)
  .debug_pubnames
-                0x00002bb0       0x1d C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcpy.o)
+                0x00002b88       0x1d C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcpy.o)
  .debug_pubnames
-                0x00002bcd       0x1d C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memset.o)
+                0x00002ba5       0x1d C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memset.o)
  .debug_pubnames
-                0x00002bea       0x1e C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-realloc.o)
+                0x00002bc2       0x1e C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-realloc.o)
  .debug_pubnames
-                0x00002c08       0x1d C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strchr.o)
+                0x00002be0       0x1d C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strchr.o)
  .debug_pubnames
-                0x00002c25       0x1d C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcmp.o)
+                0x00002bfd       0x1d C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcmp.o)
  .debug_pubnames
-                0x00002c42       0x1d C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcpy.o)
+                0x00002c1a       0x1d C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcpy.o)
  .debug_pubnames
-                0x00002c5f       0x1d C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strlen.o)
+                0x00002c37       0x1d C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strlen.o)
  .debug_pubnames
-                0x00002c7c       0x1e C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncpy.o)
+                0x00002c54       0x1e C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncmp.o)
  .debug_pubnames
-                0x00002c9a       0x1d C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok.o)
+                0x00002c72       0x1e C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncpy.o)
  .debug_pubnames
-                0x00002cb7       0x2e C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok_r.o)
+                0x00002c90       0x1d C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok.o)
  .debug_pubnames
-                0x00002ce5       0x2b C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtol.o)
+                0x00002cad       0x2e C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok_r.o)
  .debug_pubnames
-                0x00002d10       0x1f C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_muldi3.o)
+                0x00002cdb       0x2b C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtol.o)
+ .debug_pubnames
+                0x00002d06       0x1f C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_muldi3.o)
 
-.debug_aranges  0x00000000      0x4a0
+.debug_aranges  0x00000000      0x4c0
  .debug_aranges
                 0x00000000       0x20 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/startfiles/libcpatch.o
  .debug_aranges
@@ -2302,33 +2315,35 @@ OUTPUT(Obj/GNU_ARM_DEBUG_T2/TEST_TASK.axf elf32-littlearm)
  .debug_aranges
                 0x000002e0       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strlen.o)
  .debug_aranges
-                0x00000300       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncpy.o)
+                0x00000300       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncmp.o)
  .debug_aranges
-                0x00000320       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok.o)
+                0x00000320       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncpy.o)
  .debug_aranges
-                0x00000340       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok_r.o)
+                0x00000340       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok.o)
  .debug_aranges
-                0x00000360       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtol.o)
+                0x00000360       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok_r.o)
  .debug_aranges
-                0x00000380       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_udivsi3.o)
+                0x00000380       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtol.o)
  .debug_aranges
-                0x000003a0       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_divsi3.o)
+                0x000003a0       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_udivsi3.o)
  .debug_aranges
-                0x000003c0       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_umodsi3.o)
+                0x000003c0       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_divsi3.o)
  .debug_aranges
-                0x000003e0       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_modsi3.o)
+                0x000003e0       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_umodsi3.o)
  .debug_aranges
-                0x00000400       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_dvmd_tls.o)
+                0x00000400       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_modsi3.o)
  .debug_aranges
-                0x00000420       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_addsubdf3.o)
+                0x00000420       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_dvmd_tls.o)
  .debug_aranges
-                0x00000440       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_cmpdf2.o)
+                0x00000440       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_addsubdf3.o)
  .debug_aranges
-                0x00000460       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_cmpsf2.o)
+                0x00000460       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_cmpdf2.o)
  .debug_aranges
-                0x00000480       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_muldi3.o)
+                0x00000480       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_cmpsf2.o)
+ .debug_aranges
+                0x000004a0       0x20 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_muldi3.o)
 
-.debug_str      0x00000000     0x5803
+.debug_str      0x00000000     0x59aa
  .debug_str     0x00000000       0x20 C:/Program Files/TeliumSDK/SDK PatchF9.32.3.02/SDKTPLUS/HW_T2/gnu_434/startfiles/libcpatch.o
  .debug_str     0x00000020      0xe2a Obj/GNU_ARM_DEBUG_T2/Main.o
                                0x120b (size before relaxing)
@@ -2340,84 +2355,87 @@ OUTPUT(Obj/GNU_ARM_DEBUG_T2/TEST_TASK.axf elf32-littlearm)
                                 0xad1 (size before relaxing)
  .debug_str     0x00002668       0x60 Obj/GNU_ARM_DEBUG_T2/file_schema.o
                                 0x27c (size before relaxing)
- .debug_str     0x000026c8      0x466 Obj/GNU_ARM_DEBUG_T2/iofile.o
-                                0x927 (size before relaxing)
- .debug_str     0x00002b2e     0x12f6 Obj/GNU_ARM_DEBUG_T2/lists.o
+ .debug_str     0x000026c8      0x4b7 Obj/GNU_ARM_DEBUG_T2/iofile.o
+                                0x978 (size before relaxing)
+ .debug_str     0x00002b7f     0x12f6 Obj/GNU_ARM_DEBUG_T2/lists.o
                                0x14cf (size before relaxing)
- .debug_str     0x00003e24      0x757 Obj/GNU_ARM_DEBUG_T2/Goal.o
+ .debug_str     0x00003e75      0x757 Obj/GNU_ARM_DEBUG_T2/Goal.o
                                0x113a (size before relaxing)
- .debug_str     0x0000457b      0x465 Obj/GNU_ARM_DEBUG_T2/main_processing.o
-                                0xe8b (size before relaxing)
- .debug_str     0x000049e0       0x4c Obj/GNU_ARM_DEBUG_T2/log.o
+ .debug_str     0x000045cc      0x569 Obj/GNU_ARM_DEBUG_T2/main_processing.o
+                                0xfab (size before relaxing)
+ .debug_str     0x00004b35       0x4c Obj/GNU_ARM_DEBUG_T2/log.o
                                 0x7aa (size before relaxing)
- .debug_str     0x00004a2c       0x39 Obj/GNU_ARM_DEBUG_T2/Magnetic.o
+ .debug_str     0x00004b81       0x39 Obj/GNU_ARM_DEBUG_T2/Magnetic.o
                                 0x809 (size before relaxing)
- .debug_str     0x00004a65       0x7b Obj/GNU_ARM_DEBUG_T2/Timer.o
+ .debug_str     0x00004bba       0x7b Obj/GNU_ARM_DEBUG_T2/Timer.o
                                 0x7ca (size before relaxing)
- .debug_str     0x00004ae0      0x44a C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-calloc.o)
+ .debug_str     0x00004c35      0x44a C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-calloc.o)
                                 0x517 (size before relaxing)
- .debug_str     0x00004f2a       0xba C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-ctype_.o)
+ .debug_str     0x0000507f       0xba C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-ctype_.o)
                                  0xd9 (size before relaxing)
- .debug_str     0x00004fe4       0xb9 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-errno.o)
+ .debug_str     0x00005139       0xb9 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-errno.o)
                                 0x509 (size before relaxing)
- .debug_str     0x0000509d       0xd1 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-impure.o)
+ .debug_str     0x000051f2       0xd1 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-impure.o)
                                 0x521 (size before relaxing)
- .debug_str     0x0000516e       0x5a C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-malloc.o)
+ .debug_str     0x000052c3       0x5a C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-malloc.o)
                                 0x523 (size before relaxing)
- .debug_str     0x000051c8       0xbb C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcmp.o)
+ .debug_str     0x0000531d       0xbb C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcmp.o)
                                 0x157 (size before relaxing)
- .debug_str     0x00005283       0x64 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcpy.o)
+ .debug_str     0x000053d8       0x64 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcpy.o)
                                 0x16b (size before relaxing)
- .debug_str     0x000052e7       0x50 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memset.o)
+ .debug_str     0x0000543c       0x50 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memset.o)
                                 0x157 (size before relaxing)
- .debug_str     0x00005337       0x52 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-realloc.o)
+ .debug_str     0x0000548c       0x52 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-realloc.o)
                                 0x51b (size before relaxing)
- .debug_str     0x00005389       0x50 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strchr.o)
+ .debug_str     0x000054de       0x50 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strchr.o)
                                 0x150 (size before relaxing)
- .debug_str     0x000053d9       0xc8 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcmp.o)
+ .debug_str     0x0000552e       0xc8 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcmp.o)
                                 0x15d (size before relaxing)
- .debug_str     0x000054a1       0x58 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcpy.o)
+ .debug_str     0x000055f6       0x58 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcpy.o)
                                 0x15d (size before relaxing)
- .debug_str     0x000054f9       0x60 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strlen.o)
+ .debug_str     0x0000564e       0x60 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strlen.o)
                                 0x16c (size before relaxing)
- .debug_str     0x00005559       0x5e C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncpy.o)
+ .debug_str     0x000056ae       0x52 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncmp.o)
+                                0x159 (size before relaxing)
+ .debug_str     0x00005700       0x5e C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncpy.o)
                                 0x175 (size before relaxing)
- .debug_str     0x000055b7       0x50 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok.o)
+ .debug_str     0x0000575e       0x50 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok.o)
                                 0x511 (size before relaxing)
- .debug_str     0x00005607       0x7a C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok_r.o)
+ .debug_str     0x000057ae       0x7a C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok_r.o)
                                 0x189 (size before relaxing)
- .debug_str     0x00005681       0x79 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtol.o)
+ .debug_str     0x00005828       0x79 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtol.o)
                                 0x547 (size before relaxing)
- .debug_str     0x000056fa      0x109 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_muldi3.o)
+ .debug_str     0x000058a1      0x109 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_muldi3.o)
                                 0x1ad (size before relaxing)
 
-.debug_loc      0x00000000     0x54dd
+.debug_loc      0x00000000     0x54d8
  .debug_loc     0x00000000       0x2b Obj/GNU_ARM_DEBUG_T2/Main.o
  .debug_loc     0x0000002b      0x40e Obj/GNU_ARM_DEBUG_T2/Entry.o
  .debug_loc     0x00000439      0x260 Obj/GNU_ARM_DEBUG_T2/Menu.o
  .debug_loc     0x00000699     0x1531 Obj/GNU_ARM_DEBUG_T2/dynamic_arrays.o
  .debug_loc     0x00001bca       0xad Obj/GNU_ARM_DEBUG_T2/file_schema.o
- .debug_loc     0x00001c77      0x30c Obj/GNU_ARM_DEBUG_T2/iofile.o
- .debug_loc     0x00001f83     0x1f70 Obj/GNU_ARM_DEBUG_T2/lists.o
- .debug_loc     0x00003ef3      0x514 Obj/GNU_ARM_DEBUG_T2/Goal.o
- .debug_loc     0x00004407      0x64e Obj/GNU_ARM_DEBUG_T2/main_processing.o
- .debug_loc     0x00004a55       0xad Obj/GNU_ARM_DEBUG_T2/log.o
- .debug_loc     0x00004b02       0x57 Obj/GNU_ARM_DEBUG_T2/Magnetic.o
- .debug_loc     0x00004b59       0xac Obj/GNU_ARM_DEBUG_T2/Timer.o
- .debug_loc     0x00004c05       0x5b C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-calloc.o)
- .debug_loc     0x00004c60       0x7a C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-malloc.o)
- .debug_loc     0x00004cda       0x66 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcmp.o)
- .debug_loc     0x00004d40       0x5b C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcpy.o)
- .debug_loc     0x00004d9b       0x5b C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-realloc.o)
- .debug_loc     0x00004df6       0x5a C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strchr.o)
- .debug_loc     0x00004e50       0x13 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcmp.o)
- .debug_loc     0x00004e63       0x13 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcpy.o)
- .debug_loc     0x00004e76       0x26 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strlen.o)
- .debug_loc     0x00004e9c       0x79 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncpy.o)
- .debug_loc     0x00004f15       0x45 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok.o)
- .debug_loc     0x00004f5a      0x217 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok_r.o)
- .debug_loc     0x00005171      0x251 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtol.o)
- .debug_loc     0x000053c2      0x11b C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_muldi3.o)
+ .debug_loc     0x00001c77      0x30d Obj/GNU_ARM_DEBUG_T2/iofile.o
+ .debug_loc     0x00001f84     0x1f70 Obj/GNU_ARM_DEBUG_T2/lists.o
+ .debug_loc     0x00003ef4      0x514 Obj/GNU_ARM_DEBUG_T2/Goal.o
+ .debug_loc     0x00004408      0x5ed Obj/GNU_ARM_DEBUG_T2/main_processing.o
+ .debug_loc     0x000049f5       0xad Obj/GNU_ARM_DEBUG_T2/log.o
+ .debug_loc     0x00004aa2       0x57 Obj/GNU_ARM_DEBUG_T2/Magnetic.o
+ .debug_loc     0x00004af9       0xac Obj/GNU_ARM_DEBUG_T2/Timer.o
+ .debug_loc     0x00004ba5       0x5b C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-calloc.o)
+ .debug_loc     0x00004c00       0x7a C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-malloc.o)
+ .debug_loc     0x00004c7a       0x66 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcmp.o)
+ .debug_loc     0x00004ce0       0x5b C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-memcpy.o)
+ .debug_loc     0x00004d3b       0x5b C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-realloc.o)
+ .debug_loc     0x00004d96       0x5a C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strchr.o)
+ .debug_loc     0x00004df0       0x13 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcmp.o)
+ .debug_loc     0x00004e03       0x13 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strcpy.o)
+ .debug_loc     0x00004e16       0x26 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strlen.o)
+ .debug_loc     0x00004e3c       0x5b C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncmp.o)
+ .debug_loc     0x00004e97       0x79 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strncpy.o)
+ .debug_loc     0x00004f10       0x45 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok.o)
+ .debug_loc     0x00004f55      0x217 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtok_r.o)
+ .debug_loc     0x0000516c      0x251 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/arm-elf/lib/thumb/soft/interwork/libc.a(lib_a-strtol.o)
+ .debug_loc     0x000053bd      0x11b C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_muldi3.o)
 
 .debug_ranges   0x00000000       0x30
  .debug_ranges  0x00000000       0x30 C:/Ingenico/IngeDev_8.18.0.5/toolchains/gnuArm4/lib/gcc/arm-elf/4.3.4/thumb/soft/interwork/libgcc.a(_muldi3.o)
