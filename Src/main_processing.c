@@ -1709,8 +1709,6 @@ void create_menu(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
 			0
 	};
 
-	initUIContext(_OFF_);
-
 	do {
 		choice = GL_Dialog_Menu(hGraphicLib, "Select action", main_menu, choice,
 				GL_BUTTON_CANCEL , GL_KEY_0, GL_TIME_INFINITE);

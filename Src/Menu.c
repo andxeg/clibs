@@ -399,7 +399,7 @@ void GL_SampleDialogMultiChoice(T_GL_HGRAPHIC_LIB graphicLib) {
  */
 void menuGoalDisplay(void)
 {
-	int i;
+
 	T_GL_WCHAR choice = 0;
 
 	const char *MenuUser[] = {

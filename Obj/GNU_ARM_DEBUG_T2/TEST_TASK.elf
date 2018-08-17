@@ -7,14 +7,14 @@ section             size      addr
 .ARM.attributes       16         0
 .comment              35         0
 .debug_abbrev       9820         0
-.debug_info       100702         0
-.debug_line        17756         0
+.debug_info       100689         0
+.debug_line        17755         0
 .debug_frame       12952         0
 .debug_pubnames    11557         0
 .debug_aranges      1216         0
 .debug_str         23006         0
 .debug_loc         21720         0
 .debug_ranges         48         0
-Total             313142
+Total             313128
 
 
