@@ -92,43 +92,39 @@ int file_type(T_GL_HFILE file, T_GL_HGRAPHIC_LIB hGraphicLib) {
 }
 
 int assign_schema_header(FILE_SCHEMA* schema, T_GL_HGRAPHIC_LIB hGraphicLib) {
-	char* fields[7] = {"NAME", "COUNT_UNIT_NAME", "PRICE",
-					   "EATABLE", "LIQUID", "IMPORTED", "PACKED"};
+typedef	struct {
+		char* name;
+		GOOD_FIELD_TYPE type;
+		int length_min;
+		int length_max;
+	} FIELD_INFO;
 
-	GOOD_FIELD_TYPE types[7] = {STRING_GOOD, STRING_GOOD, NUMBER_GOOD,
-							   BOOL_GOOD, BOOL_GOOD, BOOL_GOOD, BOOL_GOOD};
-
-	int length_min[7] = {1, 1, 1, 1, 1, 1, 1};
-	int length_max[7] = {31, 4, 6, 1, 1, 1, 1};
+	FIELD_INFO fields_info[] = {
+			{"NAME", 			STRING_GOOD, 1, 31},
+			{"COUNT_UNIT_NAME", STRING_GOOD, 1, 4},
+			{"PRICE", 			NUMBER_GOOD, 1, 6},
+			{"EATABLE", 		BOOL_GOOD, 1, 1},
+			{"LIQUID", 			BOOL_GOOD, 1, 1},
+			{"IMPORTED", 		BOOL_GOOD, 1, 1},
+			{"PACKED", 			BOOL_GOOD, 1, 1},
+	};
 
 	int i;
 	char* str;
-
-	// add fields name
-	for (i = 0; i < NUMBER_OF_ITEMS(fields); i++) {
-		str = (char *) umalloc(sizeof(char) * (strlen(fields[i]) + 1));
+	for (i = 0; i < NUMBER_OF_ITEMS(fields_info); i++) {
+		FIELD_INFO field_info = fields_info[i];
+		// add field name
+		str = (char *) umalloc(sizeof(char) * (strlen(field_info.name) + 1));
 		if (str == NULL) {
 			print_message(hGraphicLib, "cannot allocate memory\nfor field value\nin assign schema");
 			ELOG("cannot allocate memory for field value");
 			return 1;
 		}
-		str = strcpy(str, fields[i]);
+		str = strcpy(str, field_info.name);
 		TEMPLATE(append, string)(&schema->header->fields, str);
-	}
-
-	// add types
-	for (i = 0; i < NUMBER_OF_ITEMS(types); i++) {
-		TEMPLATE(append, good_field)(&schema->header->types, types[i]);
-	}
-
-	// add length min
-	for (i = 0; i < NUMBER_OF_ITEMS(length_min); i++) {
-		TEMPLATE(append, int(&schema->header->length_min, length_min[i]));
-	}
-
-	// add length max
-	for (i = 0; i < NUMBER_OF_ITEMS(length_max); i++) {
-		TEMPLATE(append, int(&schema->header->length_max, length_max[i]));
+		TEMPLATE(append, good_field)(&schema->header->types, field_info.type);
+		TEMPLATE(append, int(&schema->header->length_min, field_info.length_min));
+		TEMPLATE(append, int(&schema->header->length_max, field_info.length_max));
 	}
 
 	return 0;

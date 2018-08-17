@@ -1474,7 +1474,6 @@ int print_document(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema,
 		GL_Widget_SetText(hPrint, document_line);
 
 		// price
-		int good_price = price * count;
 		sprintf(document_line, "price: %d", price);
 		hPrint = GL_Print_Create(hLayout);
 		GL_Widget_SetFontScale(hPrint, GL_SCALE_LARGE);

@@ -1,13 +1,16 @@
+
 #ifdef T
 #ifdef TYPE_NAME
 #ifdef TYPE_NUM
 #include <stdio.h>
 #include <stdlib.h>
-#include "defs.h"
+#include "utils.h"
 #include "log.h"
+#include "defs.h"
 #include "templates.h"
 #include "dynamic_array_types.h"
 #include "oem_public_def.h"     // ufree, umalloc
+
 
 TEMPLATE(DYN_ARRAY, TYPE_NAME)* TEMPLATE(create2, TYPE_NAME) (int size) {
     TEMPLATE(DYN_ARRAY, TYPE_NAME)* result = (TEMPLATE(DYN_ARRAY, TYPE_NAME)*) umalloc(sizeof(TEMPLATE(DYN_ARRAY, TYPE_NAME)));
@@ -358,8 +361,13 @@ int TEMPLATE(array_match, TYPE_NAME)(TEMPLATE(DYN_ARRAY, TYPE_NAME)* a, TEMPLATE
             return 0;
         } else {
             // type1 == STRING && type2 == STRING
-            if (strcmp(str2, "*\0") == 0) continue;
-            if (strcmp(str1, str2) != 0) return 0;
+//            if (strcmp(str2, "*\0") == 0) continue;
+//            if (strcmp(str1, str2) != 0) return 0;
+        	if (string_match(str1, str2)) {
+        		continue;
+        	} else {
+        		return 0;
+        	}
         }
 
     }
@@ -367,6 +375,7 @@ int TEMPLATE(array_match, TYPE_NAME)(TEMPLATE(DYN_ARRAY, TYPE_NAME)* a, TEMPLATE
 
     return 1;
 }
+
 
 #endif
 #endif

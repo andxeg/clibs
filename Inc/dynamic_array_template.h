@@ -18,7 +18,6 @@ typedef struct TEMPLATE(DYN_ARRAY, TYPE_NAME) TEMPLATE(DYN_ARRAY, TYPE_NAME);
 //typedef struct TEMPLATE(DYN_ARRAY, vop) TEMPLATE(DYN_ARRAY, vop);
 //typedef struct TEMPLATE(DYN_ARRAY, TYPE_NAME) TEMPLATE(DYN_ARRAY, TYPE_NAME);
 
-
 struct TEMPLATE(DYN_ARRAY, TYPE_NAME) {
     T* data;
     int length;
