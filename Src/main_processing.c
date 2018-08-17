@@ -670,6 +670,7 @@ int edit_good(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, int index
 			0
 	};
 
+	int iRet = 0;
 	int menu_len = 3;
 	T_GL_WCHAR choice = 0;
 	do {
@@ -679,7 +680,8 @@ int edit_good(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, int index
 		if (choice == menu_len - 1 || choice == GL_KEY_CANCEL) {
 			break;
 		} else if (choice == 0) {
-			delete_good(hGraphicLib, file_schema, index);
+			iRet = delete_good(hGraphicLib, file_schema, index);
+			CHECK(iRet == 0, lblDeleteGoodError);
 			break;
 		} else {
 			// EDIT
@@ -688,7 +690,12 @@ int edit_good(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, int index
 
 
 	} while (choice != GL_KEY_CANCEL && choice != menu_len - 1);
+	goto lblEnd;
 
+lblDeleteGoodError:
+	return 1;
+
+lblEnd:
 	return 0;
 }
 
@@ -721,15 +728,27 @@ int modify_list_with_goods(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_sche
 		if (choice == goods_count + 1 || choice == GL_KEY_CANCEL) {
 			break;
 		} else if (choice == goods_count) {
-			add_new_good(hGraphicLib, file_schema);
+			iRet = add_new_good(hGraphicLib, file_schema);
+			CHECK(iRet == 0, lblAddGoodError);
+			iRet = backup_file_schema(hGraphicLib, file_schema, ONLY_BACKUP_FILE_SCHEMA);
+			CHECK(iRet == 0, lblReleaseResources);
 			break;
 		} else {
-			edit_good(hGraphicLib, file_schema, choice);
+			iRet = edit_good(hGraphicLib, file_schema, choice);
+			CHECK(iRet == 0, lblEditGoodError);
+			iRet = backup_file_schema(hGraphicLib, file_schema, ONLY_BACKUP_FILE_SCHEMA);
+			CHECK(iRet == 0, lblReleaseResources);
 			break;
 		}
 
 	} while(choice != GL_KEY_CANCEL && choice != goods_count + 1);
 	goto lblEnd;
+
+lblEditGoodError:
+	goto lblReleaseResources;
+
+lblAddGoodError:
+	goto lblReleaseResources;
 
 lblGetFirstFieldsError:
 	GL_Dialog_Message(hGraphicLib, NULL, "Cannot get first fields", GL_ICON_ERROR, GL_BUTTON_VALID, 5*1000);
