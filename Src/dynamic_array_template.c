@@ -112,6 +112,9 @@ int TEMPLATE(insert, TYPE_NAME) (TEMPLATE(DYN_ARRAY, TYPE_NAME) *a, int index, T
         ELOG("insert: index out of range");
         return 1;
     }
+#if TYPE_NUM == STRING || TYPE_NUM == VOIDP
+    free(a->data[index]);
+#endif
     a->data[index] = elem;
     return 0;
 }

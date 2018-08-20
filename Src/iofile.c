@@ -35,7 +35,6 @@ int read_file_with_goods(const char* filename, FILE_SCHEMA* schema, T_GL_HGRAPHI
 		goto lblFileIncompatibleHeaderBody;
 	}
 
-	print_message(hGraphicLib, "File was successfully imported");
 	goto lblEnd;
 
 lblHostKO:                                         // HOST disk failed
@@ -799,8 +798,6 @@ int write_file_schema_to_file(const char* filename, FILE_SCHEMA* schema, int fil
 	iRet = GL_File_Close(file);
 	CHECK(iRet == GL_SUCCESS, lblHostKO);
 	file = NULL;
-
-	print_message(hGraphicLib, "List of goods was successfully backuped");
 	goto lblEnd;
 
 lblFileMissing:                                    // File not found

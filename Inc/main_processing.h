@@ -44,6 +44,8 @@ extern const char* BACKUP_FILE_SCHEMA;
 /*+*/int add_new_good(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema);
 /*+*/int delete_good(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, int index);
 /*+*/int edit_good(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, int index);
+/*+*/int change_good(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, int index);
+/*c*/int delete_several_goods(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema);
 /*+*/int read_search_pattern(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, TEMPLATE(DYN_ARRAY, vop)* pattern);
 /*+*/int print_header_for_search_result(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, T_GL_HWIDGET hLayout, T_GL_DIM* usLine);
 /*+*/int print_search_results(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, TEMPLATE(LIST, dyn_array_vop)* res);

@@ -953,9 +953,9 @@ void entry(void)
   file_schema = create_file_schema();
   // attempt to restore file schema from backup
   if (read_file_with_goods(BACKUP_FILE_SCHEMA, file_schema, gGoalGraphicLibInstance)) {
-	  print_message(gGoalGraphicLibInstance, "Cannot restore list of goods");
+	  ELOG("Cannot restore list of goods");
   } else {
-	  print_message(gGoalGraphicLibInstance, "List of goods was successfully restored");
+	  ELOG("List of goods was successfully restored");
   }
   log_file = GL_File_Open(LOG_FILE, GL_FILE_CREATE_ALWAYS, GL_FILE_ACCESS_WRITE);
   error_log_file = GL_File_Open(ERROR_FILE, GL_FILE_CREATE_ALWAYS, GL_FILE_ACCESS_WRITE);

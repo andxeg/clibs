@@ -106,7 +106,6 @@ int backup_file_schema(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, 
 		} else {
 			if (type == DELETE_FILE_SCHEMA) {
 				// delete current file_schema from RAM
-				print_message(hGraphicLib, "Delete current list of goods");
 				destroy_file_schema(file_schema);
 				file_schema = create_file_schema();
 			}
@@ -156,11 +155,10 @@ int import_file_with_goods(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_sche
 		iRet = read_file_with_goods(filename, file_schema, hGraphicLib);
 		if (iRet == 1) {
 			print_message(hGraphicLib, "Error while import list of goods");
-			print_message(hGraphicLib, "Restore old list of goods.\nPlease wait.");
 			iRet = restore_file_schema(hGraphicLib, file_schema);
 			CHECK(iRet == 0, lblReleaseResources);
-			print_message(hGraphicLib, "Old list of goods\nwas successfully restored");
 		} else {
+			print_message(hGraphicLib, "List with goods was successfully imported");
 			print_file_schema(file_schema);
 			iRet = backup_file_schema(hGraphicLib, file_schema, ONLY_BACKUP_FILE_SCHEMA);
 			CHECK(iRet == 0, lblReleaseResources);
@@ -663,6 +661,131 @@ int delete_good(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, int ind
 }
 
 int edit_good(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, int index) {
+	int iRet = 0;
+	TEMPLATE(DYN_ARRAY, string)* fields = &file_schema->header->fields;
+	TEMPLATE(DYN_ARRAY, good_field)* types = &file_schema->header->types;
+	TEMPLATE(DYN_ARRAY, int)* min_limit = &file_schema->header->length_min;
+	TEMPLATE(DYN_ARRAY, int)* max_limit = &file_schema->header->length_max;
+	TEMPLATE(DYN_ARRAY, vop) good_fields;
+	iRet = TEMPLATE(get_by_index, dyn_array_vop)(file_schema->goods, index, &good_fields);
+	CHECK(iRet == 0, lblGetError);
+
+	char** fields_name = NULL;
+	int fields_amount = fields->length;
+	fields_name = (char** ) umalloc(sizeof(char*) * (fields_amount + 2));
+	CHECK(fields_name != NULL, lblMemoryError);
+
+	int i;
+	char* str;
+	for (i = 0; i < fields_amount; i++) {
+		iRet = TEMPLATE(get, string)(fields, i, &str);
+		CHECK(iRet == 0, lblGetError);
+		fields_name[i] = str;
+	}
+	fields_name[fields_amount] = "Exit";
+	fields_name[fields_amount + 1] = NULL;
+
+	GOOD_FIELD_TYPE type;
+	int max_len;
+	int min_len;
+	char* field_value = NULL;
+	int* val = NULL;
+	T_GL_WCHAR choice = 0;
+	do {
+		choice = GL_Dialog_Menu(hGraphicLib, "Select field", fields_name, choice,
+				GL_BUTTON_CANCEL, GL_KEY_0, GL_TIME_INFINITE);
+
+		if (choice == fields_amount || choice == GL_KEY_CANCEL) {
+			break;
+		}
+
+		// read value of new field and edit good
+		iRet = TEMPLATE(get, good_field)(types, choice, &type);
+		CHECK(iRet == 0, lblGetError);
+		iRet = TEMPLATE(get, int)(min_limit, choice, &min_len);
+		CHECK(iRet == 0, lblGetError);
+		iRet = TEMPLATE(get, int)(max_limit, choice, &max_len);
+		CHECK(iRet == 0, lblGetError);
+
+		field_value = read_field(hGraphicLib, fields_name[choice], min_len, max_len, type, 0);
+		if (field_value == NULL) {
+			continue;
+		}
+
+		if (type == BOOL_GOOD) {
+			val = (int *) umalloc(sizeof(int));
+			CHECK(val != NULL, lblMemoryError);
+			iRet = convert_to_bool_value(field_value, val);
+			CHECK(iRet == 0, lblConvertToBoolError);
+			iRet = TEMPLATE(insert, vop)(&good_fields, choice, (void *)val);
+			CHECK(iRet == 0, lblInsertError);
+			free(field_value);  // free memory for the next value
+		} else if (type == NUMBER_GOOD) {
+			val = (int *) umalloc(sizeof(int));
+			CHECK(val != NULL, lblMemoryError);
+			iRet = convert_to_int_value(field_value, val);
+			CHECK(iRet == 0, lblConvertToNumError);
+			iRet = TEMPLATE(insert, vop)(&good_fields, choice, (void *)val);
+			CHECK(iRet == 0, lblInsertError);
+			free(field_value);  // free memory for the next value
+		} else if (type == STRING_GOOD) {
+			TEMPLATE(insert, vop)(&good_fields, choice, (void*)field_value);
+			CHECK(iRet == 0, lblInsertError);
+		} else {
+			goto lblUnknownGoodType;
+		}
+		field_value =  NULL;
+		val = NULL;
+
+	} while (choice != GL_KEY_CANCEL && choice != fields_amount);
+
+	goto lblEnd;
+
+lblConvertToBoolError:
+	GL_Dialog_Message(hGraphicLib, NULL, "Cannot convert\n value to bool", GL_ICON_ERROR, GL_BUTTON_VALID, 5*1000);
+	goto lblReleaseResources;
+
+lblConvertToNumError:
+	GL_Dialog_Message(hGraphicLib, NULL, "Cannot convert\n value to integer", GL_ICON_ERROR, GL_BUTTON_VALID, 5*1000);
+	goto lblReleaseResources;
+
+lblUnknownGoodType:
+	GL_Dialog_Message(hGraphicLib, NULL, "Internal error: unknown good type", GL_ICON_ERROR, GL_BUTTON_VALID, 5*1000);
+	goto lblReleaseResources;
+
+lblInsertError:
+	GL_Dialog_Message(hGraphicLib, NULL, "Cannot insert new value", GL_ICON_ERROR, GL_BUTTON_VALID, 5*1000);
+	goto lblReleaseResources;
+
+lblMemoryError:
+	GL_Dialog_Message(hGraphicLib, NULL, "Cannot allocate\nmemory for field names", GL_ICON_ERROR, GL_BUTTON_VALID, 5*1000);
+	goto lblReleaseResources;
+
+lblGetError:
+	GL_Dialog_Message(hGraphicLib, NULL, "Cannot get\ngood fields", GL_ICON_ERROR, GL_BUTTON_VALID, 5*1000);
+	goto lblReleaseResources;
+
+lblReleaseResources:
+	if (fields_name != NULL) {
+		ufree(fields_name);
+	}
+
+	if (field_value != NULL) {
+		ufree(field_value);
+	}
+
+	if (val != NULL) {
+		ufree(val);
+	}
+
+	return 1;
+
+lblEnd:
+
+	return 0;
+}
+
+int change_good(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, int index) {
 	const  char *menu[] = {
 			"Delete",
 			"Edit",
@@ -681,10 +804,11 @@ int edit_good(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, int index
 			break;
 		} else if (choice == 0) {
 			iRet = delete_good(hGraphicLib, file_schema, index);
-			CHECK(iRet == 0, lblDeleteGoodError);
+			CHECK(iRet == 0, lblChangeGoodError);
 			break;
 		} else {
-			// EDIT
+			iRet = edit_good(hGraphicLib, file_schema, index);
+			CHECK(iRet == 0, lblChangeGoodError);
 			break;
 		}
 
@@ -692,7 +816,77 @@ int edit_good(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema, int index
 	} while (choice != GL_KEY_CANCEL && choice != menu_len - 1);
 	goto lblEnd;
 
+lblChangeGoodError:
+	return 1;
+
+lblEnd:
+	return 0;
+}
+
+int delete_several_goods(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_schema) {
+	TEMPLATE(LIST, dyn_array_vop)* goods = file_schema->goods;
+	int goods_count = TEMPLATE(size_list, dyn_array_vop)(goods);
+
+	int i;
+	int iRet = 0;
+	char** first_fields = NULL;
+	bool* checked = NULL;
+	first_fields = (char** ) umalloc((goods_count + 2) * sizeof(char*));
+	CHECK(first_fields != NULL, lblMemoryError);
+	iRet = get_first_fields(file_schema, first_fields, hGraphicLib);
+	CHECK(iRet == 0, lblGetFirstFieldsError);
+	first_fields[goods_count] = "Delete";
+	first_fields[goods_count + 1] = NULL;
+
+	checked = (bool *) umalloc(sizeof(bool) * (goods_count + 1)); // check +1 instead +2
+	CHECK(checked != NULL, lblMemoryError);
+	for (i = 0; i < goods_count; i++) {
+		checked[i] = false;
+	}
+
+
+	T_GL_WCHAR choice = 0;
+	do {
+		choice = GL_Dialog_MultiChoice(hGraphicLib, "Categories",
+				first_fields, choice, checked, GL_BUTTON_DEFAULT, GL_KEY_0, GL_TIME_INFINITE);
+		(void)choice;
+
+		if (choice == GL_KEY_CANCEL) {
+			break;
+		}
+
+		if (choice == goods_count) {
+			for (i = goods_count-1; i >= 0; i--) {
+				if (checked[i]) {
+					iRet = delete_good(hGraphicLib, file_schema, i);
+					CHECK(iRet == 0, lblDeleteGoodError);
+				}
+			}
+			break;
+		}
+
+		checked[choice] = !checked[choice];
+	} while (choice != GL_KEY_CANCEL);
+	goto lblEnd;
+
+lblGetFirstFieldsError:
+	goto lblReleaseResources;
+
 lblDeleteGoodError:
+	goto lblReleaseResources;
+
+lblMemoryError:
+	goto lblReleaseResources;
+
+lblReleaseResources:
+	if (checked != NULL) {
+		ufree(checked);
+	}
+
+	if (first_fields != NULL) {
+		ufree(first_fields);
+	}
+
 	return 1;
 
 lblEnd:
@@ -709,40 +903,52 @@ int modify_list_with_goods(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_sche
 
 	int iRet = 0;
 	char** first_fields = NULL;
-	first_fields = (char** ) umalloc((goods_count + 3) * sizeof(char*));
+	first_fields = (char** ) umalloc((goods_count + 5) * sizeof(char*));
 	CHECK(first_fields != NULL, lblMemoryError);
-
 
 	iRet = get_first_fields(file_schema, first_fields, hGraphicLib);
 	CHECK(iRet == 0, lblGetFirstFieldsError);
-	first_fields[goods_count] = "Add new good";
-	first_fields[goods_count + 1] = "Exit";
-	first_fields[goods_count + 2] = NULL;
+	first_fields[goods_count] = "--------------------";
+	first_fields[goods_count + 1] = "Add new good";
+	first_fields[goods_count + 2] = "Delete several goods";
+	first_fields[goods_count + 3] = "Exit";
+	first_fields[goods_count + 4] = NULL;
 
 	T_GL_WCHAR choice = 0;
 	do {
-		choice = GL_Dialog_Choice(hGraphicLib, "List of goods", first_fields,
+		choice = GL_Dialog_Menu(hGraphicLib, "List of goods", first_fields,
 				choice, GL_BUTTON_CANCEL, GL_KEY_0, GL_TIME_INFINITE);
 	    (void)choice;
 
-		if (choice == goods_count + 1 || choice == GL_KEY_CANCEL) {
+		if (choice == goods_count + 3 || choice == GL_KEY_CANCEL) {
 			break;
 		} else if (choice == goods_count) {
+			continue;
+		} else if (choice == goods_count + 1) {
 			iRet = add_new_good(hGraphicLib, file_schema);
 			CHECK(iRet == 0, lblAddGoodError);
 			iRet = backup_file_schema(hGraphicLib, file_schema, ONLY_BACKUP_FILE_SCHEMA);
 			CHECK(iRet == 0, lblReleaseResources);
 			break;
-		} else {
-			iRet = edit_good(hGraphicLib, file_schema, choice);
+		} else if (choice == goods_count + 2) {
+			iRet = delete_several_goods(hGraphicLib, file_schema);
+			CHECK(iRet == 0, lblBatchDeleteError);
+			iRet = backup_file_schema(hGraphicLib, file_schema, ONLY_BACKUP_FILE_SCHEMA);
+			CHECK(iRet == 0, lblReleaseResources);
+			break;
+		}else {
+			iRet = change_good(hGraphicLib, file_schema, choice);
 			CHECK(iRet == 0, lblEditGoodError);
 			iRet = backup_file_schema(hGraphicLib, file_schema, ONLY_BACKUP_FILE_SCHEMA);
 			CHECK(iRet == 0, lblReleaseResources);
 			break;
 		}
 
-	} while(choice != GL_KEY_CANCEL && choice != goods_count + 1);
+	} while(choice != GL_KEY_CANCEL && choice != goods_count + 3);
 	goto lblEnd;
+
+lblBatchDeleteError:
+	goto lblReleaseResources;
 
 lblEditGoodError:
 	goto lblReleaseResources;
@@ -755,7 +961,7 @@ lblGetFirstFieldsError:
 	goto lblReleaseResources;
 
 lblMemoryError:
-	GL_Dialog_Message(hGraphicLib, NULL, "Cannot allocate\nmemory for first_fields", GL_ICON_ERROR, GL_BUTTON_VALID, 5*1000);
+	GL_Dialog_Message(hGraphicLib, NULL, "Cannot allocate\nmemory", GL_ICON_ERROR, GL_BUTTON_VALID, 5*1000);
 	goto lblReleaseResources;
 
 lblReleaseResources:
@@ -1222,7 +1428,7 @@ int find_goods_by_categories(T_GL_HGRAPHIC_LIB hGraphicLib, FILE_SCHEMA* file_sc
 			break;
 		}
 
-		checked[choice] = (checked[choice] == true) ? false : true;
+		checked[choice] = !checked[choice];
 	} while (choice != GL_KEY_CANCEL && choice != bool_fields_count + 1);
 
 	goto lblEnd;
