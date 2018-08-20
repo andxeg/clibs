@@ -1,1 +1,5 @@
 *.swp
+/Bin
+/Obj
+/BuildFiles
+/Ant
