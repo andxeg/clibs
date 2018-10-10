@@ -1,0 +1,58 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            b9:87:c0:9d:19:d0:b2:41
+    Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C = AU, ST = Some-State, O = Internet Widgits Pty Ltd
+        Validity
+            Not Before: Sep 18 12:45:32 2018 GMT
+            Not After : Feb  3 12:45:32 2046 GMT
+        Subject: C = AU, ST = Some-State, O = Internet Widgits Pty Ltd
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:cf:e7:83:2b:1b:26:b8:c9:60:be:52:03:65:32:
+                    a1:aa:ca:f3:7d:b8:76:e3:6d:66:ab:10:0c:c5:69:
+                    46:ca:5b:18:0f:21:27:8a:1b:5e:f7:d6:c8:a0:f5:
+                    15:78:37:e5:41:70:b0:ab:3f:43:37:7c:22:c6:d6:
+                    95:7d:b3:fb:2a:8b:71:e2:a7:97:c5:21:42:23:11:
+                    af:62:c6:f8:66:1f:26:63:6b:ff:86:60:39:2e:68:
+                    cb:7a:3a:fe:e8:0b:80:97:50:4d:5e:56:b2:36:d6:
+                    b7:cd:82:18:c9:67:9d:6d:04:7d:5b:91:e9:e3:20:
+                    14:46:2e:bc:a6:b5:43:13:14:3e:fb:c0:a9:8d:16:
+                    95:e5:e3:75:85:c8:80:44:fc:5e:09:57:e8:4b:ee:
+                    76:5c:53:35:2c:a8:57:7d:43:70:14:4a:33:45:ca:
+                    70:9a:21:90:12:c9:35:41:fd:0d:64:3d:b9:7d:0b:
+                    22:81:0c:81:36:7a:12:f9:67:7a:5f:92:79:d3:80:
+                    54:58:ae:45:09:79:b4:c6:81:8c:48:d2:02:57:19:
+                    55:7f:79:b8:9f:2c:4c:e8:a2:21:98:54:5f:ce:27:
+                    ab:1f:6f:26:40:b0:6b:1c:6f:9a:db:a5:04:9e:22:
+                    17:a8:52:eb:49:12:ca:a2:0b:27:79:11:e9:d6:ca:
+                    04:09
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Subject Key Identifier: 
+                51:A7:E8:F0:2A:CE:75:D8:59:50:9D:27:C5:F4:92:19:8F:58:F2:18
+            X509v3 Authority Key Identifier: 
+                keyid:51:A7:E8:F0:2A:CE:75:D8:59:50:9D:27:C5:F4:92:19:8F:58:F2:18
+
+            X509v3 Basic Constraints: critical
+                CA:TRUE
+    Signature Algorithm: sha256WithRSAEncryption
+         3d:1b:7d:6f:7d:08:b4:6a:e1:af:75:08:c6:c9:65:71:c5:e8:
+         cc:b7:86:fe:97:06:60:2c:bf:5d:ff:b1:09:65:b8:60:1c:11:
+         61:eb:19:30:42:92:20:ec:3a:d8:70:a0:96:d6:db:0d:1b:73:
+         fa:ba:12:45:87:8c:bb:ee:ec:cf:e3:c3:14:a5:d8:ea:f9:3a:
+         8e:63:41:f5:0f:09:f4:ba:fe:5b:0e:9a:a4:c9:74:1f:7e:b1:
+         89:04:cc:12:49:d7:cc:5d:d0:15:67:c1:72:fe:e7:dc:ce:1d:
+         19:e8:0a:9a:52:7b:0a:78:aa:19:40:18:0d:f5:24:f3:3a:13:
+         80:be:4e:e6:f4:b3:03:46:62:a1:5b:c6:f0:6c:ca:ea:54:36:
+         83:ad:15:af:c0:30:42:21:ac:bd:f0:88:d8:29:76:30:84:c2:
+         c2:83:b2:18:98:a0:42:15:c4:0b:b8:ef:3f:dd:b5:68:45:ed:
+         75:8c:c0:cc:19:c2:17:a1:b9:5f:75:68:c7:fe:6e:73:fd:b6:
+         ae:3d:4e:cf:81:d7:4d:17:7f:07:f4:d9:c7:e9:7f:fb:be:e8:
+         6a:23:83:2a:58:89:78:e8:69:98:3c:b8:5f:1b:8c:12:cd:99:
+         c6:1b:e6:15:34:d3:c2:fd:6b:61:5d:f4:26:f5:b5:6d:23:65:
+         57:6f:07:ec

@@ -1,0 +1,53 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            82:9e:f5:ca:ea:b8:ed:ef
+    Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C = RU, L = Moscow, O = URALSIB OJSC, CN = UFA-MCA01, emailAddress = ca@uralsib.ru
+        Validity
+            Not Before: Sep 25 13:28:15 2018 GMT
+            Not After : Jun  3 13:28:15 2032 GMT
+        Subject: C = RU, ST = Bashkortostan, L = Ufa, O = URALSIB OJSC, OU = DSIB, CN = Test POS
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (1024 bit)
+                Modulus:
+                    00:c5:73:7e:34:50:02:d2:67:9d:ad:fa:c6:67:9e:
+                    21:b9:a6:c2:19:57:ff:b2:f2:ae:ba:df:a2:71:ff:
+                    c9:61:8a:57:55:97:c1:03:58:ba:70:93:ed:b6:33:
+                    15:8d:52:d9:f7:1a:53:a3:25:ce:00:0d:71:92:cc:
+                    40:e0:b0:aa:13:43:a2:e2:62:36:49:4b:73:68:4d:
+                    2f:b3:fe:67:88:c4:0d:d2:21:29:c9:9e:75:62:81:
+                    41:0c:de:88:04:a4:8d:18:0d:a9:79:1d:92:2d:98:
+                    0a:13:80:cd:31:d9:9d:3b:9c:09:ea:42:af:c8:de:
+                    76:13:a9:a1:73:60:b7:e1:49
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Authority Key Identifier: 
+                keyid:80:05:9F:58:81:F7:6A:72:8C:30:05:BF:A2:43:CE:30:F4:06:D3:3E
+
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            X509v3 Key Usage: 
+                Digital Signature, Non Repudiation, Key Encipherment, Data Encipherment
+            X509v3 Extended Key Usage: 
+                TLS Web Client Authentication, TLS Web Server Authentication
+            X509v3 Subject Key Identifier: 
+                9D:39:80:4E:84:51:2E:45:7E:5F:3B:F0:65:1D:33:35:26:FA:97:2F
+    Signature Algorithm: sha256WithRSAEncryption
+         1a:23:64:95:8a:32:54:65:42:e7:82:ea:a7:d8:d9:2a:e1:53:
+         87:84:88:05:f2:32:93:3c:b5:e4:44:29:bd:53:03:8c:17:a2:
+         e9:0f:3b:96:7b:c1:fa:29:be:d9:3a:6f:bb:49:6a:98:74:15:
+         e6:fe:57:c6:3a:2e:21:a6:bf:30:98:85:62:fb:12:4b:e9:85:
+         ce:d8:df:49:ab:a5:6d:72:2e:3a:31:38:9e:58:6c:f4:16:cf:
+         61:6d:31:1d:e5:bd:6a:24:21:90:28:98:0d:d4:92:21:2b:f7:
+         34:84:fd:e7:45:70:3d:f6:6c:cf:2d:1c:90:9f:cc:05:50:7c:
+         1e:66:fe:b4:8c:21:59:e1:21:bd:32:19:67:f4:3f:75:ae:5a:
+         7c:2a:73:ee:18:ef:29:3d:43:14:91:d8:5b:ef:74:3e:e2:6f:
+         57:a8:1f:17:31:a2:97:8d:db:84:f9:b3:f2:6a:b5:2a:9e:14:
+         52:5f:1c:b0:ae:6d:57:9f:67:0a:4e:16:ab:9a:74:06:a2:2f:
+         8d:91:5a:43:67:a1:f2:ad:29:db:f0:ec:38:1d:60:3d:68:6f:
+         b0:80:99:23:57:f5:81:7f:77:f2:bc:09:60:43:ab:27:b8:d6:
+         8b:7f:97:7a:eb:aa:b4:79:4f:7d:a6:93:a5:c7:a6:5b:9f:55:
+         cc:07:34:8d

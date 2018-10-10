@@ -1,0 +1,7 @@
+authorityKeyIdentifier = keyid:always,issuer
+basicConstraints = critical, CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment
+extendedKeyUsage = serverAuth
+subjectKeyIdentifier = hash
+crlDistributionPoints = URI:http://ufa-mca01.fc.uralsibbank.ru/CertEnroll/UFA-MCA01.crl
+authorityInfoAccess = caIssuers;URI:http://ufa-mca01.fc.uralsibbank.ru/CertEnroll/ufa-mca01.fc.uralsibbank.ru_UFA-MCA01.crt

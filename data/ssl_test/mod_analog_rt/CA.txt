@@ -1,0 +1,60 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            a5:b4:99:9b:bb:c8:a3:f8
+    Signature Algorithm: sha1WithRSAEncryption
+        Issuer: C = RU, L = Moscow, O = URALSIB OJSC, CN = UFA-MCA01, emailAddress = ca@uralsib.ru
+        Validity
+            Not Before: Sep 27 10:14:48 2018 GMT
+            Not After : Feb 12 10:14:48 2046 GMT
+        Subject: C = RU, L = Moscow, O = URALSIB OJSC, CN = UFA-MCA01, emailAddress = ca@uralsib.ru
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:e1:f7:d4:dc:16:f7:40:50:ae:a0:09:49:35:ad:
+                    28:dc:99:e8:3e:f5:ed:6c:5f:d0:fc:3c:bf:37:d0:
+                    90:80:1c:96:99:07:3b:9c:d2:15:7e:3a:aa:3f:95:
+                    37:c9:fa:2c:87:95:d4:59:1a:ea:65:d3:6c:95:3c:
+                    e5:de:f4:e2:ed:81:cc:0f:89:6b:14:80:d9:b1:6f:
+                    73:e9:74:65:96:3c:48:ab:f9:1e:e9:d3:8a:5e:3f:
+                    76:80:73:35:d0:da:df:bb:22:80:a7:d5:5c:3e:0b:
+                    0c:a6:2f:3f:09:78:4f:27:29:18:b1:a5:c6:2d:81:
+                    db:7c:a4:47:53:40:5a:6c:9a:98:c6:14:8a:6e:c3:
+                    ae:84:ba:a2:21:9a:f8:83:7a:88:a9:cf:75:80:5a:
+                    c9:b7:a6:d2:cb:fe:a0:b8:89:a5:24:80:db:99:e3:
+                    b1:73:af:1e:86:91:02:bd:2f:fa:0a:5e:9c:2b:d0:
+                    67:13:1a:8e:8e:0c:6a:83:4c:4e:4d:c1:62:97:ee:
+                    94:7c:37:15:75:ea:f3:b9:ec:1e:a7:a7:f4:12:78:
+                    0b:65:38:b6:b1:71:17:69:ae:94:8e:80:68:c4:74:
+                    d3:58:15:d3:93:94:35:c8:51:8c:c8:40:fa:c1:52:
+                    0e:fb:30:66:fc:9b:2c:b1:13:90:64:92:07:1c:4f:
+                    25:2b
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Subject Key Identifier: 
+                64:53:7A:3C:A7:BE:A2:2D:39:C8:F4:9E:E9:25:0E:85:3D:4C:83:C0
+            X509v3 Authority Key Identifier: 
+                keyid:64:53:7A:3C:A7:BE:A2:2D:39:C8:F4:9E:E9:25:0E:85:3D:4C:83:C0
+
+            X509v3 Basic Constraints: critical
+                CA:TRUE
+            X509v3 Key Usage: 
+                Digital Signature, Certificate Sign, CRL Sign
+    Signature Algorithm: sha1WithRSAEncryption
+         79:6f:a5:a4:ab:86:70:21:76:8e:fb:9b:43:42:7a:5f:1e:fe:
+         78:8e:55:8b:08:18:e5:4d:f6:55:79:f1:01:da:97:ab:14:0c:
+         02:ea:96:d0:49:0c:82:b3:ae:c3:c0:f2:0f:44:81:ce:1d:1b:
+         a8:03:1d:9b:39:bf:57:49:85:6b:a2:b9:6b:25:2b:2f:01:aa:
+         15:3a:d7:a2:5e:84:38:a6:fb:95:8a:97:dd:f7:0a:1d:7e:e4:
+         9e:ec:2a:3a:62:1a:25:35:32:1c:d4:bc:a7:2d:61:bf:f1:1c:
+         22:48:57:07:0e:f8:47:f4:2f:cf:64:2d:8e:a9:8b:6a:c3:05:
+         a0:e7:f5:20:94:f7:bd:61:97:2d:1a:c2:98:4b:1e:0c:8b:9c:
+         f9:14:84:c9:6c:ea:32:8c:7c:2c:ea:4b:7a:13:73:cd:16:40:
+         57:eb:39:06:ae:31:48:b4:64:10:b2:a6:95:aa:62:cb:3c:92:
+         c1:2b:8e:74:2c:50:48:42:71:3d:6a:fc:f7:8f:7a:fa:28:7d:
+         f1:5c:a7:28:6f:e0:5d:9e:04:80:0d:9e:e0:0e:4d:2a:15:a0:
+         9e:27:6d:19:b1:26:14:3c:6b:24:54:6a:79:f4:38:25:7d:7f:
+         8a:89:1b:84:33:b9:f3:a3:af:69:76:ac:17:52:2a:b3:a7:44:
+         8e:c7:b3:b3

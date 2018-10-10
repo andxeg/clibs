@@ -1,0 +1,61 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            cf:b8:6a:aa:5f:66:1f:4a
+    Signature Algorithm: sha1WithRSAEncryption
+        Issuer: C = RU, L = Moscow, O = URALSIB OJSC, CN = UFA-MCA01, emailAddress = ca@uralsib.ru
+        Validity
+            Not Before: Oct 10 07:41:32 2018 GMT
+            Not After : Jun 18 07:41:32 2032 GMT
+        Subject: C = RU, ST = Bashkortostan, L = Ufa, O = URALSIB OJSC, OU = DSIB, CN = Test POS
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (1024 bit)
+                Modulus:
+                    00:c6:83:67:97:5b:27:ea:40:43:bc:e0:9e:1e:18:
+                    91:11:ba:6e:2d:ef:96:e1:6e:d5:9f:5b:16:33:83:
+                    50:49:45:c9:18:28:8f:13:9f:c0:8a:ab:0d:46:85:
+                    3a:f5:2c:3c:90:56:4c:54:67:3c:f9:b1:25:33:71:
+                    fc:3f:ec:c0:14:e3:d8:b8:03:ba:5d:5c:4b:59:e8:
+                    5f:e1:b0:96:fb:fb:ba:cb:2e:4c:c6:1b:9c:97:00:
+                    36:c8:1d:4e:4a:73:a2:34:9b:37:34:06:d1:71:cf:
+                    d5:67:b3:ea:b4:18:1d:b3:41:3c:4a:3f:4a:ee:39:
+                    4d:f4:c1:a4:92:79:35:10:d5
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Authority Key Identifier: 
+                keyid:6F:9B:92:95:C3:AB:DC:31:33:E4:AC:84:EE:65:F6:91:6C:B0:40:69
+
+            X509v3 Basic Constraints: critical
+                CA:FALSE
+            X509v3 Key Usage: critical
+                Digital Signature, Non Repudiation, Key Encipherment, Data Encipherment
+            X509v3 Extended Key Usage: 
+                TLS Web Client Authentication
+            X509v3 Subject Key Identifier: 
+                47:76:43:97:5B:40:88:F2:14:89:D3:02:C9:43:F4:ED:FF:06:43:8A
+            X509v3 CRL Distribution Points: 
+
+                Full Name:
+                  URI:http://ufa-mca01.fc.uralsibbank.ru/CertEnroll/UFA-MCA01.crl
+
+            Authority Information Access: 
+                CA Issuers - URI:http://ufa-mca01.fc.uralsibbank.ru/CertEnroll/ufa-mca01.fc.uralsibbank.ru_UFA-MCA01.crt
+
+    Signature Algorithm: sha1WithRSAEncryption
+         c3:5d:1e:6b:bf:7f:cb:96:a4:7a:5e:de:c2:c0:15:7f:b7:43:
+         9b:5f:c8:55:0c:10:82:cf:49:5a:e5:8b:62:9c:28:e3:ee:56:
+         2b:54:0d:53:a6:52:a4:a7:c0:25:83:bb:36:62:f7:9a:87:11:
+         a8:c4:f9:24:91:a1:39:aa:69:32:d7:9f:c1:19:05:f4:62:61:
+         3d:81:cc:52:56:ab:94:93:4f:64:14:3d:44:64:5c:2b:30:af:
+         0a:6a:82:a9:4e:d4:d9:ff:0a:c6:a2:e0:5e:e0:36:8c:be:81:
+         cf:66:ad:80:d7:8c:1a:82:96:77:b4:c9:db:ce:bd:19:c7:80:
+         0e:75:2f:52:31:1a:2b:cb:1e:c3:09:67:2c:0d:86:f9:0a:e6:
+         06:aa:6e:9b:d3:90:36:3d:0e:a1:9f:61:db:b2:6d:be:d8:92:
+         f4:3a:b9:fc:cc:37:67:d7:81:a3:16:ca:1b:56:e0:b6:bc:7b:
+         a3:91:8a:c4:0a:a1:da:ae:e5:73:28:d2:ca:d4:ba:6c:bd:d7:
+         46:43:9b:c0:69:10:07:d4:49:17:07:2b:6e:e6:93:a7:c5:a5:
+         6f:2d:43:80:74:33:1e:2b:e4:17:42:a8:58:d6:2d:cf:20:93:
+         e3:ed:7b:7f:d9:dc:74:d4:03:66:f5:60:74:6f:d7:f4:6a:62:
+         f8:25:8b:45
